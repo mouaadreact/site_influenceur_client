@@ -4,8 +4,8 @@ module.exports=(Sequelize,dataType)=>{
   const Interet=Sequelize.define("Interet",{
     interetNom:{
       type:dataType.TEXT,
-      allowNull:false
-     }
+      allowNull:false,
+     } 
   });
    
   

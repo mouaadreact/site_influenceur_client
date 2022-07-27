@@ -1,4 +1,4 @@
-
+ 
 
 module.exports=(Sequelize,dataType)=>{
 
@@ -7,7 +7,8 @@ module.exports=(Sequelize,dataType)=>{
       
       titre:{
        type:dataType.STRING(100),
-       allowNull:false
+       allowNull:false,
+       unique:true
       },
       dateDebut:{
        type:dataType.DATE,
@@ -31,11 +32,17 @@ module.exports=(Sequelize,dataType)=>{
       },
       hashtags:{
        type:dataType.TEXT,
-       allowNull:false
+       allowNull:false,
+       validate:{
+        is:/(#(?:[^\x00-\x7F]|\w)+)/g // testing 
+       }
       },
       compteTagger:{
        type:dataType.TEXT,
-       allowNull:false
+       allowNull:false,
+       validate:{
+        is:/(@(?:[^\x00-\x7F]|\w)+)/g
+       }
       }
 
 

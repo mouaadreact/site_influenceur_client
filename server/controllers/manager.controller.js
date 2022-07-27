@@ -1,7 +1,6 @@
 
-const {TemporaireInfluenceur}=require("../models");
-const UsernameByEmail=require("../utils/usernameByEmail");
-const SchemaValidation=require("../validators/temporaireInfluenceur.validator");
+const {Manager}=require("../models");
+const SchemaValidation=require("../validators/manager.validator");
 const bcrypt=require("bcrypt");
 const jwt=require("jsonwebtoken");
 const privateKey=process.env.PRIVATE_KEY_AUTHORIZATION;
@@ -14,14 +13,14 @@ exports.register=async(req,res)=>{
   
 
      console.log(req.body);
-     const {email,password}=req.body;
-     let validation=SchemaValidation.validate({email,password})
+     const {email,password,username}=req.body;
+     let validation=SchemaValidation.validate({email,username,password})
 
      if(validation.error){
        res.json({validation:validation.error.details[0].message})
       }
       
-     TemporaireInfluenceur.count({
+     Manager.count({
       where:{email:email}
      })
      .then(doc=>{ 
@@ -30,11 +29,10 @@ exports.register=async(req,res)=>{
       }else{
 
        bcrypt.hash(password,10).then(passwordCrypt=>{
-        TemporaireInfluenceur.create({
+        Manager.create({
          email:req.body.email,
-         username:UsernameByEmail(req.body.email),
-         password:passwordCrypt,
-         statusConfirmer:false})
+         username:req.body.username,
+         password:passwordCrypt})
          .then((result)=>res.status(200).json(result))
          .catch((err)=>res.status(400).json(err))
        })
@@ -48,7 +46,7 @@ exports.register=async(req,res)=>{
 exports.Login=async (req,res)=>{
  
  try{
-  var data=await TemporaireInfluenceur.findOne({
+  var data=await Manager.findOne({
                     where:{email:req.body.email}
                     }); 
   data=data.dataValues;
@@ -84,14 +82,14 @@ exports.Logout = (req,res) =>{
   //res.send("hello")
   res.redirect('/');
 }
- //----------------------------------------------------
- 
+ //-----------------------------------------
+
 //afficher tout les influenceurs dans table temporaire
 exports.getAll=async (req,res)=>{
   try{
-   const data=await TemporaireInfluenceur.findAll()
+   const data=await Manager.findAll()
    if(!data){
-    res.json({message:"influenceur introuvable!"});
+    res.json({message:" introuvable!"});
    }
     res.status(200).json(data);
   }catch(err){
@@ -105,12 +103,12 @@ exports.getAll=async (req,res)=>{
 exports.getId=async (req,res)=>{
  
   try{
-   const data=await TemporaireInfluenceur.findOne({
+   const data=await Manager.findOne({
                      where:{id:req.params.id}
                      });
        
    if(!data){
-    res.json({message:"influenceur introuvable!"});
+    res.json({message:" introuvable!"});
    }
     res.status(200).json(data);
   }catch(err){
@@ -122,17 +120,16 @@ exports.getId=async (req,res)=>{
 exports.Update=async (req,res)=>{
 
  try{
-  const data=await  TemporaireInfluenceur.update({
+  const data=await  Manager.update({
                     email:req.body.email, 
                     username:req.body.username,
-                    password:req.body.password,
-                    statusConfirmer:req.body.statusConfirmer 
+                    password:req.body.password, 
                     },{
                      where:{id:req.params.id}
                     })
       
   if(!data){
-   res.json({message:"influenceur not update!"});
+   res.json({message:"not update!"});
   }
    res.status(200).json(data);
  }catch(err){
@@ -140,17 +137,17 @@ exports.Update=async (req,res)=>{
  }
 }
 
-
+ 
 //delete influenceurs dans table temporaire
 exports.Delete= async (req,res)=>{
-  
+ 
  try{
-  const data=await  TemporaireInfluenceur.destroy({
+  const data=await  Manager.destroy({
                      where:{id:req.params.id}
                       })
       
   if(!data){
-   res.json({message:"influenceur non supprimer!"});
+   res.json({message:" non supprimer!"});
   }
    res.status(200).json(data);
  }catch(err){

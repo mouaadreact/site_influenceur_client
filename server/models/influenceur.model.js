@@ -7,75 +7,62 @@ module.exports=(Sequelize,dataType)=>{
       
       nom:{
        type:dataType.STRING(50),
-       allowNull:false
       },
       prenom:{
        type:dataType.STRING(50),
-       allowNull:false
       },
       email:{
         type:dataType.STRING(50),
-        allowNull:false
+        allowNull:false,
+        unique:true,
        }, 
        username:{
         type:dataType.STRING(50),
-        allowNull:false
+        allowNull:false,
+        unique:true
        },
        password:{
-        type:dataType.STRING(50),
-        allowNull:false
+        type:dataType.TEXT,
+        allowNull:false,   
        } ,
       genre:{
        type:dataType.STRING(10),
-       allowNull:false
       },
       dateNaissance:{
        type:dataType.DATE,
-       allowNull:false
       },
       instagramUsernameCompte:{
        type:dataType.TEXT,
-       allowNull:false
       },
       facebookUsernameCompte:{
        type:dataType.TEXT,
-       allowNull:true
       },
       youtubeUsernameCompte:{
        type:dataType.TEXT,
-       allowNull:true
       },
       pays:{
        type:dataType.STRING(50),
-       allowNull:false
       },
       ville:{
        type:dataType.STRING(50),
-       allowNull:false
       },
       quartier:{
        type:dataType.STRING(100),
-       allowNull:false
       },
       codePostal:{
        type:dataType.BIGINT,
-       allowNull:false
       },
-      situationFamilale:{
+      situationFamiliale:{
        type:dataType.STRING(50),
-       allowNull:false
       },
       nombreEnfant:{
        type:dataType.INTEGER,
-       allowNull:false
       },
       niveauEtude:{
        type:dataType.STRING(50),
-       allowNull:false
       },
       profession:{
        type:dataType.STRING(50),
-       allowNull:false 
       }, 
       token:{
        type:dataType.TEXT

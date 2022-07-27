@@ -2,7 +2,7 @@ module.exports=(Sequelize,dataType)=>{
 
  //-----create table client 
   return Sequelize.define("Client",{
-      nomSociete:{
+      nomSociete:{  
        type:dataType.STRING(100),
        allowNull:false
       },
@@ -28,15 +28,18 @@ module.exports=(Sequelize,dataType)=>{
       },
       telephone:{
        type:dataType.STRING(50),
-       allowNull:false
+       allowNull:false,
+       unique:true
       }, 
       email:{
        type:dataType.STRING,
-       allowNull:false
+       allowNull:false,
+       unique:true
       },
       password:{
        type:dataType.STRING,
-       allowNull:false
+       allowNull:false,
+       unique:true
       }
 
   });

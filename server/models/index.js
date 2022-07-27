@@ -104,7 +104,7 @@ Influenceur.belongsToMany(Campagne ,{through:EtatPaiment})
 Influenceur.belongsToMany(Interet ,{through:InteretInfluenceur})
 Interet.belongsToMany(Influenceur ,{through:InteretInfluenceur});
 
-
+ 
 //generate Tables in DB
 db.sync({force:false}).then(()=>{
     console.log("Tables Created ! ");
@@ -113,10 +113,15 @@ db.sync({force:false}).then(()=>{
 module.exports={
     Client,
     Influenceur,
-    Interet,
+    Interet, 
     Langue,
     Manager,
     TemporaireInfluenceur,
     Campagne,
-    GalerieCampagne
+    GalerieCampagne,
+    Offre,
+    EtatPaiment,
+    InteretCampagne,
+    InteretInfluenceur,
+    LangueInfluenceur
 }
