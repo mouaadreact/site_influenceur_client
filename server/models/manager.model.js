@@ -4,7 +4,10 @@ module.exports=(Sequelize,dataType)=>{
   const Manager=Sequelize.define("Manager",{
       email:{
        type:dataType.STRING(50),
-       allowNull:false
+       allowNull:false,
+       validate:{
+        isEmail: true
+           }
       }, 
       username:{
        type:dataType.STRING(50),

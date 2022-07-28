@@ -4,7 +4,13 @@ module.exports=(Sequelize,dataType)=>{
   return Sequelize.define("Client",{
       nomSociete:{  
        type:dataType.STRING(100),
-       allowNull:false
+       allowNull:false,
+       validate:{
+        min:{
+            args:[3],
+            msg:"Minimum 3 characters required in nomSociete"
+        }
+     }
       },
       pays:{
        type:dataType.STRING(100),
@@ -24,22 +30,29 @@ module.exports=(Sequelize,dataType)=>{
       },
       nomDirecteur:{
        type:dataType.STRING(100),
-       allowNull:false
+       allowNull:false,
+       validate:{
+        is:/^(?=.{1,50}$)[a-z]+(?:['_.\s][a-z]+)*$/gi
+       }
       },
       telephone:{
        type:dataType.STRING(50),
        allowNull:false,
-       unique:true
+       unique:true,
+       validate:{
+        is:/^[+]*[(]{0,1}[0-9]{1,3}[)]{0,1}[-\s\./0-9]*$/g
+       }
       }, 
       email:{
        type:dataType.STRING,
        allowNull:false,
-       unique:true
+       unique:true,
+       validate:{
+        isEmail: true
+         }
       },
       password:{
-       type:dataType.STRING,
-       allowNull:false,
-       unique:true
+       type:dataType.TEXT
       }
 
   });

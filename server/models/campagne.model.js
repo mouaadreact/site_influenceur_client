@@ -8,15 +8,35 @@ module.exports=(Sequelize,dataType)=>{
       titre:{
        type:dataType.STRING(100),
        allowNull:false,
-       unique:true
+       unique:true,
+       validate:{
+          min:{
+              args:[3],
+              msg:"Minimum 3 characters required in titre"
+          }
+       }
       },
       dateDebut:{
        type:dataType.DATE,
-       allowNull:false
+       allowNull:false,
+       validate:{
+        customValidator(value){
+          if(new Date(value)<new Date()){
+            throw new Error("invalid date")
+             }
+          }
+        }
       },
       dateFin:{
        type:dataType.DATE,
-       allowNull:false
+       allowNull:false,
+       validate:{
+        customValidator(value){
+          if(new Date(value)<new Date()){
+            throw new Error("invalid date")
+             }
+          }
+        }
       },
       presence:{
        type:dataType.BOOLEAN,
@@ -34,14 +54,14 @@ module.exports=(Sequelize,dataType)=>{
        type:dataType.TEXT,
        allowNull:false,
        validate:{
-        is:/(#(?:[^\x00-\x7F]|\w)+)/g // testing 
+        is:/^(#[a-zA-Z0-9]+,? *)*#[a-zA-Z0-9]+$/gi
        }
       },
       compteTagger:{
        type:dataType.TEXT,
        allowNull:false,
        validate:{
-        is:/(@(?:[^\x00-\x7F]|\w)+)/g
+        is:/^(@[a-zA-Z0-9]+,? *)*@[a-zA-Z0-9]+$/gi
        }
       }
 

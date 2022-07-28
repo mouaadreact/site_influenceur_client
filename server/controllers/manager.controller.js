@@ -6,19 +6,19 @@ const jwt=require("jsonwebtoken");
 const privateKey=process.env.PRIVATE_KEY_AUTHORIZATION;
 
 //-------------------------------------------------------------
-//logout une influenceur;
+ //Remarque: en besoin de utilise IF ELSE apres retourne des données
+//car si n'a fait pas il exits une error d'envoyer deux(2) response --> "si on a une error dans request"
 
-//register un(e) influenceur
+
+//register un(e) manager
 exports.register=async(req,res)=>{
   
-
-     console.log(req.body);
      const {email,password,username}=req.body;
      let validation=SchemaValidation.validate({email,username,password})
 
      if(validation.error){
        res.json({validation:validation.error.details[0].message})
-      }
+      }else{
       
      Manager.count({
       where:{email:email}
@@ -38,8 +38,8 @@ exports.register=async(req,res)=>{
        })
       }
      })
-
     }
+  }
 
     //login:
     //get by specific id
@@ -50,16 +50,14 @@ exports.Login=async (req,res)=>{
                     where:{email:req.body.email}
                     }); 
   data=data.dataValues;
-  console.log(data);
 
   if(!data){
-   res.json({message:"email not valid!"});
+   res.status(400).json({error:"email not valid!"});
   
   }
   else{
      
      bcrypt.compare(req.body.password,data.password).then((same)=>{
-      console.log(same);
        if(same){
         let token=jwt.sign({id:data.id,email:req.body.email,role:"userRole"},privateKey,{
          expiresIn:3*24*60*60*1000 });
@@ -67,7 +65,7 @@ exports.Login=async (req,res)=>{
         res.status(200).json({token:token})
 
        }else{
-        res.status(400).json({err:"password not valid"});
+        res.status(400).json({error:"password not valid"});
        }
      })
   }
@@ -76,22 +74,23 @@ exports.Login=async (req,res)=>{
     res.status(400).json({err:err});
  }
 }
-//logout influenceur:
+
+//logout manager:
 exports.Logout = (req,res) =>{
   res.cookie('jwt','',{maxAge :1});
-  //res.send("hello")
   res.redirect('/');
 }
  //-----------------------------------------
 
-//afficher tout les influenceurs dans table temporaire
+//afficher tout les managers
 exports.getAll=async (req,res)=>{
   try{
    const data=await Manager.findAll()
-   if(!data){
-    res.json({message:" introuvable!"});
-   }
-    res.status(200).json(data);
+    if(!data){
+      res.status(400).json({error:"les managers sont introuvables !"});
+    }else{
+      res.status(200).json(data);
+    }
   }catch(err){
    res.status(400).json({err:err.errors[0].message});
   }
@@ -99,7 +98,7 @@ exports.getAll=async (req,res)=>{
 }
 
 
-//get by specific id
+//afficher une spec manager
 exports.getId=async (req,res)=>{
  
   try{
@@ -107,16 +106,17 @@ exports.getId=async (req,res)=>{
                      where:{id:req.params.id}
                      });
        
-   if(!data){
-    res.json({message:" introuvable!"});
-   }
-    res.status(200).json(data);
+    if(!data){
+      res.status(400).json({error:"le manager est introuvable !"});
+    }else{
+      res.status(200).json(data);
+    }
   }catch(err){
    res.status(400).json(err);
   }
 }
 
-//update influenceur
+//editer un manager
 exports.Update=async (req,res)=>{
 
  try{
@@ -128,10 +128,12 @@ exports.Update=async (req,res)=>{
                      where:{id:req.params.id}
                     })
       
-  if(!data){
-   res.json({message:"not update!"});
-  }
-   res.status(200).json(data);
+    if(!data){
+    res.status(400).json({message:"on peut pas editer manager!"});
+    }else{
+    res.status(200).json(data);
+    }
+    
  }catch(err){
   res.status(400).json({err:err.errors[0].message});
  }
@@ -146,10 +148,12 @@ exports.Delete= async (req,res)=>{
                      where:{id:req.params.id}
                       })
       
-  if(!data){
-   res.json({message:" non supprimer!"});
-  }
-   res.status(200).json(data);
+    if(!data){
+    res.status(400).json({message:" on peut pas supprimer manager!"});
+    }else{
+    res.status(200).json(data);
+    }
+
  }catch(err){
   res.status(400).json({err:err.errors[0].message});
  }

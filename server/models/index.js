@@ -34,11 +34,13 @@ const GalerieCampagne=GalerieCampagneModel(db,Sequelize);
    const Offre=db.define("Offre",{
     statusAccepter:{
      type:Sequelize.BOOLEAN,
-     allowNull:false
+     allowNull:true,
+     default:false,
     },
     statusNouveau:{
      type:Sequelize.BOOLEAN,
-     allowNull:false
+     allowNull:true,
+     default:true,
     }
   });
    // etatPaiment(campagne, influenceur)
@@ -49,7 +51,14 @@ const GalerieCampagne=GalerieCampagneModel(db,Sequelize);
     },
     dateReglement:{ 
      type:Sequelize.DATE,
-     allowNull:false
+     allowNull:false,
+     validate:{
+      customValidator(value){
+        if(new Date(value)<new Date()){
+          throw new Error("invalid date")
+           }
+        }
+      }
     }
   });
   

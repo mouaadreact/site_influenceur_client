@@ -1,8 +1,10 @@
 
     const {LangueInfluenceur}=require("../models");
     //-------------------------------------------
-    
-    //add langue influenceur :
+    //Remarque: en besoin de utilise IF ELSE apres retourne des données
+    //car si n'a fait pas il exits une error d'envoyer deux(2) response --> "si on a une error dans request"
+
+    //ajouter langue influenceur :
     exports.addLangueInfluenceur=async (req,res)=>{
     
       try{
@@ -13,33 +15,37 @@
 
 
            
-       if(!data){
-        res.json({message:"can't create Langue Influenceur!"});
-       }
-        res.status(200).json(data);
+          if(!data){
+            res.status(400).json({error:"On peut pas créer Langue Influenceur!"});
+          }else{
+            res.status(200).json(data);
+          }
+
       }catch(err){
        res.status(400).json(err);
       }
     }
     
     //-----------------------------------------------
-    //all data
+    //tout les langues Influenceurs
     exports.getAll=async (req,res)=>{
      try{
     
       const data=await LangueInfluenceur.findAll();
           
-      if(!data){
-       res.json({message:"Langue Influenceur introuvable!"});
-      }
-       res.status(200).json(data);
+        if(!data){
+        res.status(400).json({error:"les langueInfluenceurs sont introuvables!"});
+        }else{
+        res.status(200).json(data);
+        }
+
      }catch(err){
       res.status(400).json(err);
      }
     }
     
     //------------------------------------------------------
-    //find all influenceur d'un langue
+    //trouve tout les influenceurs d'un langue
     exports.getIdLangue=async (req,res)=>{
      try{
       const data=await LangueInfluenceur.findAll({
@@ -48,16 +54,17 @@
        }
       });
           
-      if(!data){
-       res.json({message:"can't find LangueInfluenceur by langue!"});
-      }
-       res.status(200).json(data);
+        if(!data){
+        res.status(400).json({error:"On peut pas trouver LangueInfluenceur utilisant langueID!"});
+        }else{
+        res.status(200).json(data);
+        }
      }catch(err){
-      res.status(400).json({err:"error etat Paiment !!!"});
+      res.status(400).json(err);
      }
     }
     //--------------------------------------------------------------
-     //find all langue d'un influenceur
+     //trouve les langues d'un influenceur
     exports.getIdInfluenceur=async (req,res)=>{
      try{
       const data=await LangueInfluenceur.findAll({
@@ -66,18 +73,20 @@
        }
       });
           
-      if(!data){
-       res.json({message:"can't find InteretInfleunceur by influenceur!"});
-      }
-       res.status(200).json(data);
+        if(!data){
+        res.status(400).json({error:"On peut pas Trouve InteretInfleunceur utilisant influenceurID!"});
+        }else{
+        res.status(200).json(data);
+        }
+
      }catch(err){
-      res.status(400).json({err:"error etat Paiment !!!"});
+      res.status(400).json(err);
      }
     }
 
     
     //-----------------------------------------------
-    //delete
+    //supprimer les languesInfluenceurs
     exports.delete=async (req,res)=>{
      try{
       const data=await LangueInfluenceur.destroy({
@@ -87,10 +96,11 @@
        }
       });
           
-      if(!data){
-       res.json({message:"can't delete!"});
-      }
-       res.status(200).json(data);
+        if(!data){
+        res.status(400).json({error:"On peut pas Supprimer LangueInfluenceur"});
+        }else{
+        res.status(200).json(data);
+        }
      }catch(err){
       res.status(400).json(err);
      }

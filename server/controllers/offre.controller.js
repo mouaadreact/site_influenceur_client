@@ -1,8 +1,11 @@
 const {Offre}=require("../models");
 //-------------------------------------------
+//Remarque: en besoin de utilise IF ELSE apres retourne des données
+//car si n'a fait pas il exits une error d'envoyer deux(2) response --> "si on a une error dans request"
 
-//add Offre:
+//ajouter Offre:
 exports.addOffre=async (req,res)=>{
+   
 
   try{
    const data=await Offre.create({
@@ -12,32 +15,37 @@ exports.addOffre=async (req,res)=>{
                           statusNouveau:true
                                 })
        
-   if(!data){
-    res.json({message:"can't create offre!"});
-   }
-    res.status(200).json(data);
+    if(!data){
+      res.status(400).json({message:"On peut pas créer  offre!"});
+    }else{
+      res.status(200).json(data);
+    }
+
   }catch(err){
    res.status(400).json(err);
   }
 }
 
-//-----------------------------------------------
+//----------------------------------------------
+// afficher tout les offres
 exports.getAll=async (req,res)=>{
  try{
 
   const data=await Offre.findAll();
       
-  if(!data){
-   res.json({message:"Offre introuvable!"});
-  }
-   res.status(200).json(data);
+    if(!data){
+    res.status(400).json({error:"les Offres sont introuvables!"});
+    }else{
+    res.status(200).json(data);
+    }
+
  }catch(err){
   res.status(400).json(err);
  }
 }
 
 //------------------------------------------------------
-
+//afficher l'offre by id
 exports.getId=async (req,res)=>{
  try{
   const data=await Offre.findOne({
@@ -47,12 +55,14 @@ exports.getId=async (req,res)=>{
    }
   });
       
-  if(!data){
-   res.json({message:"can't find Offre!"});
-  }
-   res.status(200).json(data);
+    if(!data){
+    res.status(400).json({error:"trouve l'Offre!"});
+    }else{
+    res.status(200).json(data);
+    }
+
  }catch(err){
-  res.status(400).json({err:"error offre !!!"});
+  res.status(400).json(err);
  }
 }
 //--------------------------------------------------------------
@@ -70,10 +80,12 @@ exports.update=async (req,res)=>{
     }
   });
       
-  if(!data){ 
-   res.json({message:"can't update!"});
-  }
-   res.status(200).json(data);
+    if(!data){ 
+    res.status(400).json({error:"on peut pas editer offre!"});
+    }else{
+    res.status(200).json(data);
+    }
+    
  }catch(err){
   res.status(400).json(err);
  }
@@ -81,6 +93,7 @@ exports.update=async (req,res)=>{
 
 //---------------------------------------------
 //change new to old offre:
+
 exports.oldOffre=async (req,res)=>{
  try{
   const data=await Offre.update(
@@ -93,10 +106,12 @@ exports.oldOffre=async (req,res)=>{
     }
   });
       
-  if(!data){ 
-   res.json({message:"can't update!"});
-  }
-   res.status(200).json(data);
+    if(!data){ 
+    res.status(400).json({error:"on peut pas change status offre tout old!"});
+    }else{
+    res.status(200).json(data);
+    }
+
  }catch(err){
   res.status(400).json(err);
  }
@@ -116,10 +131,12 @@ exports.accepterOffre=async (req,res)=>{
     }
   });
       
-  if(!data){ 
-   res.json({message:"can't update!"});
-  }
-   res.status(200).json(data);
+    if(!data){ 
+    res.status(400).json({error:"On peut pas accepter offre!"});
+    }else{
+    res.status(200).json(data);
+    }
+
  }catch(err){
   res.status(400).json(err);
  }
@@ -127,6 +144,7 @@ exports.accepterOffre=async (req,res)=>{
 
 
 //-----------------------------------------------
+//supprimer offre
 exports.delete=async (req,res)=>{
  try{
   const data=await Offre.destroy({
@@ -136,10 +154,12 @@ exports.delete=async (req,res)=>{
    }
   });
       
-  if(!data){
-   res.json({message:"can't delete!"});
-  }
-   res.status(200).json(data);
+    if(!data){
+    res.status(400).json({error:"on peut pas supprimer offre!"});
+    }else{
+    res.status(200).json(data);
+    }
+    
  }catch(err){
   res.status(400).json(err);
  }

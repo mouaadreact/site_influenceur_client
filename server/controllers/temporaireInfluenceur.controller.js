@@ -11,9 +11,7 @@ const privateKey=process.env.PRIVATE_KEY_AUTHORIZATION;
 
 //register un(e) influenceur
 exports.register=async(req,res)=>{
-  
 
-     console.log(req.body);
      const {email,password}=req.body;
      let validation=SchemaValidation.validate({email,password})
 
@@ -44,7 +42,8 @@ exports.register=async(req,res)=>{
     }
 
     //login:
-    //get by specific id
+    //commentaire cette method car j'utilise pour le testing
+/*
 exports.Login=async (req,res)=>{
  
  try{
@@ -52,21 +51,19 @@ exports.Login=async (req,res)=>{
                     where:{email:req.body.email}
                     }); 
   data=data.dataValues;
-  console.log(data);
 
   if(!data){
-   res.json({message:"email not valid!"});
+   res.json({error:"email not valid!"});
   
   }
   else{
      
      bcrypt.compare(req.body.password,data.password).then((same)=>{
-      console.log(same);
        if(same){
         let token=jwt.sign({id:data.id,email:req.body.email,role:"userRole"},privateKey,{
          expiresIn:3*24*60*60*1000 });
          res.cookie('jwt',token,{httpOnly :true,maxAge:3*24*60*60*1000 });
-        res.status(200).json({token:token})
+         res.status(200).json({token:token})
 
        }else{
         res.status(400).json({err:"password not valid"});
@@ -77,11 +74,12 @@ exports.Login=async (req,res)=>{
  }catch(err){
     res.status(400).json({err:err});
  }
-}
+}*/
+
+//---------------------------------------------------
 //logout influenceur:
 exports.Logout = (req,res) =>{
   res.cookie('jwt','',{maxAge :1});
-  //res.send("hello")
   res.redirect('/');
 }
  //----------------------------------------------------
@@ -91,9 +89,10 @@ exports.getAll=async (req,res)=>{
   try{
    const data=await TemporaireInfluenceur.findAll()
    if(!data){
-    res.json({message:"influenceur introuvable!"});
-   }
+    res.status(400).json({error:"les influenceurTemporaires sont introuvables!"});
+   }else{
     res.status(200).json(data);
+   }
   }catch(err){
    res.status(400).json({err:err.errors[0].message});
   }
@@ -101,7 +100,7 @@ exports.getAll=async (req,res)=>{
 }
 
 
-//get by specific id
+//afficher une seul influenceurTemporaire by id
 exports.getId=async (req,res)=>{
  
   try{
@@ -109,16 +108,18 @@ exports.getId=async (req,res)=>{
                      where:{id:req.params.id}
                      });
        
-   if(!data){
-    res.json({message:"influenceur introuvable!"});
-   }
-    res.status(200).json(data);
+    if(!data){
+      res.status(400).json({error:"l'influenceurTemporaire est introuvable!"});
+    }else{
+      res.status(200).json(data);
+    }
+
   }catch(err){
    res.status(400).json(err);
   }
 }
 
-//update influenceur
+//editer influenceurTemporaire
 exports.Update=async (req,res)=>{
 
  try{
@@ -131,10 +132,12 @@ exports.Update=async (req,res)=>{
                      where:{id:req.params.id}
                     })
       
-  if(!data){
-   res.json({message:"influenceur not update!"});
-  }
-   res.status(200).json(data);
+    if(!data){
+    res.status(400).json({error:"on peut pas editer l'influenceurTemporaire!"});
+    }else{
+    res.status(200).json(data);
+    }
+
  }catch(err){
   res.status(400).json({err:err.errors[0].message});
  }
@@ -149,10 +152,12 @@ exports.Delete= async (req,res)=>{
                      where:{id:req.params.id}
                       })
       
-  if(!data){
-   res.json({message:"influenceur non supprimer!"});
-  }
-   res.status(200).json(data);
+    if(!data){
+    res.status(400).json({error:"on peut pas supprimer influenceurTemporaire!"});
+    }else{
+    res.status(200).json(data);
+    }
+
  }catch(err){
   res.status(400).json({err:err.errors[0].message});
  }

@@ -7,14 +7,31 @@ module.exports=(Sequelize,dataType)=>{
       
       nom:{
        type:dataType.STRING(50),
+       validate:{
+        is:/^(?=.{1,50}$)[a-z]+(?:['_.\s][a-z]+)*$/gi,
+        min:{
+          args:[3],
+          msg:"Minimum 3 characters required in nom"
+           }
+       }
       },
       prenom:{
        type:dataType.STRING(50),
+       validate:{
+        is:/^(?=.{1,50}$)[a-z]+(?:['_.\s][a-z]+)*$/gi,
+        min:{
+          args:[3],
+          msg:"Minimum 3 characters required in prenom"
+           }
+       }
       },
       email:{
         type:dataType.STRING(50),
         allowNull:false,
         unique:true,
+        validate:{
+          isEmail: true
+          }
        }, 
        username:{
         type:dataType.STRING(50),
@@ -30,6 +47,13 @@ module.exports=(Sequelize,dataType)=>{
       },
       dateNaissance:{
        type:dataType.DATE,
+       validate:{
+        customValidator(value){
+          if(new Date(value)>= new Date()){
+            throw new Error("invalid date")
+             }
+          }
+        }
       },
       instagramUsernameCompte:{
        type:dataType.TEXT,
@@ -72,11 +96,13 @@ module.exports=(Sequelize,dataType)=>{
       },
       statusAccepterConditionGenerale:{
        type:dataType.BOOLEAN,
-       allowNull:false
+       allowNull:true,
+       default:false,
       },
       statusEtatActiver:{
        type:dataType.BOOLEAN,
-       allowNull:false
+       allowNull:true,
+       default:true,
       }
  
   });

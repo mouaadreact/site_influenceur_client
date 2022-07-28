@@ -19,8 +19,7 @@ router.route("/:id")
 router.route("/register")
        .post(temporaireInfluenceurController.register)
 
-router.route("/login")
-      .post(temporaireInfluenceurController.Login)
+
 
 
 module.exports=router;

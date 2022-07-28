@@ -13,6 +13,7 @@ const storage=multer.diskStorage({
  }
 })
 
+//we need more options 
 const upload=multer({
  storage:storage,
  /*limits: {

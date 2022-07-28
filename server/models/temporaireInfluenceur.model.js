@@ -6,7 +6,10 @@
        email:{
         type:dataType.STRING(50),
         allowNull:false,
-        unique:true
+        unique:true,
+        validate:{
+            isEmail: true
+        }
        }, 
        username:{
         type:dataType.STRING(50),
@@ -22,7 +25,8 @@
        },
        statusConfirmer:{
         type:dataType.BOOLEAN,
-        allowNull:false
+        allowNull:true,
+        default:false,
        }
    });
    
