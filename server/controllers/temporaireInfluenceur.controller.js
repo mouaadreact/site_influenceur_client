@@ -5,7 +5,7 @@ const SchemaValidation=require("../validators/temporaireInfluenceur.validator");
 const bcrypt=require("bcrypt");
 const jwt=require("jsonwebtoken");
 const privateKey=process.env.PRIVATE_KEY_AUTHORIZATION;
-
+const SendEmail=require("../utils/SendEmailValidationCompte");
 //-------------------------------------------------------------
 //logout une influenceur;
 
@@ -24,10 +24,10 @@ exports.register=async(req,res)=>{
      })
      .then(doc=>{ 
       if(doc!=0){
-       res.status(400).error("this is email is used")
+       res.status(400).json({error:"username or password invalid"})
       }else{
 
-       bcrypt.hash(password,10).then(passwordCrypt=>{
+        bcrypt.hash(password,10).then(passwordCrypt=>{
         TemporaireInfluenceur.create({
          email:req.body.email,
          username:UsernameByEmail(req.body.email),
@@ -35,6 +35,9 @@ exports.register=async(req,res)=>{
          statusConfirmer:false})
          .then((result)=>res.status(200).json(result))
          .catch((err)=>res.status(400).json(err))
+         //send email pour verifier 
+         SendEmail.ContactUs(req.body.email,`http://localhost:3000/api/v1/influenceur/confirmer-email?email=${req.body.email}`)
+
        })
       }
      })
