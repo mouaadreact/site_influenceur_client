@@ -11,15 +11,15 @@ module.exports.ContactUs=(email,url)=>{
      secure: true, //error
      auth:{  //add une email pour access 
          user:"influenceur.client.mail2022@gmail.com", //influenceur.client.mail2022@gmail.com
-         pass:"3wdev2022"//3wdev2022
+         pass:"azbvktbknbjfvnbl"//3wdev2022
      }
   })//.authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
   let mailOptions={
-      form:email,
-      to:"influenceur.client.mail2022@gmail.com",
+      form:"influenceur.client.mail2022@gmail.com",
+      to:email,
       subject:`
-      Message from email : ${email} , 
+      Message from email : influenceur.client.mail2022@gmail.com , 
       subject : 
         comfirmer votre email`,
       "text":` 

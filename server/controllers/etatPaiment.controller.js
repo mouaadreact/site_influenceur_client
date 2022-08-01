@@ -7,8 +7,8 @@
     //etatPaiment est une table creer a base
     // de association many to many de campagne et influenceur
     //primary key est CampagneId et influenceurId
-
-    //ajouter une etatPaiment:
+   //----------------------------------------------------
+    //Ajouter une etatPaiment:
     exports.addEtatPaiment=async (req,res)=>{
     
       try{
@@ -35,7 +35,6 @@
     //afficher les EtatPaiments
     exports.getAll=async (req,res)=>{
      try{
-    
       const data=await EtatPaiment.findAll();
           
         if(!data){

@@ -5,6 +5,7 @@ module.exports=(Sequelize,dataType)=>{
     interetNom:{
       type:dataType.TEXT,
       allowNull:false,
+      unique:true
      } 
   });
    

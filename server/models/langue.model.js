@@ -4,7 +4,8 @@ module.exports=(Sequelize,dataType)=>{
   const Langue=Sequelize.define("Langue",{
       langueNom:{
        type:dataType.TEXT,
-       allowNull:false
+       allowNull:false,
+       unique:true
       }
   });
     

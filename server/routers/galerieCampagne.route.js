@@ -5,7 +5,6 @@ const multer=require("multer");
 const path=require("path");
 
 //id of element 
-
 const storage=multer.diskStorage({
  destination:'./uploads/galerieCampagne',
  filename:(req,file,cb)=>{ //change date vers random

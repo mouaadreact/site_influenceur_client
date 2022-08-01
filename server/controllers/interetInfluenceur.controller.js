@@ -1,5 +1,5 @@
 
-    const {InteretInfluenceur}=require("../models");
+    const {InteretInfluenceur,Interet,Influenceur}=require("../models");
     //-------------------------------------------
     //Remarque: en besoin de utilise IF ELSE apres retourne des données
    //car si n'a fait pas il exits une error d'envoyer deux(2) response --> "si on a une error dans request"
@@ -81,7 +81,33 @@
      }
     }
 
-    
+    //-------------------------------------------
+    //filtrage par centre Interet
+    exports.filtreParCentreInteret=async (req,res)=>{
+      try{
+        const {interetNom}=req.body;
+       
+        const data=await Interet.findOne({
+          where:{interetNom},
+          include:{
+            model: Influenceur,
+            through: { attributes: [] }
+         }
+        });
+
+        if(!data){
+          res.status(400).json({err:"Error Filtrage InteretInfluenceur ! "});
+        }else{
+          res.status(200).json(data);
+        }
+          
+
+      }catch(err){
+
+       res.status(400).json(err);
+
+      }
+     }
     //-----------------------------------------------
     //supprimer interetInfluenceur
     exports.delete=async (req,res)=>{

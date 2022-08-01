@@ -17,6 +17,7 @@ router.route('/:interetId/:campagneId')
       .post(interetCampagneController.addInteretCampagne)
       .delete(interetCampagneController.delete)
 
-
+router.route('/filtrageCentreInteret')
+      .post(interetCampagneController.filtreParCentreInteret);
 
 module.exports=router;

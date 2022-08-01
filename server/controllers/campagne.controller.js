@@ -61,11 +61,11 @@ exports.getAll=async (req,res)=>{
   
 }
 
-
+//--------------------------------------------------
 //afficher une seul campagne utilisant id
 exports.getId=async (req,res)=>{
  
-  try{
+  try{ 
    const data=await Campagne.findOne({
                      where:{id:req.params.id}
                      });
@@ -79,7 +79,17 @@ exports.getId=async (req,res)=>{
    res.status(400).json(err);
   }
 }
+//--------------------------------------------
+//-------------------------------------------
+//filtrage : age,ville,quartier,genre,situation familiale,
+//niveau d'etude,langue
 
+exports.filtrage=async (req,res)=>{
+       
+      
+}
+
+//-------------------------------------------------
 //editer une campagne 
 //method editer sa marche aussi si vous voulez editer une seul champs
 //editer a base de condition id='' --> valuer id ce trouve dans params URL
@@ -120,7 +130,7 @@ exports.update=async (req,res)=>{
  }
 }
 
-
+//---------------------------------------------
 //supprimer une campagne
 exports.delete= async (req,res)=>{
  

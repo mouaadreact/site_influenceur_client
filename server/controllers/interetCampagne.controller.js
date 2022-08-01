@@ -1,5 +1,5 @@
 
-    const {InteretCampagne}=require("../models");
+    const {InteretCampagne,Interet,Campagne}=require("../models");
     //-------------------------------------------
     //Remarque: en besoin de utilise IF ELSE apres retourne des données
     //car si n'a fait pas il exits une error d'envoyer deux(2) response --> "si on a une error dans request"
@@ -81,7 +81,36 @@
      }
     }
 
-    
+    //------------------------------------------------------
+    //filtrage par centre interet
+
+    exports.filtreParCentreInteret=async (req,res)=>{
+      try{
+        const {interetNom}=req.body;
+       
+        const data=await Interet.findOne({
+          where:{interetNom},
+          include:{
+            model: Campagne,
+            through: { attributes: [] }
+         }
+        });
+
+        if(!data){
+          res.status(400).json({err:"Error Filtrage InteretCampagne! "});
+        }else{
+          res.status(200).json(data);
+        }
+          
+
+      }catch(err){
+
+       res.status(400).json(err);
+
+      }
+     }
+
+
     //-----------------------------------------------
     //supprimer l'interetCampagne
     exports.delete=async (req,res)=>{
@@ -97,7 +126,7 @@
           res.status(400).json({error:"On peut pas Supprimer l'interetCampagne !"});
           }else{
           res.status(200).json(data);
-          }
+          } 
      }catch(err){
       res.status(400).json(err);
      }

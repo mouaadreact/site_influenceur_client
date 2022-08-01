@@ -94,14 +94,16 @@ module.exports=(Sequelize,dataType)=>{
       commentaire:{
        type:dataType.TEXT
       },
+      statusValideInstagramCompte:{
+       type:dataType.BOOLEAN,
+       default:false,
+      },
       statusAccepterConditionGenerale:{
        type:dataType.BOOLEAN,
-       allowNull:true,
        default:false,
       },
       statusEtatActiver:{
        type:dataType.BOOLEAN,
-       allowNull:true,
        default:true,
       }
  

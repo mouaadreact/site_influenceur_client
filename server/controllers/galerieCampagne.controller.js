@@ -1,4 +1,5 @@
-const {GalerieCampagne}=require("../models");
+const {GalerieCampagne,Campagne}=require("../models");
+
 
 //-------------------------------------------
 //Remarque: en besoin de utilise IF ELSE apres retourne des données
@@ -11,7 +12,7 @@ exports.upload=async (req,res)=>{
   //enregistrer URL d'image exist dans fichier upload->galerieCampagne
     image:`${process.env.URL_SERVER}:${process.env.PORT}/api/v1/profile/${req.body.campagneId}/${req.file.filename}`,
     //utilisant CampagneId pour specifier les images de chaque Campagne
-    CampagneId:req.body.campagneid
+    CampagneId:req.body.campagneId
   })
 
     if(!data){
@@ -34,7 +35,10 @@ exports.upload=async (req,res)=>{
 //afficher tout les images de tout les campagnes
 exports.getAll=async (req,res)=>{
  try{
-  const data=await GalerieCampagne.findAll();
+
+  const data=await GalerieCampagne.findAll({
+    include:[Campagne]
+  });
 
     if(!data){
       res.status(400).json({error:"On peut pas afficher les images de Campagnes "})
@@ -51,7 +55,8 @@ exports.getAll=async (req,res)=>{
 exports.getId=async (req,res)=>{
  try{
   const data=await GalerieCampagne.findAll({
-   where:{CampagneId:req.params.campagneId}
+   where:{CampagneId:req.params.campagneId},
+   include:[Campagne]
   })
 
     if(!data){

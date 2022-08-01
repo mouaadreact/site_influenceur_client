@@ -6,6 +6,8 @@ const db=require("./config/db");
 const models=require("./models")
 require("dotenv").config();
 const cookieParser = require('cookie-parser');
+const helmet = require("helmet");
+const morgan = require('morgan')
 
 //route require:
 
@@ -18,10 +20,10 @@ const InfluenceurRoute=require("./routers/influenceur.route");
 const CampagneRoute=require("./routers/campagne.route");
 const OffreRoute=require("./routers/offre.route");
 const EtatPaimentRoute=require("./routers/etatPaiment.route");
-const InteretInfleunceurRoute=require("./routers/interetInfluenceur.route")
-const LangueInfluenceurRoute=require("./routers/langueInfluenceur.route")
-const InteretCampagneRoute=require("./routers/interetCampagne.route")
-const GalerieCampagneRoute=require("./routers/galerieCampagne.route")
+const InteretInfleunceurRoute=require("./routers/interetInfluenceur.route");
+const LangueInfluenceurRoute=require("./routers/langueInfluenceur.route");
+const InteretCampagneRoute=require("./routers/interetCampagne.route");
+const GalerieCampagneRoute=require("./routers/galerieCampagne.route");
 //route of influenceur:
 //authorization
 const Authorization=require("./middlewares/auth.middelware");
@@ -29,12 +31,17 @@ const Authorization=require("./middlewares/auth.middelware");
 
 //--variables 
 const PORT=process.env.PORT || 3000;
-process.setMaxListeners(0)
+process.setMaxListeners(0);
 //--configurer pour lire les donnes envoyent par les formulaires 
 //--formuler post request (json or urlencoded)
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
-app.use(cookieParser())
+app.use(cookieParser());
+//security header of request
+//app.use(helmet());
+if(process.env.NODE_ENV=='development'){
+  app.use(morgan('tiny'));
+}
 //--connect to database
 
  
