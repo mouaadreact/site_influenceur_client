@@ -6,7 +6,7 @@ const path=require("path");
 
 //id of element 
 const storage=multer.diskStorage({
- destination:'./uploads/galerieCampagne',
+ destination:'./uploads/images/galerieCampagne',
  filename:(req,file,cb)=>{ //change date vers random
   return cb(null,`${file.fieldname}_${Date.now()}${path.extname(file.originalname)}`)
  }

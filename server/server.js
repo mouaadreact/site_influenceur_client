@@ -8,6 +8,7 @@ require("dotenv").config();
 const cookieParser = require('cookie-parser');
 const helmet = require("helmet");
 const morgan = require('morgan')
+const cors=require("cors");
 
 //route require:
 
@@ -24,19 +25,26 @@ const InteretInfleunceurRoute=require("./routers/interetInfluenceur.route");
 const LangueInfluenceurRoute=require("./routers/langueInfluenceur.route");
 const InteretCampagneRoute=require("./routers/interetCampagne.route");
 const GalerieCampagneRoute=require("./routers/galerieCampagne.route");
+const AuthRoute=require("./routers/auth.route");
 //route of influenceur:
 //authorization
-const Authorization=require("./middlewares/auth.middelware");
+const {requireAuth,checkUser}=require("./middlewares/auth.middelware");
  
 
 //--variables 
-const PORT=process.env.PORT || 3000;
+const PORT=process.env.PORT || 5000;
 process.setMaxListeners(0);
 //--configurer pour lire les donnes envoyent par les formulaires 
 //--formuler post request (json or urlencoded)
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
 app.use(cookieParser());
+const corsOptions = {
+  origin:process.env.URL_CLIENT,
+  credentials :true,
+
+}
+app.use(cors(corsOptions));
 //security header of request
 //app.use(helmet());
 if(process.env.NODE_ENV=='development'){
@@ -49,9 +57,13 @@ if(process.env.NODE_ENV=='development'){
 
 //---routing 
 //check if user have privilage to access at information 
-app.post('/api/v1/token',Authorization.checkUser);
+app.get("*",checkUser);
+app.get('/jwtid',requireAuth,(req,res)=>{
+  res.status(200).send(res.locals.user.email);
+});
+//app function route
+//--------------------
 app.use('/api/v1/profile/:id', express.static('uploads/galerieCampagne'));
-//temporaireTable influenceur
 app.use('/api/v1/temporaireInfluenceur',TemporaireInfluenceurRoute);
 app.use('/api/v1/client',ClientRoute);
 app.use('/api/v1/interet',InteretRoute);
@@ -65,6 +77,7 @@ app.use('/api/v1/interetInfluenceur',InteretInfleunceurRoute);
 app.use('/api/v1/langueInfluenceur',LangueInfluenceurRoute);
 app.use('/api/v1/interetCampagne',InteretCampagneRoute);
 app.use('/api/v1/galerieCampagne',GalerieCampagneRoute); 
+app.use('/api/v1/auth',AuthRoute);
 
 //------------------------------------------
 //instagrma api for testing api instagram

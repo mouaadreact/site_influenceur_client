@@ -132,7 +132,7 @@ exports.accepterOffre=async (req,res)=>{
   });
       
     if(!data){ 
-    res.status(400).json({error:"On peut pas accepter offre!"});
+    res.status(400).json({error:"On peut pas accepter l'offre!"});
     }else{
     res.status(200).json(data);
     }
@@ -141,7 +141,32 @@ exports.accepterOffre=async (req,res)=>{
   res.status(400).json(err);
  }
 }
+//-----------------------------------------------
+//refuser offre:
 
+exports.refuserOffre=async (req,res)=>{
+  try{
+   const data=await Offre.update(
+    {
+     statusNouveau:false
+    },{
+     where:{
+      CampagneId:req.params.campagneId,
+      InfluenceurId:req.params.influenceurId
+     }
+   });
+       
+     if(!data){ 
+     res.status(400).json({error:"On peut pas refuser l'offre!"});
+     }else{
+     res.status(200).json(data);
+     }
+ 
+  }catch(err){
+   res.status(400).json(err);
+  }
+ }
+ 
 
 //-----------------------------------------------
 //supprimer offre

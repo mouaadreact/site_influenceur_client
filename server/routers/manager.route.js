@@ -5,10 +5,7 @@ const ManagerController=require("../controllers/manager.controller");
 
 router.route("/")
       .get(ManagerController.getAll)
-
-
-router.route("/logout") 
-      .get(ManagerController.Logout)  
+ 
 
 router.route("/:id")
        .get(ManagerController.getId)
@@ -16,11 +13,9 @@ router.route("/:id")
        .delete(ManagerController.Delete)
 
  
-router.route("/register")
-       .post(ManagerController.register)
+router.route("/addAdmin")
+       .post(ManagerController.addAdmin)
 
-router.route("/login")
-      .post(ManagerController.Login)
 
 
 module.exports=router;

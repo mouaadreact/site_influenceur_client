@@ -88,9 +88,9 @@ module.exports=(Sequelize,dataType)=>{
       profession:{
        type:dataType.STRING(50),
       }, 
-      token:{
+     /* token:{  ?? delete
        type:dataType.TEXT
-      },
+      },*/
       commentaire:{
        type:dataType.TEXT
       },

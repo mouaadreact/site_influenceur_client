@@ -6,9 +6,6 @@ const influenceurController=require("../controllers/influenceur.controller");
 router.route("/")
       .get(influenceurController.getAll)
 
-router.route("/logout") 
-      .get(influenceurController.logout)  
-
 
 //corfimer l'email pour allez vers l'etape 2
 router.route("/confirmer-email")
@@ -23,11 +20,7 @@ router.route("/:id")
        .get(influenceurController.getId)
        .put(influenceurController.update)
        .delete(influenceurController.delete)
- 
-//cette login au cas ou l'influenceur signUp au premier fois mais 
-//il ne termine pas leur procedure dans il reste dans l'etape 2
-router.route("/login")
-       .post(influenceurController.login)
+
 
 //valider compte instagram : API instagram utilisant rapiAPI 
 router.route("/afficherCompte/:id")

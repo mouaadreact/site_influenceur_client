@@ -1,8 +1,7 @@
 const nodemailer=require("nodemailer") 
-
+ 
 //send verifier email
-module.exports.ContactUs=(email,url)=>{
- console.log(url+" --> "+email);
+module.exports.ContactUs=(email,subject,text)=>{
  //code verification iujypqrgtevjdltp
 
  let transporter=nodemailer.createTransport({
@@ -12,7 +11,7 @@ module.exports.ContactUs=(email,url)=>{
      auth:{  //add une email pour access 
          user:"influenceur.client.mail2022@gmail.com", //influenceur.client.mail2022@gmail.com
          pass:"azbvktbknbjfvnbl"//3wdev2022
-     }
+     } 
   })//.authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
   let mailOptions={
@@ -20,10 +19,9 @@ module.exports.ContactUs=(email,url)=>{
       to:email,
       subject:`
       Message from email : influenceur.client.mail2022@gmail.com , 
-      subject : 
-        comfirmer votre email`,
+      subject : ${subject}`,
       "text":` 
-        click ici : ${url}
+         ${text}
       `
   };
 

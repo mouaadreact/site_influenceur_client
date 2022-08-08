@@ -3,7 +3,7 @@ module.exports=(Sequelize,dataType)=>{
  //-----create table client 
   const Interet=Sequelize.define("Interet",{
     interetNom:{
-      type:dataType.TEXT,
+      type:dataType.STRING(255),
       allowNull:false,
       unique:true
      } 

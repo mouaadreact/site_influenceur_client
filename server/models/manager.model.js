@@ -5,13 +5,16 @@ module.exports=(Sequelize,dataType)=>{
       email:{
        type:dataType.STRING(50),
        allowNull:false,
+       unique:true,
        validate:{
         isEmail: true
            }
       }, 
       username:{
        type:dataType.STRING(50),
-       allowNull:false
+       allowNull:false,
+       unique:true
+       
       },
       password:{
        type:dataType.TEXT,

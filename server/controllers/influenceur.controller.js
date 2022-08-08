@@ -2,118 +2,22 @@
 const {Influenceur,TemporaireInfluenceur,LangueInfluenceur}=require("../models");
 const SchemaValidation=require("../validators/influenceur.validator")
 const UsernameByEmail=require("../utils/usernameByEmail");
-const bcrypt=require("bcrypt");
-const jwt=require("jsonwebtoken");
-const privateKey=process.env.PRIVATE_KEY_AUTHORIZATION;
 const axios=require("axios");
-const options = {
-  method: 'GET',
-  url: 'https://instagram188.p.rapidapi.com/userinfo/fitness_bdarija',
-  headers: {
-    'X-RapidAPI-Key': 'c4224ad9afmsh23090e104f2175dp13d473jsnc6133a3d91a6',
-    'X-RapidAPI-Host': 'instagram188.p.rapidapi.com'
-  }
-};
+const fs=require("fs")
+// https://rapidapi.com/yuananf/api/instagram28/
 
 
 //-------------------------------------------------------------
 //Remarque: en besoin de utilise IF ELSE apres retourne des données
 //car si n'a fait pas il exits une error d'envoyer deux(2) response --> "si on a une error dans request"
 
-//login influenceur:
-
-exports.login=async (req,res)=>{
-  try{
-   var countTempInf=await TemporaireInfluenceur.count({
-                        where:{
-                          email:req.body.email
-                          }
-                        });
-
-
-    if(countTempInf>0){
-      //si on reste dans etape1 
-          
-          var data=await TemporaireInfluenceur.findOne({
-                         where:{email:req.body.email}
-                         }); 
-          data=data.dataValues;
-
-        
-
-          if(!data){
-          res.json({error:"email not valid!"});
-
-          }
-          else{
-
-          bcrypt.compare(req.body.password,data.password).then((same)=>{
-          if(same){
-          let token=jwt.sign({id:data.id,email:req.body.email,role:"userRole"},privateKey,{
-          expiresIn:3*24*60*60*1000 });
-          res.cookie('jwt',token,{httpOnly :true,maxAge:3*24*60*60*1000 });
-          res.status(200).json({token:token})
-
-          }else{
-          res.status(400).json({err:"password not valid"});
-          }
-          })
-          }
-
-    }else{
-      //si on passe vers etape 2
-          
-          var data=await Influenceur.findOne({
-                        where:{email:req.body.email}
-                        }); 
-          data=data.dataValues;
-
-
-          if(!data){
-          res.json({error:"email not valid!"});
-
-          }
-          else{
-
-          bcrypt.compare(req.body.password,data.password).then((same)=>{
-          if(same){
-          let token=jwt.sign({id:data.id,email:req.body.email,role:"userRole"},privateKey,{
-          expiresIn:3*24*60*60*1000 });
-          res.cookie('jwt',token,{httpOnly :true,maxAge:3*24*60*60*1000 });
-          res.status(200).json({token:token})
-
-          }else{
-          res.status(400).json({err:"password not valid"});
-          }
-          })
-          }
-
-
-
-      }
-    
-  }catch(err){
-
-     res.status(400).json({err:err});
-
-  }
- }
- 
- //-------------------------------------------------------------------
-
-//logout :
-//logout influenceur:
-exports.logout = (req,res) =>{
-  res.cookie('jwt','',{maxAge :1});
-  res.redirect('/');
-}
-
-//--------------------------------------------------------------
+//------------------------------------------
 
 //valider compte de temporaireInfluenceur
 //j'aime l'ajoute de token dans la base de données
 //email envoye link comme:
 // http://localhost:3000/api/v1/influenceur/confirmer-email?email=** 
+
 exports.validerCompteParEmail=async(req,res)=>{
      
      const {email}=req.query;
@@ -139,7 +43,7 @@ exports.validerCompteParEmail=async(req,res)=>{
                   statusValideInstagramCompte:false,
                   statusAccepterConditionGenerale:false,
                   statusEtatActiver:true
-                  });
+                  }); 
                  
                   if(!resultat){
                     res.status(400).json({error:"On peut pas créer un(e) Influenceur(e) ! "});
@@ -169,7 +73,7 @@ exports.validerCompteParEmail=async(req,res)=>{
     }
 
 //-----------------------------------------------------------
-//complete etape 2: valideCompte Instg:
+//complete etape 2: valideCompte Instg: (afficher data userInstagram)
 
 exports.afficherCompteInstagram=async (req,res)=>{
  
@@ -188,16 +92,26 @@ exports.afficherCompteInstagram=async (req,res)=>{
             genre,
             dateNaissance,
             instagramUsernameCompte
-      },{
-        where:{id:req.params.id}
-      })
+            },{
+              where:{id:req.params.id}
+            })
           
         if(data<=0){
            res.status(400).json({error:"On peut pas valideCompte instagram!"});
         }else{
            try {
+            
+            const options = {
+              method: 'GET',
+              url: `${process.env.INSTAGRAM_API_URL}`,
+              params: {user_name: `${instagramUsernameCompte}`},
+              headers: {
+                'X-RapidAPI-Key': `${process.env.INSTAGRAM_API_HEADER_KEY}`,
+                'X-RapidAPI-Host': `${process.env.INSTAGRAM_API_HEADER_HOST}`
+              }
+            };
                var UserApiInfo= await  axios.request(options);
-               var UserAPI = UserApiInfo.data.data;
+               var UserAPI = UserApiInfo.data.data.user;
                if(!UserAPI){
                   res.status(400).json({err:"on peut pas envoyer Instagram Info ! "});
                }else{
@@ -211,7 +125,20 @@ exports.afficherCompteInstagram=async (req,res)=>{
                     description:UserAPI.biography ,
                     link: UserAPI.external_url
                   });
-               }
+               
+               /* enregistrer Api so form json dans Uploads->Api */
+               console.log(`../uploads/Api/${instagramUsernameCompte}_${req.params.id}.json`)
+                
+               fs.writeFile(`uploads/Api/${instagramUsernameCompte}_${req.params.id}.json`,JSON.stringify(UserAPI,null,2),err=>{
+                if(err){
+                  console.log(err);
+                }else{
+                  console.log("file write successful !! ")
+                }
+              });
+               
+              }
+
            }catch(err){
               res.status(400).json(err);
            }

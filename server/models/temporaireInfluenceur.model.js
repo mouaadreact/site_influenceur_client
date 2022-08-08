@@ -19,15 +19,16 @@
        password:{
         type:dataType.TEXT,
         allowNull:false
-       },
-       token:{
+       }
+       /*
+       token:{  // delete ???
         type:dataType.TEXT,
        },
-       statusConfirmer:{
+       statusConfirmer:{  //delete ???? 
         type:dataType.BOOLEAN,
         allowNull:true,
         default:false,
-       }
+       }*/
    });
    
     
