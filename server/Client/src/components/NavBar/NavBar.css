@@ -1,0 +1,112 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400&display=swap');
+:root{
+    --logo:#FFF;
+    --bleu:#42a5f5;
+    --mauve:#e040fb
+}
+.Nav{ 
+    background: linear-gradient(to left ,#42a5f5,#e040fb);
+}
+
+.Nav .container{
+   padding:10px 20px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+ .logo{
+     flex-grow: 1;
+     font-size: 16px;
+     font-family: sans-serif;
+     font-weight: bold;
+     color:var(--logo);
+ }
+
+ .Nav .NavBar-form {
+     display: flex;
+     justify-content: center;
+ }
+ .Nav .NavBar-form ul {
+     text-decoration: none;
+ }
+ .Nav .NavBar-form ul a{
+    padding: 8px 12px;
+     text-decoration: none;
+     color:var(--logo);
+     font-size: 11px;
+     font-family: sans-serif;
+     font-weight: bold;
+     cursor: pointer;
+    
+ }
+
+ ul li a{
+     font-size: 14px;
+ }
+ 
+.Buttons{
+    text-decoration: none;
+    color: #FFF;
+    padding: 8px 12px;
+    border-radius:8px;
+    margin-right:18px;
+    font-family:Ubuntu;
+    font-weight: bold;
+    font-size: 12px;
+   transition: all 0.3s ease-in-out;
+}
+.log{
+background-color:#e83e8c ;
+}
+.reg{
+    background-color: #e040fb;
+}
+.Buttons:hover{
+background-color: #42a5f5 !important;
+color: #FFF;
+font-size: 12px;
+}
+.logo{
+    color: #000;
+}
+.nav-link{
+    transition: all 0.1s linear;
+}
+.nav-link:hover{
+    border-bottom: 3px solid #FFF !important;
+}
+
+.Notification{
+    display: flex;
+    flex-direction: column;
+    background-color: #FFF;
+    color:#000;
+    position: absolute;
+    top: 84%;
+    right: 15.7%;
+    box-shadow: 10px 10px 10px #DDD;
+}
+.Notification span{
+    background-color: #FFF;
+    border: 1px solid #DDD;
+}
+.Notification::before{
+    content: '';
+    display: block;
+    border-bottom: 16px solid #FFF;
+    width: 0;
+    height: 0;
+    position: absolute;
+    bottom: 100%;
+    right: 0%;
+    border-top: 16px solid transparent;
+    border-right: 16px solid transparent;
+    border-left: 16px solid transparent;
+}
+
+.row > div h1{
+    font-size: 20px;
+}
+ 
+
+
