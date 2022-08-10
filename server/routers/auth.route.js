@@ -8,8 +8,10 @@ router.route("/logout")
 
  
 router.route("/register")
-       .post(AuthController.register);
+       .post(AuthController.registerInfluenceur);
 
+router.route("/addAdmin")
+       .post(AuthController.registerAdmin);
 
 router.route("/login")
       .post(AuthController.login)

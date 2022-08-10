@@ -4,11 +4,13 @@ import { basicSchemaLogin } from '../../schemas'
 import './Login.css'
 import axios from 'axios'
 import {UemailContext}  from '../../contexts/AppContext'
+import { useNavigate } from 'react-router-dom'
 
 
 function Login() {
   const uEmail=useContext(UemailContext);
-  console.log(uEmail);
+  let navigate=useNavigate();
+  //console.log(uEmail);
   const [erreurs,setError]=useState({passwordError:'',emailError:''});
 
   //submit
@@ -16,7 +18,7 @@ function Login() {
     const {email,password}=values;
  
     try{
-     const data= await axios({
+     const res= await axios({
       method:"post",
       url:"http://localhost:5000/api/v1/auth/login",
       data:{
@@ -25,12 +27,22 @@ function Login() {
           },
       withCredentials:true
       });
-      if(data){
-        console.log(data);
+      if(res){
+         switch(res.data.role){
+          case "admin":
+                 navigate('/dashboard')
+                 break;
+          case "influenceur":
+                navigate('/profil')
+                break;
+          default:
+                break;
+         }   
+
       }
     }catch(error){
      console.log(error)
-     setError({...erreurs,...error.response.data.error})
+     setError({...erreurs,...error.response.data.err});
     }
        
  

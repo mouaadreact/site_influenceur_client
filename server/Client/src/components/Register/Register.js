@@ -3,9 +3,12 @@ import {useFormik} from 'formik'
 import { basicSchemaRegister } from '../../schemas'
 import './Register.css'
 import axios from 'axios'
+import { useNavigate } from "react-router-dom";
 
+ 
 
 function Register() {
+  let navigate=useNavigate();
   const onSubmit= async (values,actions)=>{
 
     /*API post data */
@@ -15,7 +18,7 @@ function Register() {
 
     axios({
       method:"post",
-      url:"http://localhost:5000/api/v1/manager/addAdmin",
+      url:"http://localhost:5000/api/v1/auth/register",
       data:{
           username,
           email,
@@ -23,13 +26,15 @@ function Register() {
       }
      }).then((res)=>{
           console.log(res);
+          navigate("./verifierEmail");
+
      }).catch((err)=>{
          console.log(err);
      });
 
     /* after sumbit */
-    await new Promise((resolve)=> setTimeout(resolve,1000));
-    actions.resetForm();
+   /* await new Promise((resolve)=> setTimeout(resolve,1000));
+    actions.resetForm();*/
    }
 
    const {values,errors,touched,isSubmitting,handleBlur,handleChange,handleSubmit}=useFormik({

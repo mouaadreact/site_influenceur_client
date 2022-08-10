@@ -1,5 +1,5 @@
 
-const {Influenceur,TemporaireInfluenceur,Manager}=require("../models");
+const {Influenceur,User,Role}=require("../models");
 const SchemaValidation=require("../validators/influenceur.validator")
 const UsernameByEmail=require("../utils/usernameByEmail");
 const compareCryptPassword=require("../utils/compareCryptPassword");
@@ -10,173 +10,141 @@ const bcrypt=require("bcrypt");
 //car si n'a fait pas il exits une error d'envoyer deux(2) response --> "si on a une error dans request"
 
 //login  :  
-
-exports.login=async (req,res)=>{
-  
-  const AdminCount=await Manager.count({
-    where:{
-     email:req.body.email
-    }
-  });
-  if(AdminCount>0){
-     //admin login*
-     try{ 
-      var data=await Manager.findOne({
-                        where:{email:req.body.email}
-                        }); 
-      data=data.dataValues;
-    
-      if(!data){
-       res.status(400).json(
-         {
-            error:{
-                  email:"email not valid!"
-               }
-         });
-      }
-      else{
-           console.log("manager : ");
-           let token= await compareCryptPassword.verifier(req.body.password,data.password,data.id,data.email,"admin");
-           console.log(token);
-           if(token!=null){
-           
-              res.cookie('jwt',token,{httpOnly :true,maxAge:3*24*60*60*1000 });
-              res.status(200).json({
-                 token:token,
-                 admin:true
-              });
-             }else{
-              res.status(400).json({
-               error:{
-               password:"password n'est pas validé!"
-                  }
-                }
-              );
-           }               
-      }
-        
-     }catch(err){
-        res.status(400).json({err:err});
-     }
-  }else{
-
+exports.login= async (req,res)=>{
+   const {email}=req.body;
    try{
-    //influenceur login*
-    var countTempInf=await TemporaireInfluenceur.count({
-                         where:{
-                           email:req.body.email
-                           }
-                         });
-  
-  
-     if(countTempInf>0){  
-       //si on reste dans etape1 
-           
-           var data=await TemporaireInfluenceur.findOne({
-                          where:{email:req.body.email}
-                          }); 
-           data=data.dataValues;
-  
-         
-  
-           if(!data){
-           res.json({error:"email not valid!"});
-  
-           }
-           else{  
-            console.log("temporaireInfluenceur : ");
-             const token= await compareCryptPassword.verifier(req.body.password,data.password,data.id,data.email,"influenceur");
-             if(token!=null){
-                
-                res.cookie('jwt',token,{httpOnly :true,maxAge:3*24*60*60*1000 });
-                res.status(200).json({
-                   token:token,
-                   admin:false
-                });
-               }else{
-                res.status(400).json({err:"password n'est pas validé ! "});
-             }         
-  
-           }
-  
-     }else{
-       //si on passe vers etape 2
-           
-           var data=await Influenceur.findOne({
-                         where:{email:req.body.email}
-                         }); 
-           data=data.dataValues;
-  
-  
-           if(!data){
-           res.json({error:"email not valid!"});
-  
-           }
-           else{
-            console.log("influenceur : ");
-            let token= await compareCryptPassword.verifier(req.body.password,data.password,data.id,data.email,"influenceur");
-            if(token!=null){
-               res.cookie('jwt',token,{httpOnly :true,maxAge:3*24*60*60*1000 });
-               res.status(200).json({
-                  token:token,
-                  admin:false
-               });
-              }else{
-               res.status(400).json({err:"password n'est pas validé ! "});
-            }   
+   const data=await User.findOne({
+      where:{
+         email
+        },
+        include:[Role]
+   });
 
+   if(!data){
+      res.status(400).json({err:{
+         email:"email not correct"
+      }});
+   }else{
+      
+      let token= await compareCryptPassword.verifier(req.body.password,data.password,data.id,data.email,data.Role.dataValues.roleNom);
+     // console.log(token);
+      if(token!=null){
+      
+         res.cookie('jwt',token,{httpOnly :true,maxAge:3*24*60*60*1000 });
+         res.status(200).json({
+            token:token,
+            role:data.Role.dataValues.roleNom
+         });
+        }else{
+         res.status(400).json({
+          err:{
+          password:"password n'est pas validé!"
+             }
            }
-  
-  
-  
-       }
-     
+         );
+      }  
+
+   }
+   
    }catch(err){
-      res.status(400).json({err:err}); 
-   }  
-  }
+    res.status(400).json(err);
+   }
+
 
 }
 
 //-------------------------------------------------------------------
 //logout :
 exports.logout = (req,res) =>{
- res.cookie('jwt','',{maxAge :1});
- res.redirect('/');
+ res.cookie('jwt','',{maxAge :1}); // res obliger dans cette router
+ res.status(200).json({msg:'logout'})
 }
 
 //----------------------------------------------------------
 
 //register un(e) influenceur etape 1:
-exports.register=async(req,res)=>{
+exports.registerInfluenceur=async(req,res)=>{
 
- const {email,password}=req.body;
+ const {email,password,username}=req.body;
  let validation=SchemaValidation.validate({email,password})
 
  if(validation.error){
    res.json({validation:validation.error.details[0].message})
   }
   
- TemporaireInfluenceur.count({
-  where:{email:email}
+ User.count({
+  where:{
+   email,
+   statusConfirmeInfluenceur:false
+        }
  })
  .then(doc=>{ 
+   //console.log(doc);
   if(doc!=0){
-   res.status(400).json({error:"username or password invalid"})
+   res.status(400).json({error:"Influenceur deja exist ! "});
   }else{
-
+   // console.log("yes");
     bcrypt.hash(password,10).then(passwordCrypt=>{
-    TemporaireInfluenceur.create({
+    User.create({
      email:req.body.email,
-     username:UsernameByEmail(req.body.email),
-     password:passwordCrypt})
-     .then((result)=>res.status(200).json(result))
+     username:req.body.username,
+     password:passwordCrypt,
+     statusConfirmeInfluenceur:false,
+     RoleId:2
+     })
+     .then((result)=>{
+      res.status(200).json(result);
+      SendEmail.ContactUs(req.body.email,`comfirmer votre email`,`Click in : http://localhost:3000/register/confirmEmail?id=${result.id}&email=${req.body.email}`)
+   
+   })
      .catch((err)=>res.status(400).json(err))
+
      //send email pour verifier 
-     SendEmail.ContactUs(req.body.email,`comfirmer votre email`,`Click in : http://localhost:3000/api/v1/influenceur/confirmer-email?email=${req.body.email}`)
 
    })
   }
  })
 
 }
+
+
+//-----------------------------
+//add admin account
+exports.registerAdmin=async(req,res)=>{
+
+   const {email,password,username}=req.body;
+   let validation=SchemaValidation.validate({email,password})
+  
+   if(validation.error){
+     res.json({validation:validation.error.details[0].message})
+    }
+    
+   User.count({
+      where:{email:email}
+   })
+   .then(doc=>{ 
+    if(doc!=0){
+     res.status(400).json({error:"user deja exist ! "})
+    }else{
+  
+      bcrypt.hash(password,10).then(passwordCrypt=>{
+
+      User.create({
+       email:req.body.email,
+       username:username,
+       password:passwordCrypt,
+       RoleId:1
+      })
+       .then((result)=>res.status(200).json({
+         result,
+         admin:true
+       }))
+       .catch((err)=>res.status(400).json(err))
+       
+  
+     })
+    }
+   })
+  
+  }
+  

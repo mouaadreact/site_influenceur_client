@@ -1,5 +1,5 @@
 
-const {Influenceur,TemporaireInfluenceur,LangueInfluenceur}=require("../models");
+const {Influenceur,User,LangueInfluenceur}=require("../models");
 const SchemaValidation=require("../validators/influenceur.validator")
 const UsernameByEmail=require("../utils/usernameByEmail");
 const axios=require("axios");
@@ -20,54 +20,52 @@ const fs=require("fs")
 
 exports.validerCompteParEmail=async(req,res)=>{
      
-     const {email}=req.query;
-     const temporaireInfluenceurCount=await TemporaireInfluenceur.count(
+     const {id,email}=req.query;
+     console.log(req.query.id);
+     const UserInf=await User.findOne(
       {
-        where:{email} //email:email
+        where:{
+          email:email
+        }
       }
       ); 
       
+      //console.log(UserInf);
      
-      if(temporaireInfluenceurCount>0){
-            var data=await TemporaireInfluenceur.findOne({where:{email}});
-            data=data.dataValues;  
-            //Ajouter les infos dans table influenceur:
-            if(data){
-              try {
-                console.log(data);
-                //creer influenceur
-                const resultat=await Influenceur.create({
-                  email:data.email,
-                  username:data.username,
-                  password:data.password,
+      if(UserInf){
+           const user=await User.update({ 
+                        statusConfirmeInfluenceur:true
+                      },{ 
+                      where:{
+                        email:email,
+                        id:id
+                            }
+                      })
+            
+            if(!user){
+                  res.status(400).json({error:"error in register etape 1 ! "});
+            }else{
+              //in test check user active or not ???
+             try{ 
+                const influenceur=await Influenceur.create({
+                  UserId:UserInf.id,
                   statusValideInstagramCompte:false,
                   statusAccepterConditionGenerale:false,
-                  statusEtatActiver:true
-                  }); 
-                 
-                  if(!resultat){
-                    res.status(400).json({error:"On peut pas créer un(e) Influenceur(e) ! "});
+                  statusEtatActiver:false
+                })
+                  if(influenceur){
+                    res.status(200).json(influenceur);
                   }else{
-                    //confirmer email:
-                    console.log(resultat);
-                    console.log("Email est confimer ! ")
-                    res.status(400).json(resultat);
+                    res.status(400).json({err:'error in creation influenceur!'})
                   }
+             }catch(err){
+               res.status(400).json(err)
+             }
 
-                  //supprimer Temporaire:
-                  const temporaireInfluenceurSupprimer=await TemporaireInfluenceur.destroy(
-                      {
-                        where:{email} //email:email
-                      }
-                    );
-                     
-
-              }catch(err){
-                res.status(400).json({err:err});
-              }
-          }
+            }
       }else{
-         res.status(400).json({error:"Vous avez besoin de registrer dans le site ! "});
+         res.status(400).json({
+          error:"Vous avez besoin de registrer dans le site Or vous etes deja confirmer votre email! "});
       }
 
     }
@@ -85,6 +83,7 @@ exports.afficherCompteInstagram=async (req,res)=>{
             dateNaissance,
             instagramUsernameCompte, //add after compte youtube,facebook
           }=req.body;
+      console.log(req.body);
    
       const data=await Influenceur.update({
             nom,
@@ -252,7 +251,16 @@ exports.completerProfil=async (req,res)=>{
             error:"On peut pas accepter condition genrale d'influenceur!"
           });
         }else{
-          res.status(200).json(data);
+            res.status(200).json(data);
+
+            const active=await Influenceur.update({
+              statusEtatActiver:true
+            },{where:{id:req.params.id}});
+            if(active){
+                console.log("active ok !");
+            }else{
+               console.log("not active ! ");
+            }
         }
     }
     catch(err){
@@ -266,6 +274,7 @@ exports.completerProfil=async (req,res)=>{
  exports.changeEtatActiveCompte= async (req,res)=>{
     
   try{
+    //send active or not 
      const {statusEtatActiver}=req.body;
      const data=await  Influenceur.update({
            statusEtatActiver

@@ -1,6 +1,6 @@
 const jwt=require("jsonwebtoken");
 const privateKey=process.env.PRIVATE_KEY_AUTHORIZATION; //env mieux
-const {TemporaireInfluenceur, Manager}=require("../models");
+const {User}=require("../models");
 
 module.exports.checkUser=async(req,res,next)=>{
  
@@ -16,7 +16,7 @@ module.exports.checkUser=async(req,res,next)=>{
           }else{
 
             //console.log(decodedToken.email);
-            const user=await Manager.findOne({where:{
+            const user=await User.findOne({where:{
                 email:decodedToken.email
               }});
             //res.status(200).send(data);

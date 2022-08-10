@@ -11,11 +11,11 @@ const ClientModel=require("./client.model");
 const InfluenceurModel=require("./influenceur.model");
 const InteretModel=require("./interet.model");
 const LangueModel=require("./langue.model");
-const ManagerModel=require("./manager.model");
-const TemporaireInfluenceurModel=require("./temporaireInfluenceur.model");
+const UserModel=require("./user.model");
 //--models have foreign key
 const CampagneModel=require("./campagne.model");
 const GalerieCampagneModel=require("./galerieCampagne.model");
+const RoleModel=require("./role.model");
 
 
 //----------create Model:
@@ -23,10 +23,10 @@ const Client=ClientModel(db,Sequelize);
 const Influenceur=InfluenceurModel(db,Sequelize);
 const Interet=InteretModel(db,Sequelize);
 const Langue=LangueModel(db,Sequelize);
-const Manager=ManagerModel(db,Sequelize);
-const TemporaireInfluenceur=TemporaireInfluenceurModel(db,Sequelize);
+const User=UserModel(db,Sequelize);
 const Campagne=CampagneModel(db,Sequelize);
 const GalerieCampagne=GalerieCampagneModel(db,Sequelize);
+const Role=RoleModel(db,Sequelize);
 
 //--models nouveau apres relation many to many entre:
 
@@ -93,7 +93,36 @@ const GalerieCampagne=GalerieCampagneModel(db,Sequelize);
     onDelete:"CASCADE",
     onUpdate: "CASCADE",
   })
+//-----
+//user - role (utilise ca pour eviter d avoir 2 table)
+//temporaire influceur et manager donc on utlise ca avec table de role
+Role.hasMany(User,{
+  onDelete:"CASCADE",
+  onUpdate: "CASCADE",
+})
+User.belongsTo(Role,{
+  onDelete:"CASCADE",
+  onUpdate: "CASCADE",
+})
 
+//-----
+//influenceur et user:
+User.hasOne(Influenceur,{
+  onDelete:"CASCADE",
+  onUpdate: "CASCADE",
+  foreignKey: {
+    name:'UserId',
+    unique:true
+  }
+})
+Influenceur.belongsTo(User,{
+  onDelete:"CASCADE",
+  onUpdate: "CASCADE",
+  foreignKey: {
+    name:'UserId',
+    unique:true
+  }
+})
   
  
 
@@ -124,10 +153,10 @@ module.exports={
     Influenceur,
     Interet, 
     Langue,
-    Manager,
-    TemporaireInfluenceur,
+    User,
     Campagne,
     GalerieCampagne,
+    Role,
     Offre,
     EtatPaiment,
     InteretCampagne,
