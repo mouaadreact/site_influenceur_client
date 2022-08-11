@@ -1,14 +1,14 @@
 import React from 'react'
 import './App.css';
 import Routers from './components/Routers/Routers'
-import {UemailContext}  from './contexts/AppContext';
+import {UidContext}  from './contexts/AppContext';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from 'axios'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 function App() {
-  const [uEmail,setUemail]=useState(); 
+  const [uid,setUid]=useState(); 
  
   useEffect(()=>{
     const fetchToken =async ()=>{ 
@@ -18,19 +18,18 @@ function App() {
       withCredentials:true
     })
        .then((res)=>{
-          console.log(uEmail);
-          setUemail(res.data);
+          setUid(res.data.id);
        })
        .catch((err)=>console.log("No token"))
   }
   fetchToken();
 
-  },[uEmail]);
-
+  },[]); //uid
+ console.log(uid);
   return (
-    <UemailContext.Provider value={uEmail}>
+    <UidContext.Provider value={uid}>
         <Routers/>
-   </UemailContext.Provider>   
+   </UidContext.Provider>   
   );
 }
 

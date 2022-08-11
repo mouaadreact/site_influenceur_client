@@ -17,11 +17,12 @@ module.exports=(Sequelize,dataType)=>{
        
       },
       password:{
-       type:dataType.TEXT,
+       type:dataType.TEXT, 
        allowNull:false
       },
-      statusConfirmeInfluenceur:{
-        type:dataType.BOOLEAN
+      isInfluenceur:{
+        type:dataType.BOOLEAN,
+        allowNull:true
       }
   });
     

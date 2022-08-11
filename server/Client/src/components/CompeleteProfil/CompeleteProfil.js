@@ -8,7 +8,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 function CompeleteProfil() {
  const location=useLocation();
  const Querys=new URLSearchParams(location.search);
- const queryId=Querys.get('id');
+ const queryIds=Querys.get('id');
  let navigate=useNavigate();
  const [options,setOptions]=useState([{
   key:"veuillez entre langue",value:"0"
@@ -28,11 +28,11 @@ function CompeleteProfil() {
 
   const onSubmit= async (values,actions)=>{
 
-     await axios.put(`http://localhost:5000/api/v1/influenceur/complete/${queryId}`,{
+     await axios.put(`http://localhost:5000/api/v1/influenceur/complete/${queryIds}`,{
          ...values
       })
         .then(res=>{
-          navigate(`/register/conditionGenrale?id=${queryId}`);
+          navigate(`/register/conditionGenrale?id=${queryIds}`);
         })
         .catch((err)=>{
          console.log(err);
@@ -41,25 +41,31 @@ function CompeleteProfil() {
  
    useEffect(() => {
     const fetLangue=async ()=>{
-    try{
-      const res=await axios.get("http://localhost:5000/api/v1/langue");
-       if(res){
-        res.data.forEach(ele=>{
-            const op={
-             key:ele.langueNom,
-             value:ele.id
-            }
-            setOptions((options)=>[...options,op])
-             
-        })
-      
-       }
-     }catch(err){
+       await axios({
+       method:"get",
+       url:"http://localhost:5000/api/v1/langue",
+       withCredentials:true
+       })
+      .then((res)=>{
+        console.log(res);
+        if(res.status===200){
+          res.data.forEach(ele=>{
+                      const op={
+                      key:ele.langueNom,
+                      value:ele.id
+                      }
+                      setOptions((options)=>[...options,op])         
+                  })
+        }
+        
+      })
+      .catch((err)=>{
         console.log(err);
-     }
+      });
+       
     }
      fetLangue();
-   }, []);
+   },[]);
 console.log(options);
  //---------------
   return (

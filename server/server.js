@@ -27,6 +27,8 @@ const GalerieCampagneRoute=require("./routers/galerieCampagne.route");
 const UserRoute=require("./routers/user.route");
 const RoleRoute=require("./routers/role.route");
 const AuthRoute=require("./routers/auth.route");
+//utils route:
+const CountriesRoute=require("./utils/countries");
 //route of influenceur:
 //authorization
 const {requireAuth,checkUser}=require("./middlewares/auth.middelware");
@@ -59,8 +61,16 @@ if(process.env.NODE_ENV=='development'){
 //---routing 
 //check if user have privilage to access at information 
 app.get("*",checkUser);
+//-----
+// function 24h get Json file of API instagram and all username of influenceurs
+app.get('*',(req,res,next)=>{
+  console.log('Mouaad')
+  next()
+});
+//-----------------
 app.get('/jwtid',requireAuth,(req,res)=>{
-  res.status(200).send(res.locals.user.email);
+  console.log(res.locals.user.id);
+  res.status(200).json({id:res.locals.user.id});
 });
 
 //app function route
@@ -81,6 +91,9 @@ app.use('/api/v1/galerieCampagne',GalerieCampagneRoute);
 app.use('/api/v1/user',UserRoute);
 app.use('/api/v1/role',RoleRoute);
 app.use('/api/v1/auth',AuthRoute);
+
+//utils route
+app.get('/api/v1/countries',CountriesRoute.getCountries);
 
 //------------------------------------------
 //instagrma api for testing api instagram

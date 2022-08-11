@@ -10,6 +10,7 @@ import CompeleteProfil from '../CompeleteProfil/CompeleteProfil'
 import ConfirmConditionGenerale from '../ConfirmConditionGenerale/ConfirmConditionGenerale'
 import Admin from '../Dashboard/Admin'
 import ProfilInfluenceur from '../ProfilInfluenceur/ProfilInfluenceur'
+import ConfirmInstagram from '../ConfimerInstagram/ConfirmInstagram'
 
 function Routers() {
   return (
@@ -21,6 +22,7 @@ function Routers() {
           <Route path='/register' element={<Register/>} />
           <Route path='/register/verifierEmail' element={<VerifierEmail />} />
           <Route path='/register/confirmEmail' element={<ConfimerEmail/>} />
+          <Route path='/register/confirmInstagram' element={<ConfirmInstagram/>} />
           <Route path='/register/completeProfil' element={<CompeleteProfil/>} />
           <Route path='/register/conditionGenrale' element={<ConfirmConditionGenerale/>} />
           <Route path='/dashboard' element={<Admin/>} />

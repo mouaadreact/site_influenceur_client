@@ -3,12 +3,14 @@ import {Formik,Form,Field,ErrorMessage} from 'formik'
 import { basicSchemaConfirmInstagram } from '../../schemas'
 import './ConfimInstagram.css'
 import axios from 'axios'
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
  
 
 function ConfirmInstagram({id}) {
-
+  const location=useLocation();
+  const Querys=new URLSearchParams(location.search);
+  const queryId=Querys.get('id');
   let navigate=useNavigate();
   const [instagramData,setInstagramData]=useState({name:""});
 
@@ -22,7 +24,7 @@ function ConfirmInstagram({id}) {
  //on submit afficher instagram data
   const onSubmit= async (values,actions)=>{
     console.log("axios")
-      await axios.put(`http://localhost:5000/api/v1/influenceur/afficherCompte/${id}`,{
+      await axios.put(`http://localhost:5000/api/v1/influenceur/afficherCompte/${queryId}`,{
          ...values
       })
         .then(res=>{
@@ -44,9 +46,9 @@ function ConfirmInstagram({id}) {
   e.preventDefault();
   console.log("confirm");
 
-  await axios.put(`http://localhost:5000/api/v1/influenceur/valideCompte/${id}`)
+  await axios.put(`http://localhost:5000/api/v1/influenceur/valideCompte/${queryId}`)
    .then(res=>{
-      navigate(`/register/completeProfil?id=${id}`);
+      navigate(`/register/completeProfil?id=${queryId}`);
    })
    .catch((err)=>{
     console.log(err);

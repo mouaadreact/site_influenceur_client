@@ -4,6 +4,8 @@ const SchemaValidation=require("../validators/influenceur.validator")
 const UsernameByEmail=require("../utils/usernameByEmail");
 const axios=require("axios");
 const fs=require("fs")
+const jwt=require("jsonwebtoken");
+const privateKey=process.env.PRIVATE_KEY_AUTHORIZATION; 
 // https://rapidapi.com/yuananf/api/instagram28/
 
 
@@ -20,25 +22,25 @@ const fs=require("fs")
 
 exports.validerCompteParEmail=async(req,res)=>{
      
-     const {id,email}=req.query;
-     console.log(req.query.id);
+     const {token}=req.query;
+     const {id,email,role}=jwt.verify(token,privateKey);
+     
      const UserInf=await User.findOne(
       {
         where:{
-          email:email
+          email
         }
       }
       ); 
       
-      //console.log(UserInf);
      
       if(UserInf){
            const user=await User.update({ 
-                        statusConfirmeInfluenceur:true
+                        isInfluenceur:true
                       },{ 
                       where:{
-                        email:email,
-                        id:id
+                          email,
+                          id
                             }
                       })
             
@@ -126,9 +128,9 @@ exports.afficherCompteInstagram=async (req,res)=>{
                   });
                
                /* enregistrer Api so form json dans Uploads->Api */
-               console.log(`../uploads/Api/${instagramUsernameCompte}_${req.params.id}.json`)
+               console.log(`../uploads/Api/${instagramUsernameCompte}/${instagramUsernameCompte}_${req.params.id}_${new Date()}.json`)
                 
-               fs.writeFile(`uploads/Api/${instagramUsernameCompte}_${req.params.id}.json`,JSON.stringify(UserAPI,null,2),err=>{
+               fs.writeFile(`uploads/Api/${instagramUsernameCompte}/${instagramUsernameCompte}_${req.params.id}_${new Date()}.json`,JSON.stringify(UserAPI,null,2),err=>{
                 if(err){
                   console.log(err);
                 }else{

@@ -17,7 +17,7 @@ module.exports.checkUser=async(req,res,next)=>{
 
             //console.log(decodedToken.email);
             const user=await User.findOne({where:{
-                email:decodedToken.email
+                id:decodedToken.id
               }});
             //res.status(200).send(data);
              res.locals.user=user; 
@@ -45,6 +45,7 @@ module.exports.requireAuth=async(req,res,next)=>{
           if(err){
             console.log(err)
           }else{
+             console.log(decodedToken);
              next();         
           }
     });

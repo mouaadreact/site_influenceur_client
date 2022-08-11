@@ -4,12 +4,12 @@ import { useLocation, useNavigate } from "react-router-dom";
 
  
 
-function ConfirmConditionGenerale({id}) {
-
+function ConfirmConditionGenerale() {
+  
   let navigate=useNavigate();
   const location=useLocation();
   const Querys=new URLSearchParams(location.search);
-  const queryId=Querys.get('id');
+  const userId=Querys.get('id');
 
  //on cancel et on confirm instagram data
  const handleCancel=async (e)=>{
@@ -23,7 +23,7 @@ function ConfirmConditionGenerale({id}) {
   e.preventDefault();
   console.log("confirm");
 
-  await axios.put(`http://localhost:5000/api/v1/influenceur/accepterCondition/${queryId}`)
+  await axios.put(`http://localhost:5000/api/v1/influenceur/accepterCondition/${userId}`)
    .then(res=>{
       navigate('/login');
    })

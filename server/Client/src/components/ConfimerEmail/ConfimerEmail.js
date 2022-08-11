@@ -1,6 +1,6 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
-import { useLocation } from 'react-router-dom';
+import React, { useEffect, useId, useState } from 'react'
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import ConfirmInstagram from '../ConfimerInstagram/ConfirmInstagram';
@@ -8,25 +8,24 @@ import ConfirmInstagram from '../ConfimerInstagram/ConfirmInstagram';
 function ConfimerEmail() {
  const location=useLocation();
  const [isConfirm,setIsConfirm]=useState(false);
- const [idUser,setIdUser]=useState();
+ //const [idUser,setIdUser]=useState();
  useEffect(()=>{
   
   const fetchUser=async ()=>{
      const Querys=new URLSearchParams(location.search);
-     const queryEmail=Querys.get('email');
-     const queryId=Querys.get('id');
-     await axios.get(`http://localhost:3000/api/v1/influenceur/confirmer-email?id=${queryId}&email=${queryEmail}`)
+     const queryToken=Querys.get('token');
+     await axios.get(`http://localhost:3000/api/v1/influenceur/confirmer-email?token=${queryToken}`)
        .then(res=>{
-        ///console.log(res);
         setIsConfirm(true);
-        setIdUser(res.data.id)
-        //console.log(isConfirm);
+        localStorage.setItem("idUser",res.data.id);
+        //setIdUser(res.data.id)
+       
         toast.success("Success Confirm Email");
        })
        .catch((err)=>{
-        console.log(err.response.data.errors[0].message);
-        //UserId must be unique
-        if(err.response.data.errors[0].message){
+        console.log(err);
+        if(err.response.data.errors[0].message=="UserId must be unique"){
+          setIsConfirm(true)
           toast.error("Deja confirmer votre Email ! ");
         }else{
           toast.error("erreur dans confirmations email");
@@ -36,23 +35,25 @@ function ConfimerEmail() {
   fetchUser()
   },[]);
 
-//console.log(isConfirm)
-//http://localhost:3000/api/v1/influenceur/confirmer-email?email=${req.body.email}
+console.log(isConfirm);
+console.log(localStorage.getItem("idUser"));
   return (
    <>
      <ToastContainer autoClose={3000}/>
-     {
-      isConfirm ? 
-      ( 
-       <><ConfirmInstagram id={idUser} /></>
-      ) 
-      : 
-      (
-        <>
-         <div>Error Confimation email ! </div>
-        </>
-      )
-     }
+    
+    
+        <div className='col d-flex justify-content-center m-5'>
+        <div className="card text-center border border-2" style={{width:"18rem"}}>
+          <div className="card-body">
+            <p className="card-text">Complete votre compte instagram et compete register</p>
+          </div>
+          <NavLink  
+          className="btn btn-primary w-30 m-1" 
+          to={`/register/confirmInstagram?id=${localStorage.getItem('idUser')}`}
+           >Go Complete</NavLink>
+        </div>
+        </div>
+
       
     </>
   )

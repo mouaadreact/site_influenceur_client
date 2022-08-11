@@ -5,6 +5,8 @@ const UsernameByEmail=require("../utils/usernameByEmail");
 const compareCryptPassword=require("../utils/compareCryptPassword");
 const SendEmail=require("../utils/SendEmailValidationCompte");
 const bcrypt=require("bcrypt");
+const jwt=require("jsonwebtoken");
+const privateKey=process.env.PRIVATE_KEY_AUTHORIZATION; 
 //-------------------------------------------------------------
 //Remarque: en besoin de utilise IF ELSE apres retourne des données
 //car si n'a fait pas il exits une error d'envoyer deux(2) response --> "si on a une error dans request"
@@ -30,11 +32,74 @@ exports.login= async (req,res)=>{
      // console.log(token);
       if(token!=null){
       
-         res.cookie('jwt',token,{httpOnly :true,maxAge:3*24*60*60*1000 });
-         res.status(200).json({
-            token:token,
-            role:data.Role.dataValues.roleNom
-         });
+       
+
+         if(data.isInfluenceur!=true){
+            if(data.Role.dataValues.roleNom=="admin"){
+               res.cookie('jwt',token,{httpOnly :true,maxAge:3*24*60*60*1000 });
+               res.status(200).json({
+                  status:"login",
+                  token:token,
+                  role:data.Role.dataValues.roleNom
+               });
+            }else{
+               //res.redirect('http://localhost:3000/register/verifierEmail');
+               res.status(200).json({
+                  status:"confirmEmail",
+                  message:"error tu n'est pas confirmer votre Email ! ",
+                  id:data.UserId
+               })
+            }
+         }else{
+            try{
+               let influenceurData=await Influenceur.findOne({
+                 where:{UserId:data.id}
+               });
+               if(!influenceurData){
+                  res.status(400).json({
+                     status:"error",
+                     message:"error cant find influenceur"
+                  })
+               }else{
+                  influenceurData=influenceurData.dataValues;
+                  if(influenceurData.statusValideInstagramCompte==false){
+                     res.status(200).json({
+                        status:"validCompte",
+                        message:"redirect to valid compte instagram",
+                        id:influenceurData.id
+                     });
+                  }else{
+                     if(influenceurData.statusAccepterConditionGenerale==false){
+                        res.status(200).json({
+                           status:"conditionGenrale",
+                           message:"redirect to confirm condition generale",
+                           id:influenceurData.id
+                        });
+                    }
+                        else{
+                             
+                             if(influenceurData.statusEtatActiver==false){
+                              res.status(400).json({
+                                 status:"ActiveCompte",
+                                 message:"compte not active",
+                                 id:influenceurData.id
+                              });
+                           }else{
+                                 res.cookie('jwt',token,{httpOnly :true,maxAge:3*24*60*60*1000 });
+                                 res.status(200).json({
+                                    status:"login",
+                                    token:token,
+                                    role:data.Role.dataValues.roleNom
+                                 }); 
+                             }
+                        }
+                  }
+               }
+            }catch(err){
+               res.status(400).json(err)
+            }
+         }
+
         }else{
          res.status(400).json({
           err:{
@@ -47,7 +112,7 @@ exports.login= async (req,res)=>{
    }
    
    }catch(err){
-    res.status(400).json(err);
+    res.status(400).json(err); 
    }
 
 
@@ -75,7 +140,7 @@ exports.registerInfluenceur=async(req,res)=>{
  User.count({
   where:{
    email,
-   statusConfirmeInfluenceur:false
+   isInfluenceur:false
         }
  })
  .then(doc=>{ 
@@ -89,17 +154,26 @@ exports.registerInfluenceur=async(req,res)=>{
      email:req.body.email,
      username:req.body.username,
      password:passwordCrypt,
-     statusConfirmeInfluenceur:false,
-     RoleId:2
+     isInfluenceur:false,
+     RoleId:2 //influenceur
      })
      .then((result)=>{
-      res.status(200).json(result);
-      SendEmail.ContactUs(req.body.email,`comfirmer votre email`,`Click in : http://localhost:3000/register/confirmEmail?id=${result.id}&email=${req.body.email}`)
+  
+         res.status(200).json({
+            status:"register",
+            message:"confirme your email",
+            result:result
+         });
+
+         jwt.sign({id:result.id,email:result.email,role:"influenceur"},privateKey,{
+            expiresIn:3*24*60*60*1000 },(err,token)=>{
+           // console.log(token);
+            SendEmail.ContactUs(req.body.email,`comfirmer votre email`,`Click in : http://localhost:3000/register/confirmEmail?token=${token}`);
+              });
    
    })
      .catch((err)=>res.status(400).json(err))
 
-     //send email pour verifier 
 
    })
   }
@@ -131,8 +205,9 @@ exports.registerAdmin=async(req,res)=>{
 
       User.create({
        email:req.body.email,
-       username:username,
+       username:username, //isInfluenceur : null
        password:passwordCrypt,
+       isInfluenceur:null,
        RoleId:1
       })
        .then((result)=>res.status(200).json({

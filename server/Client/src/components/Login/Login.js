@@ -3,12 +3,13 @@ import {useFormik} from 'formik'
 import { basicSchemaLogin } from '../../schemas'
 import './Login.css'
 import axios from 'axios'
-import {UemailContext}  from '../../contexts/AppContext'
+import {UidContext}  from '../../contexts/AppContext'
 import { useNavigate } from 'react-router-dom'
 
 
 function Login() {
-  const uEmail=useContext(UemailContext);
+  const uid=useContext(UidContext);
+  //console.log(uid);
   let navigate=useNavigate();
   //console.log(uEmail);
   const [erreurs,setError]=useState({passwordError:'',emailError:''});
@@ -28,6 +29,8 @@ function Login() {
       withCredentials:true
       });
       if(res){
+         
+         if(res.data.status==='login'){
          switch(res.data.role){
           case "admin":
                  navigate('/dashboard')
@@ -37,7 +40,18 @@ function Login() {
                 break;
           default:
                 break;
-         }   
+         }
+        }else if(res.data.status==='confirmEmail'){
+          navigate('/register/verifierEmail');
+        }else if(res.data.status==='validCompte'){
+          navigate(`/register/confirmInstagram?id=${res.data.id}`);
+        }else if(res.data.status==='conditionGenrale'){
+          navigate(`/register/conditionGenrale?id=${res.data.id}`);
+        }else{
+          console.log(res.data);
+        }
+
+
 
       }
     }catch(error){
@@ -62,7 +76,7 @@ function Login() {
   return (
     <>
       {
-        uEmail ? 
+        uid ? 
          (
           <>
             <div className='bg-primary'>
