@@ -4,7 +4,8 @@ import { basicSchemaConfirmInstagram } from '../../schemas'
 import './ConfimInstagram.css'
 import axios from 'axios'
 import { useLocation, useNavigate } from "react-router-dom";
-
+import { ToastContainer, toast } from 'react-toastify'; 
+import 'react-toastify/dist/ReactToastify.css';
  
 
 function ConfirmInstagram({id}) {
@@ -23,7 +24,7 @@ function ConfirmInstagram({id}) {
   }
  //on submit afficher instagram data
   const onSubmit= async (values,actions)=>{
-    console.log("axios")
+      toast.success("Wait A few Second");
       await axios.put(`http://localhost:5000/api/v1/influenceur/afficherCompte/${queryId}`,{
          ...values
       })
@@ -62,6 +63,7 @@ function ConfirmInstagram({id}) {
         instagramData.username
         ? 
         <>
+        <ToastContainer autoClose={4000}/>
         <form className='container '>
         <div className='col d-flex justify-content-center m-5'>
         <div className="card text-center border border-2" style={{width:"18rem"}}>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import {useFormik} from 'formik'
 import { basicSchemaRegister } from '../../schemas'
 import './Register.css'
@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 
 function Register() {
   let navigate=useNavigate();
+  const [erreurMessage,setError]=useState('');
   const onSubmit= async (values,actions)=>{
 
     /*API post data */
@@ -29,14 +30,15 @@ function Register() {
           navigate("./verifierEmail");
 
      }).catch((err)=>{
-         console.log(err);
+         console.log(err.response.data.errors[0].message);
+         setError(err.response.data.errors[0].message);
      });
 
     /* after sumbit */
    /* await new Promise((resolve)=> setTimeout(resolve,1000));
     actions.resetForm();*/
    }
-
+ 
    const {values,errors,touched,isSubmitting,handleBlur,handleChange,handleSubmit}=useFormik({
     initialValues: {
       username:"",
@@ -111,7 +113,7 @@ function Register() {
     </div>
 
 
-
+    <p className='text-danger'>{erreurMessage}</p>
     <button disabled={isSubmitting} type="submit" className="btn btn-primary w-100">Register</button>
  </form>
      </div>

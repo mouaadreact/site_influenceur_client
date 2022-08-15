@@ -6,6 +6,7 @@ const axios=require("axios");
 const fs=require("fs")
 const jwt=require("jsonwebtoken");
 const privateKey=process.env.PRIVATE_KEY_AUTHORIZATION; 
+const FormatDate=require('../utils/formatDate');
 // https://rapidapi.com/yuananf/api/instagram28/
 
 
@@ -53,7 +54,8 @@ exports.validerCompteParEmail=async(req,res)=>{
                   UserId:UserInf.id,
                   statusValideInstagramCompte:false,
                   statusAccepterConditionGenerale:false,
-                  statusEtatActiver:false
+                  statusEtatActiver:false,
+                  statusIsComplete:false
                 })
                   if(influenceur){
                     res.status(200).json(influenceur);
@@ -96,11 +98,11 @@ exports.afficherCompteInstagram=async (req,res)=>{
             },{
               where:{id:req.params.id}
             })
-          
+          console.log(data);
         if(data<=0){
            res.status(400).json({error:"On peut pas valideCompte instagram!"});
         }else{
-           try {
+           try { 
             
             const options = {
               method: 'GET',
@@ -111,6 +113,7 @@ exports.afficherCompteInstagram=async (req,res)=>{
                 'X-RapidAPI-Host': `${process.env.INSTAGRAM_API_HEADER_HOST}`
               }
             };
+              console.log(options);
                var UserApiInfo= await  axios.request(options);
                var UserAPI = UserApiInfo.data.data.user;
                if(!UserAPI){
@@ -128,9 +131,12 @@ exports.afficherCompteInstagram=async (req,res)=>{
                   });
                
                /* enregistrer Api so form json dans Uploads->Api */
-               console.log(`../uploads/Api/${instagramUsernameCompte}/${instagramUsernameCompte}_${req.params.id}_${new Date()}.json`)
-                
-               fs.writeFile(`uploads/Api/${instagramUsernameCompte}/${instagramUsernameCompte}_${req.params.id}_${new Date()}.json`,JSON.stringify(UserAPI,null,2),err=>{
+               console.log(`uploads/Api/${instagramUsernameCompte}/${instagramUsernameCompte}_${req.params.id}_${FormatDate(new Date())}.json`)
+               var dir=`uploads/Api/${instagramUsernameCompte}`
+               if (!fs.existsSync(dir)){
+                 fs.mkdirSync(dir);
+               }
+               fs.writeFile(`uploads/Api/${instagramUsernameCompte}/${instagramUsernameCompte}_${req.params.id}_${FormatDate(new Date())}.json`,JSON.stringify(UserAPI,null,2),err=>{
                 if(err){
                   console.log(err);
                 }else{
@@ -197,7 +203,6 @@ exports.completerProfil=async (req,res)=>{
             pays,
             ville,
             quartier,
-            codePostal,
             situationFamiliale,
             nombreEnfant,
             niveauEtude,
@@ -210,11 +215,11 @@ exports.completerProfil=async (req,res)=>{
             pays,
             ville,
             quartier,
-            codePostal,
             situationFamiliale,
             nombreEnfant,
             niveauEtude,
             profession,
+            statusIsComplete:true
             //commentaire 
       },{
         where:{id:req.params.id}
@@ -409,7 +414,6 @@ exports.update=async (req,res)=>{
     pays,
     ville,
     quartier,
-    codePostal,
     situationFamiliale,
     nombreEnfant,
     niveauEtude,
@@ -430,7 +434,6 @@ exports.update=async (req,res)=>{
                     pays,
                     ville,
                     quartier,
-                    codePostal,
                     situationFamiliale,
                     nombreEnfant,
                     niveauEtude,

@@ -57,9 +57,6 @@ module.exports=(Sequelize,dataType)=>{
       quartier:{
        type:dataType.STRING(100),
       },
-      codePostal:{
-       type:dataType.BIGINT,
-      },
       situationFamiliale:{
        type:dataType.STRING(50),
       },
@@ -85,6 +82,10 @@ module.exports=(Sequelize,dataType)=>{
       statusAccepterConditionGenerale:{
        type:dataType.BOOLEAN,
        default:false,
+      },
+      statusIsComplete:{
+        type:dataType.BOOLEAN,
+        default:false,
       },
       statusEtatActiver:{
        type:dataType.BOOLEAN,

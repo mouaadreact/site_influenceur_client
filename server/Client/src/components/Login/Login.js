@@ -12,7 +12,7 @@ function Login() {
   //console.log(uid);
   let navigate=useNavigate();
   //console.log(uEmail);
-  const [erreurs,setError]=useState({passwordError:'',emailError:''});
+  const [erreurs,setError]=useState({password:'',email:''});
 
   //submit
   const onSubmit= async (values,actions)=>{
@@ -45,7 +45,10 @@ function Login() {
           navigate('/register/verifierEmail');
         }else if(res.data.status==='validCompte'){
           navigate(`/register/confirmInstagram?id=${res.data.id}`);
-        }else if(res.data.status==='conditionGenrale'){
+        }else if(res.data.status==='completeProfil'){
+          navigate(`/register/completeProfil?id=${res.data.id}`);
+        }
+         else if(res.data.status==='conditionGenrale'){
           navigate(`/register/conditionGenrale?id=${res.data.id}`);
         }else{
           console.log(res.data);
@@ -71,7 +74,7 @@ function Login() {
     onSubmit,
    });
      
-  
+  //console.log(erreurs);
 
   return (
     <>
@@ -103,6 +106,7 @@ function Login() {
                 className={ "form-control "+(errors.email && touched.email ? "border-danger" : "" )}  
               />
                 {errors.email && touched.email && <p className='text-danger'>{errors.email}</p>}
+                 { erreurs.email &&<p className='text-danger'>{erreurs.email}</p>}
            </div>
 
         
@@ -117,6 +121,7 @@ function Login() {
                 className={ "form-control "+(errors.password && touched.password ? "border-danger" : "" )}  
               />
                 {errors.password && touched.password && <p className='text-danger'>{errors.password}</p>}
+                {erreurs.password && <p className='text-danger'>{erreurs.password}</p>}
             </div>
 
               <button type="submit" className="btn btn-primary w-100">Login</button>

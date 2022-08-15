@@ -10,7 +10,7 @@ const privateKey=process.env.PRIVATE_KEY_AUTHORIZATION;
 //-------------------------------------------------------------
 //Remarque: en besoin de utilise IF ELSE apres retourne des données
 //car si n'a fait pas il exits une error d'envoyer deux(2) response --> "si on a une error dans request"
-
+ 
 //login  :  
 exports.login= async (req,res)=>{
    const {email}=req.body;
@@ -69,30 +69,38 @@ exports.login= async (req,res)=>{
                         id:influenceurData.id
                      });
                   }else{
-                     if(influenceurData.statusAccepterConditionGenerale==false){
+                     if(influenceurData.statusIsComplete==false){
                         res.status(200).json({
-                           status:"conditionGenrale",
-                           message:"redirect to confirm condition generale",
+                           status:"completeProfil",
+                           message:"redirect to complete profil",
                            id:influenceurData.id
                         });
-                    }
-                        else{
-                             
-                             if(influenceurData.statusEtatActiver==false){
-                              res.status(400).json({
-                                 status:"ActiveCompte",
-                                 message:"compte not active",
+                     }else{
+                           if(influenceurData.statusAccepterConditionGenerale==false){
+                              res.status(200).json({
+                                 status:"conditionGenrale",
+                                 message:"redirect to confirm condition generale",
                                  id:influenceurData.id
                               });
-                           }else{
-                                 res.cookie('jwt',token,{httpOnly :true,maxAge:3*24*60*60*1000 });
-                                 res.status(200).json({
-                                    status:"login",
-                                    token:token,
-                                    role:data.Role.dataValues.roleNom
+                           }
+                           else{
+                              
+                              if(influenceurData.statusEtatActiver==false){
+                                 res.status(400).json({
+                                    status:"ActiveCompte",
+                                    message:"compte not active",
+                                    id:influenceurData.id
                                  }); 
-                             }
-                        }
+                              }else{
+                                    res.cookie('jwt',token,{httpOnly :true,maxAge:3*24*60*60*1000 });
+                                    res.status(200).json({
+                                       status:"login",
+                                       token:token,
+                                       role:data.Role.dataValues.roleNom
+                                    }); 
+                              }
+                           }
+                     }
                   }
                }
             }catch(err){
@@ -137,7 +145,7 @@ exports.registerInfluenceur=async(req,res)=>{
    res.json({validation:validation.error.details[0].message})
   }
   
- User.count({
+ /*User.count({
   where:{
    email,
    isInfluenceur:false
@@ -147,7 +155,7 @@ exports.registerInfluenceur=async(req,res)=>{
    //console.log(doc);
   if(doc!=0){
    res.status(400).json({error:"Influenceur deja exist ! "});
-  }else{
+  }else{*/
    // console.log("yes");
     bcrypt.hash(password,10).then(passwordCrypt=>{
     User.create({
@@ -176,10 +184,11 @@ exports.registerInfluenceur=async(req,res)=>{
 
 
    })
-  }
+  /*}
  })
-
+*/
 }
+
 
 
 //-----------------------------

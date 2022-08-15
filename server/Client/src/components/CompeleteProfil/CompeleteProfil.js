@@ -4,21 +4,46 @@ import { basicSchemaCompleteProfil } from '../../schemas'
 import './CompeleteProfil.css'
 import axios from 'axios'
 import { useLocation, useNavigate } from "react-router-dom";
+import countries from '../../assets/data/countries.json'
+import cities from '../../assets/data/cities.json'
 
 function CompeleteProfil() {
  const location=useLocation();
  const Querys=new URLSearchParams(location.search);
  const queryIds=Querys.get('id');
  let navigate=useNavigate();
- const [options,setOptions]=useState([{
+ //------------------
+ const [optionsLangue,setOptionsLangue]=useState([{
   key:"veuillez entre langue",value:"0"
  }]);
+//----
+ const [optionsPays,setOptionsPays]=useState([{
+  key:"veuillez entre pays",value:""
+ }]);
+ //---
+ const [optionsVille,setOptionsVille]=useState([{
+  key:"veuillez entre ville",value:""
+ },
+{
+  key:"tanger",value:"tanger"
+}
+]);
+//---
+ const SituationFamilialeOptions=[
+  {key:"veuillez entre situation familiale",value:""},
+  {key:"célébataire",value:"célébataire"},
+  {key:"marié",value:"marié"},
+  {key:"divorcé",value:"divorcé"},
+  {key:"séparé",value:"séparé"},
+  {key:"veuf",value:"veuf"} 
+ ]
 
+
+ //------------------------------------
   const initialValues={
    pays:"",
    ville:"",
    quartier:"",
-   codePostal:"",
    situationFamiliale:"",
    nombreEnfant:"",
    niveauEtude:"",
@@ -26,20 +51,9 @@ function CompeleteProfil() {
    LangueId:""
   }
 
-  const onSubmit= async (values,actions)=>{
-
-     await axios.put(`http://localhost:5000/api/v1/influenceur/complete/${queryIds}`,{
-         ...values
-      })
-        .then(res=>{
-          navigate(`/register/conditionGenrale?id=${queryIds}`);
-        })
-        .catch((err)=>{
-         console.log(err);
-        });
-   }
  
    useEffect(() => {
+
     const fetLangue=async ()=>{
        await axios({
        method:"get",
@@ -47,14 +61,13 @@ function CompeleteProfil() {
        withCredentials:true
        })
       .then((res)=>{
-        console.log(res);
         if(res.status===200){
           res.data.forEach(ele=>{
                       const op={
                       key:ele.langueNom,
                       value:ele.id
                       }
-                      setOptions((options)=>[...options,op])         
+                      setOptionsLangue((options)=>[...options,op])         
                   })
         }
         
@@ -65,8 +78,46 @@ function CompeleteProfil() {
        
     }
      fetLangue();
+
+     //------------------------------
+     //fetch countries
+
+     countries.pays.forEach(ele=>{
+        const op={
+          key:ele.name,
+          value:ele.name
+          }
+        setOptionsPays((options)=>[...options,op])     
+  })
+
+
    },[]);
-console.log(options);
+
+  const handleCities= async (e)=>{
+    setOptionsVille([{key:"veuillez entre ville",value:""}])
+    cities[e.target.value]?.forEach(ele=>{
+       const op={
+        key:ele,
+        value:ele
+        }
+      setOptionsVille((options)=>[...options,op])
+
+   });
+  }
+
+  const onSubmit= async (values,actions)=>{
+    console.log(values);
+      await axios.put(`http://localhost:5000/api/v1/influenceur/complete/${queryIds}`,{
+          ...values
+       })
+         .then(res=>{
+           navigate(`/register/conditionGenrale?id=${queryIds}`);
+         })
+         .catch((err)=>{
+          console.log(err);
+         });
+    }
+
  //---------------
   return (
    
@@ -79,30 +130,48 @@ console.log(options);
       <div className='text-center p-3'>Complete Profil</div>
 
       <Form> 
+      
       <div className="form-outline mb-4">
           <label className="form-label" htmlFor="pays">Pays</label>
-          <Field
-            type="text" 
-            id="pays"
+          <Field  
+            as="select"
             name='pays'
-            className="form-control"  
-          />
+            id="pays" 
+            className="form-control"
+            options={optionsPays}
+            onClick={(e)=>{handleCities(e)}}
+          >
+          {
+           optionsPays.map(ele=>{
+            return (<option value={ele.value} key={ele.value}>{ele.key}</option>)
+             })
+          }
+          </Field>
           <div className='text-danger'>
             <ErrorMessage name='pays'/>
         </div>
+         
       </div>
 
       <div className="form-outline mb-4">
           <label className="form-label" htmlFor="ville">Ville</label>
-          <Field 
+          <Field  
+            as="select"
             name='ville'
-            type="text" 
             id="ville" 
-            className="form-control" 
-          />
+            className="form-control"
+            options={optionsVille}
+          >
+          {
+           optionsVille.map(ele=>{
+            return (<option value={ele.value} key={ele.value}>{ele.key}</option>)
+             })
+          }
+          </Field>
           <div className='text-danger'>
             <ErrorMessage name='ville'/>
         </div>
+         
       </div>
 
       <div className="form-outline mb-4">
@@ -118,32 +187,28 @@ console.log(options);
         </div>
       </div>
 
-      <div className="form-outline mb-4">
-          <label className="form-label" htmlFor="ville">Code Postal</label>
-          <Field 
-            name='codePostal'
-            type="text" 
-            id="codePostal" 
-            className="form-control" 
-          />
-          <div className='text-danger'>
-            <ErrorMessage name='codePostal'/>
-        </div>
-      </div>
       
-
       <div className="form-outline mb-4">
           <label className="form-label" htmlFor="situationFamiliale">Situation Familiale</label>
-          <Field 
+          <Field  
+            as="select"
             name='situationFamiliale'
-            type="text" 
             id="situationFamiliale" 
-            className="form-control" 
-          />
+            className="form-control"
+            options={SituationFamilialeOptions}
+          >
+          {
+           SituationFamilialeOptions.map(ele=>{
+            return (<option value={ele.value} key={ele.value}>{ele.key}</option>)
+             })
+          }
+          </Field>
           <div className='text-danger'>
             <ErrorMessage name='situationFamiliale'/>
         </div>
+         
       </div>
+     
 
       <div className="form-outline mb-4">
           <label className="form-label" htmlFor="ville">Nombre des Enfants</label>
@@ -191,10 +256,10 @@ console.log(options);
             name='LangueId'
             id="LangueId" 
             className="form-control"
-            options={options}
+            options={optionsLangue}
           >
           {
-           options.map(ele=>{
+           optionsLangue.map(ele=>{
             return (<option value={ele.value} key={ele.value}>{ele.key}</option>)
              })
           }

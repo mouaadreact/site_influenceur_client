@@ -28,7 +28,7 @@ const UserRoute=require("./routers/user.route");
 const RoleRoute=require("./routers/role.route");
 const AuthRoute=require("./routers/auth.route");
 //utils route:
-const CountriesRoute=require("./utils/countries");
+const CountriesRoute=require("./utils/addresses");
 //route of influenceur:
 //authorization
 const {requireAuth,checkUser}=require("./middlewares/auth.middelware");
@@ -64,8 +64,8 @@ app.get("*",checkUser);
 //-----
 // function 24h get Json file of API instagram and all username of influenceurs
 app.get('*',(req,res,next)=>{
-  console.log('Mouaad')
-  next()
+  //console.log('Mouaad')
+  next() 
 });
 //-----------------
 app.get('/jwtid',requireAuth,(req,res)=>{
@@ -94,6 +94,7 @@ app.use('/api/v1/auth',AuthRoute);
 
 //utils route
 app.get('/api/v1/countries',CountriesRoute.getCountries);
+app.get('/api/v1/cities',CountriesRoute.getCities);
 
 //------------------------------------------
 //instagrma api for testing api instagram
