@@ -1,20 +1,24 @@
 import React, { useEffect, useState } from 'react'
-import {Formik,Form,Field,ErrorMessage} from 'formik'
+import {Formik,Form,Field,ErrorMessage,formik} from 'formik'
 import { basicSchemaCompleteProfil } from '../../schemas'
 import './CompeleteProfil.css'
 import axios from 'axios'
 import { useLocation, useNavigate } from "react-router-dom";
 import countries from '../../assets/data/countries.json'
 import cities from '../../assets/data/cities.json'
+import Select from 'react-select'
+import { ToastContainer, toast } from 'react-toastify'; 
+import 'react-toastify/dist/ReactToastify.css';
 
 function CompeleteProfil() {
  const location=useLocation();
+ const [langueMult,setLangueMult]=useState([]);
  const Querys=new URLSearchParams(location.search);
  const queryIds=Querys.get('id');
  let navigate=useNavigate();
  //------------------
  const [optionsLangue,setOptionsLangue]=useState([{
-  key:"veuillez entre langue",value:"0"
+  label:"veuillez entre langue",value:0
  }]);
 //----
  const [optionsPays,setOptionsPays]=useState([{
@@ -48,7 +52,7 @@ function CompeleteProfil() {
    nombreEnfant:"",
    niveauEtude:"",
    profession:"",
-   LangueId:""
+   //langue:[]
   }
 
  
@@ -64,7 +68,7 @@ function CompeleteProfil() {
         if(res.status===200){
           res.data.forEach(ele=>{
                       const op={
-                      key:ele.langueNom,
+                      label:ele.langueNom,
                       value:ele.id
                       }
                       setOptionsLangue((options)=>[...options,op])         
@@ -106,9 +110,14 @@ function CompeleteProfil() {
   }
 
   const onSubmit= async (values,actions)=>{
-    console.log(values);
+
+      if(values.situationFamiliale==="célébataire" && values.nombreEnfant!=0)  {
+        toast.error("erreur célébataire a 0 enfants ");
+      }
+      else{
       await axios.put(`http://localhost:5000/api/v1/influenceur/complete/${queryIds}`,{
-          ...values
+          ...values,
+          langue:langueMult
        })
          .then(res=>{
            navigate(`/register/conditionGenrale?id=${queryIds}`);
@@ -116,16 +125,27 @@ function CompeleteProfil() {
          .catch((err)=>{
           console.log(err);
          });
+         console.log(values);
+         console.log(langueMult);
+        }
     }
-
+//-------------------
+const handleLangue =(e)=>{
+  setLangueMult(Array.isArray(e)?e.map(x=>x.value):[]);
+}
  //---------------
   return (
-   
+    <>
+      <ToastContainer autoClose={3000}/>
     <Formik
           initialValues={initialValues}
           validationSchema={basicSchemaCompleteProfil}
           onSubmit={onSubmit}
     >
+
+  
+
+    {  formik => (
       <div className='container w-50 shadow-lg p-3 mb-5 bg-white roundedd ' style={{marginTop:"30px"}}>
       <div className='text-center p-3'>Complete Profil</div>
 
@@ -250,32 +270,29 @@ function CompeleteProfil() {
       </div>
    
       <div className="form-outline mb-4">
-          <label className="form-label" htmlFor="LangueId">Langue</label>
-          <Field  
-            as="select"
-            name='LangueId'
-            id="LangueId" 
-            className="form-control"
-            options={optionsLangue}
-          >
-          {
-           optionsLangue.map(ele=>{
-            return (<option value={ele.value} key={ele.value}>{ele.key}</option>)
-             })
-          }
-          </Field>
+          <label className="form-label" htmlFor="langue">Langue</label>
+          
+          <Select required={true} isMulti options={optionsLangue} id='langue' name='langue' onChange={handleLangue} ></Select>
+          
+          
+          
           <div className='text-danger'>
-            <ErrorMessage name='LangueId'/>
+            <ErrorMessage name='langue'/>
         </div>
          
       </div>
           <button type="submit" className="btn btn-primary w-100">Submit</button>
         </Form>
         </div>
+     )
+    }
    </Formik>
+   </>
         
   )
 
 }
 
 export default CompeleteProfil
+
+

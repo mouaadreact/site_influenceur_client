@@ -4,7 +4,6 @@ const {User}=require("../models");
 
 module.exports.checkUser=async(req,res,next)=>{
  
-  console.log("testing correct");
   const token=req.cookies.jwt;
   if(token){
     const tokenData=jwt.verify(token,privateKey,async(err,decodedToken)=>{

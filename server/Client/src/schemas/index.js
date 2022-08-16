@@ -32,5 +32,5 @@ export const basicSchemaConfirmInstagram=yup.object().shape({
     nombreEnfant: yup.number().required("required"),
     niveauEtude: yup.string().required("required"),
     profession: yup.string().required("required"),
-    LangueId: yup.number().required("required")
+    //langue: yup.array().required("required")
    });

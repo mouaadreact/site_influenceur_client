@@ -19,7 +19,7 @@ exports.login= async (req,res)=>{
       where:{
          email
         },
-        include:[Role]
+        include:[Role] 
    });
 
    if(!data){

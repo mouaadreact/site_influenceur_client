@@ -32,10 +32,11 @@ const CountriesRoute=require("./utils/addresses");
 //route of influenceur:
 //authorization
 const {requireAuth,checkUser}=require("./middlewares/auth.middelware");
+const {getAPI}=require('./middlewares/apiInstagram.middelware');
  
 
 //--variables 
-const PORT=process.env.PORT || 5000;
+const PORT=process.env.PORT || 5000; 
 process.setMaxListeners(0);
 //--configurer pour lire les donnes envoyent par les formulaires 
 //--formuler post request (json or urlencoded)
@@ -63,10 +64,7 @@ if(process.env.NODE_ENV=='development'){
 app.get("*",checkUser);
 //-----
 // function 24h get Json file of API instagram and all username of influenceurs
-app.get('*',(req,res,next)=>{
-  //console.log('Mouaad')
-  next() 
-});
+app.get('*',getAPI);
 //-----------------
 app.get('/jwtid',requireAuth,(req,res)=>{
   console.log(res.locals.user.id);

@@ -134,7 +134,7 @@ exports.afficherCompteInstagram=async (req,res)=>{
                console.log(`uploads/Api/${instagramUsernameCompte}/${instagramUsernameCompte}_${req.params.id}_${FormatDate(new Date())}.json`)
                var dir=`uploads/Api/${instagramUsernameCompte}`
                if (!fs.existsSync(dir)){
-                 fs.mkdirSync(dir);
+                 fs.mkdirSync(dir); 
                }
                fs.writeFile(`uploads/Api/${instagramUsernameCompte}/${instagramUsernameCompte}_${req.params.id}_${FormatDate(new Date())}.json`,JSON.stringify(UserAPI,null,2),err=>{
                 if(err){
@@ -207,7 +207,8 @@ exports.completerProfil=async (req,res)=>{
             nombreEnfant,
             niveauEtude,
             profession, 
-            LangueId
+            //LangueId
+            langue
             //commentaire
           }=req.body;
    
@@ -219,8 +220,7 @@ exports.completerProfil=async (req,res)=>{
             nombreEnfant,
             niveauEtude,
             profession,
-            statusIsComplete:true
-            //commentaire 
+            statusIsComplete:true 
       },{
         where:{id:req.params.id}
       })
@@ -233,10 +233,17 @@ exports.completerProfil=async (req,res)=>{
             res.status(200).json(data);
             //Add in table LangueInfluenceur 
             //utilise ca dans partir jointure
-            const langueData=LangueInfluenceur.create({
+            console.log(req.body);
+
+           /* const langueData=LangueInfluenceur.create({
               LangueId,
               InfluenceurId:req.params.id,
-            }); 
+            }); */
+            let langueReq=[];
+            langue.forEach((ele)=>{
+              langueReq.push({"LangueId":ele,"InfluenceurId":req.params.id})
+            })
+            const langueData=LangueInfluenceur.bulkCreate(langueReq); 
         }
     }catch(err){
      res.status(400).json(err); 
