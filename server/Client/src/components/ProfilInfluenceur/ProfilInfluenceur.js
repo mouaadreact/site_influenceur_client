@@ -2,26 +2,15 @@ import React, { useState } from 'react'
 import cookie from 'js-cookie';
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { authLogout } from '../../redux/actions/auth.actions';
 
 function ProfilInfluenceur() {
-  let navigate=useNavigate();
-
-  const removeCookie=(key)=>{
-    cookie.remove(key,{expires:1});
-   }
+  const dispatch=useDispatch();
+  
   const handleLogout= async (e)=>{
     e.preventDefault();
-    await axios({
-      method:"get",
-      url:`http://localhost:5000/api/v1/auth/logout`,
-      withCredentials:true
-      }) 
-      .then(()=> {
-        removeCookie("jwt");
-        navigate('/login');
-    })
-      .catch((err)=>console.log(err))
-    ;
+    authLogout(dispatch);
    }
 
   return (

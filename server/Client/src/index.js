@@ -1,19 +1,22 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-
-ReactDOM.render( <App />,document.getElementById('root'));
-
-/*import reportWebVitals from './reportWebVitals';
+import {Provider} from 'react-redux'
+import store from './redux/store'
+import reportWebVitals from './reportWebVitals';
+//axios.defaults.baseUrl=
+//axios.defaults.headers.common['authorization']='Beader '+localstorge.getItem('token');
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  //<React.StrictMode>
+  <Provider store={store}>
     <App />
-  </React.StrictMode>
+    </Provider>
+  //</React.StrictMode>
 );
 
-reportWebVitals();*/
+/*reportWebVitals();*/
 
 

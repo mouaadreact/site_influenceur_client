@@ -1,21 +1,28 @@
-import React, { useEffect, useState } from 'react'
-import {Formik,Form,Field,ErrorMessage,formik} from 'formik'
-import { basicSchemaCompleteProfil } from '../../schemas'
-import './CompeleteProfil.css'
-import axios from 'axios'
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
+import {Formik,Form,Field,ErrorMessage,formik} from 'formik';
+import { basicSchemaCompleteProfil } from '../../schemas';
 import { useLocation, useNavigate } from "react-router-dom";
-import countries from '../../assets/data/countries.json'
-import cities from '../../assets/data/cities.json'
-import Select from 'react-select'
+import countries from '../../assets/data/countries.json';
+import cities from '../../assets/data/cities.json';
+import Select from 'react-select';
 import { ToastContainer, toast } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css';
+import { getAllLangue } from '../../redux/actions/langue.actions';
+import {useDispatch, useSelector} from 'react-redux';
+import './CompeleteProfil.css';
+import { compeleteProfil } from '../../redux/actions/register.actions';
 
 function CompeleteProfil() {
+
  const location=useLocation();
  const [langueMult,setLangueMult]=useState([]);
  const Querys=new URLSearchParams(location.search);
  const queryIds=Querys.get('id');
  let navigate=useNavigate();
+ const dispatch=useDispatch();
+ const {langueData}=useSelector(state=>state.langue);
+
+
  //------------------
  const [optionsLangue,setOptionsLangue]=useState([{
   label:"veuillez entre langue",value:0
@@ -52,50 +59,33 @@ function CompeleteProfil() {
    nombreEnfant:"",
    niveauEtude:"",
    profession:"",
-   //langue:[]
   }
 
- 
-   useEffect(() => {
-
-    const fetLangue=async ()=>{
-       await axios({
-       method:"get",
-       url:"http://localhost:5000/api/v1/langue",
-       withCredentials:true
-       })
-      .then((res)=>{
-        if(res.status===200){
-          res.data.forEach(ele=>{
-                      const op={
-                      label:ele.langueNom,
-                      value:ele.id
-                      }
-                      setOptionsLangue((options)=>[...options,op])         
-                  })
-        }
-        
-      })
-      .catch((err)=>{
-        console.log(err);
-      });
-       
-    }
-     fetLangue();
-
-     //------------------------------
-     //fetch countries
-
-     countries.pays.forEach(ele=>{
+  const fetchDataLangue = useCallback(() => {
+      getAllLangue(dispatch);
+      langueData.forEach(ele=>{
         const op={
-          key:ele.name,
-          value:ele.name
-          }
-        setOptionsPays((options)=>[...options,op])     
-  })
+        label:ele.langueNom,
+        value:ele.id
+        }
+      setOptionsLangue((options)=>[...options,op]) 
+      console.log("render")        
+});
+	}, [langueData[0]?.id]);
 
+   useEffect(() => {
+      fetchDataLangue();
+   },[fetchDataLangue]);
 
-   },[]);
+   useEffect(()=>{
+    countries.pays.forEach(ele=>{
+      const op={
+        key:ele.name,
+        value:ele.name
+        }
+      setOptionsPays((options)=>[...options,op])     
+     })
+   },[])
 
   const handleCities= async (e)=>{
     setOptionsVille([{key:"veuillez entre ville",value:""}])
@@ -113,21 +103,10 @@ function CompeleteProfil() {
 
       if(values.situationFamiliale==="célébataire" && values.nombreEnfant!=0)  {
         toast.error("erreur célébataire a 0 enfants ");
-      }
+       }
       else{
-      await axios.put(`http://localhost:5000/api/v1/influenceur/complete/${queryIds}`,{
-          ...values,
-          langue:langueMult
-       })
-         .then(res=>{
-           navigate(`/register/conditionGenrale?id=${queryIds}`);
-         })
-         .catch((err)=>{
-          console.log(err);
-         });
-         console.log(values);
-         console.log(langueMult);
-        }
+           compeleteProfil(queryIds,values,langueMult,dispatch);
+      }
     }
 //-------------------
 const handleLangue =(e)=>{

@@ -54,17 +54,17 @@ app.use(cors(corsOptions));
 if(process.env.NODE_ENV=='development'){
   app.use(morgan('tiny'));
 }
-//--connect to database
 
- 
-//-----Associations
 
 //---routing 
 //check if user have privilage to access at information 
 app.get("*",checkUser);
 //-----
 // function 24h get Json file of API instagram and all username of influenceurs
-app.get('*',getAPI);
+// use or get 
+//using use ???? problem de reatilisation de function
+//---------------
+//app.get('*',getAPI); 
 //-----------------
 app.get('/jwtid',requireAuth,(req,res)=>{
   console.log(res.locals.user.id);

@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import axios from 'axios'
 import { useLocation, useNavigate } from "react-router-dom";
+import { conditionGenrale } from '../../redux/actions/register.actions';
+import { useDispatch } from 'react-redux';
 
  
 
@@ -10,26 +12,18 @@ function ConfirmConditionGenerale() {
   const location=useLocation();
   const Querys=new URLSearchParams(location.search);
   const userId=Querys.get('id');
+  const dispatch=useDispatch();
 
  //on cancel et on confirm instagram data
  const handleCancel=async (e)=>{
    e.preventDefault();
-   console.log("cancel");
    window.location.reload(false);
   
  }  
 
  const handleConfirm=async (e)=>{
   e.preventDefault();
-  console.log("confirm");
-
-  await axios.put(`http://localhost:5000/api/v1/influenceur/accepterCondition/${userId}`)
-   .then(res=>{
-      navigate('/login');
-   })
-   .catch((err)=>{
-    console.log(err);
-   });
+  conditionGenrale(userId,dispatch)
  }
  //---------------
   return (

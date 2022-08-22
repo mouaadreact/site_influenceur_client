@@ -2,41 +2,18 @@ import React, { useState } from 'react'
 import {useFormik} from 'formik'
 import { basicSchemaRegister } from '../../schemas'
 import './Register.css'
-import axios from 'axios'
-import { useNavigate } from "react-router-dom";
+import { register } from '../../redux/actions/register.actions';
+import { useDispatch, useSelector } from 'react-redux';
 
  
 
 function Register() {
-  let navigate=useNavigate();
-  const [erreurMessage,setError]=useState('');
+  const dispatch=useDispatch();
+  const {errorMessage}=useSelector(state=>state.register);
+
   const onSubmit= async (values,actions)=>{
-
-    /*API post data */
-    const {email,username,password}=values;
-    console.log(email);
-  
-
-    axios({
-      method:"post",
-      url:"http://localhost:5000/api/v1/auth/register",
-      data:{
-          username,
-          email,
-          password,       
-      }
-     }).then((res)=>{
-          console.log(res);
-          navigate("./verifierEmail");
-
-     }).catch((err)=>{
-         console.log(err.response.data.errors[0].message);
-         setError(err.response.data.errors[0].message);
-     });
-
-    /* after sumbit */
-   /* await new Promise((resolve)=> setTimeout(resolve,1000));
-    actions.resetForm();*/
+     const {email,username,password}=values;
+     register({email,username,password},dispatch);  
    }
  
    const {values,errors,touched,isSubmitting,handleBlur,handleChange,handleSubmit}=useFormik({
@@ -113,7 +90,7 @@ function Register() {
     </div>
 
 
-    <p className='text-danger'>{erreurMessage}</p>
+    <p className='text-danger'>{errorMessage}</p>
     <button disabled={isSubmitting} type="submit" className="btn btn-primary w-100">Register</button>
  </form>
      </div>

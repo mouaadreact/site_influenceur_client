@@ -1,20 +1,21 @@
 import React, { useState } from 'react'
 import {Formik,Form,Field,ErrorMessage} from 'formik'
 import { basicSchemaConfirmInstagram } from '../../schemas'
-import './ConfimInstagram.css'
-import axios from 'axios'
+import { useDispatch, useSelector } from 'react-redux';
 import { useLocation, useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css';
- 
+import './ConfimInstagram.css'
+import { afficherCompteInstagram, validerCompteInstagram } from '../../redux/actions/register.actions';
 
 function ConfirmInstagram({id}) {
   const location=useLocation();
   const Querys=new URLSearchParams(location.search);
   const queryId=Querys.get('id');
   let navigate=useNavigate();
-  const [instagramData,setInstagramData]=useState({name:""});
-
+  const {loading,instagramData}=useSelector(state=>state.register);
+  const dispatch=useDispatch();
+  
   const initialValues={
     nom:"",
     prenom:"",
@@ -24,16 +25,7 @@ function ConfirmInstagram({id}) {
   }
  //on submit afficher instagram data
   const onSubmit= async (values,actions)=>{
-      toast.success("Wait A few Second");
-      await axios.put(`http://localhost:5000/api/v1/influenceur/afficherCompte/${queryId}`,{
-         ...values
-      })
-        .then(res=>{
-           setInstagramData(res.data);
-        })
-        .catch((err)=>{
-         console.log(err);
-        });
+     afficherCompteInstagram(queryId,values,dispatch);
    }
  //on cancel et on confirm instagram data
  const handleCancel=async (e)=>{
@@ -43,56 +35,58 @@ function ConfirmInstagram({id}) {
   
  }  
 
+ //-------
+ //confirm compte
  const handleConfirm=async (e)=>{
   e.preventDefault();
-  console.log("confirm");
-
-  await axios.put(`http://localhost:5000/api/v1/influenceur/valideCompte/${queryId}`)
-   .then(res=>{
-      navigate(`/register/completeProfil?id=${queryId}`);
-   })
-   .catch((err)=>{
-    console.log(err);
-   });
+  validerCompteInstagram(queryId,dispatch);
  }
  //---------------
  console.log(instagramData)
   return (
     <>
-      { 
-        instagramData.username
-        ? 
-        <>
-        <ToastContainer autoClose={4000}/>
-        <form className='container '>
-        <div className='col d-flex justify-content-center m-5'>
-        <div className="card text-center border border-2" style={{width:"18rem"}}>
-          <div className="card-body">
-            <p className="card-text">{instagramData.username}</p>
-            <p className="card-text">publications : {instagramData.publications}</p>
-            <p className="card-text">abonnes : {instagramData.abonnes}</p>
-            <p className="card-text">abonnements : {instagramData.abonnements}</p>
-            <p className="card-text">{instagramData.full_name}</p>
-            <p className="card-text">{instagramData.description}</p>
-            <p className="card-text">link : {instagramData.link}</p>
-          </div>
-          <button 
-          className="btn btn-primary w-30 m-1"
-          name='confirm'
-          onClick={(e) => handleConfirm(e)}
-          >Confirm</button>
-          <button 
-          className="btn btn-danger w-30 m-1"
-          name='cancel'
-          onClick={(e)=> handleCancel(e)}
-          >Cancel</button>
-          
-        </div>
-        </div>
+    {  
+      loading 
+      ? 
+      <>
+        <p className='btn bg-primary'>Loading .... </p>
+      </>
+      :
+      <>
+      {
+          instagramData.username 
+           ? 
+           <>
+           <form className='container '>
+            <div className='col d-flex justify-content-center m-5'>
+            <div className="card text-center border border-2" style={{width:"18rem"}}>
+              <div className="card-body">
+                <p className="card-text">{instagramData.username}</p>
+                <p className="card-text">publications : {instagramData.publications}</p>
+                <p className="card-text">abonnes : {instagramData.abonnes}</p>
+                <p className="card-text">abonnements : {instagramData.abonnements}</p>
+                <p className="card-text">{instagramData.full_name}</p>
+                <p className="card-text">{instagramData.description}</p>
+                <p className="card-text">link : {instagramData.link}</p>
+              </div>
+              <button 
+              className="btn btn-primary w-30 m-1"
+              name='confirm'
+              onClick={(e) => handleConfirm(e)}
+              >Confirm</button>
+              <button 
+              className="btn btn-danger w-30 m-1"
+              name='cancel'
+              onClick={(e)=> handleCancel(e)}
+              >Cancel</button>    
+            </div>
+            </div>
         </form>
-        </> 
-        : 
-    <Formik
+           </>
+           :
+           <>
+            
+<Formik
           initialValues={initialValues}
           validationSchema={basicSchemaConfirmInstagram}
           onSubmit={onSubmit}
@@ -185,8 +179,11 @@ function ConfirmInstagram({id}) {
         </Form>
         </div>
    </Formik>
-         }
-    </>
+           </>
+        }
+      </>
+    }
+    </>   
   )
 }
 

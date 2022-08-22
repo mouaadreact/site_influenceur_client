@@ -1,69 +1,26 @@
 import React, { useContext, useState } from 'react'
+import axios from 'axios'
 import {useFormik} from 'formik'
 import { basicSchemaLogin } from '../../schemas'
-import './Login.css'
-import axios from 'axios'
 import {UidContext}  from '../../contexts/AppContext'
 import { useNavigate } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+import { authLogin } from '../../redux/actions/auth.actions'
+import './Login.css'
 
 
 function Login() {
-  const uid=useContext(UidContext);
-  //console.log(uid);
-  let navigate=useNavigate();
-  //console.log(uEmail);
-  const [erreurs,setError]=useState({password:'',email:''});
+  const id=useContext(UidContext);
+  const dispatch=useDispatch();
+  const {userData}=useSelector(state=>state.auth)
+  const {userErrorMessageEmail,userErrorMessagePassword}=useSelector(state=>state.auth);
 
   //submit
-  const onSubmit= async (values,actions)=>{
+  const onSubmit=async (values,actions)=>{
     const {email,password}=values;
- 
-    try{
-     const res= await axios({
-      method:"post",
-      url:"http://localhost:5000/api/v1/auth/login",
-      data:{
-          email,
-          password,     
-          },
-      withCredentials:true
-      });
-      if(res){
-         
-         if(res.data.status==='login'){
-         switch(res.data.role){
-          case "admin":
-                 navigate('/dashboard')
-                 break;
-          case "influenceur":
-                navigate('/profil')
-                break;
-          default:
-                break;
-         }
-        }else if(res.data.status==='confirmEmail'){
-          navigate('/register/verifierEmail');
-        }else if(res.data.status==='validCompte'){
-          navigate(`/register/confirmInstagram?id=${res.data.id}`);
-        }else if(res.data.status==='completeProfil'){
-          navigate(`/register/completeProfil?id=${res.data.id}`);
-        }
-         else if(res.data.status==='conditionGenrale'){
-          navigate(`/register/conditionGenrale?id=${res.data.id}`);
-        }else{
-          console.log(res.data);
-        }
-
-
-
-      }
-    }catch(error){
-     console.log(error)
-     setError({...erreurs,...error.response.data.err});
-    }
-       
- 
-   }
+    authLogin({email,password},dispatch);
+   
+  }
 
    const {values,errors,touched,handleBlur,handleChange,handleSubmit}=useFormik({
     initialValues: {
@@ -74,12 +31,11 @@ function Login() {
     onSubmit,
    });
      
-  //console.log(erreurs);
 
   return (
     <>
       {
-        uid ? 
+        id ? 
          (
           <>
             <div className='bg-primary'>
@@ -106,7 +62,7 @@ function Login() {
                 className={ "form-control "+(errors.email && touched.email ? "border-danger" : "" )}  
               />
                 {errors.email && touched.email && <p className='text-danger'>{errors.email}</p>}
-                 { erreurs.email &&<p className='text-danger'>{erreurs.email}</p>}
+                 {userErrorMessageEmail &&<p className='text-danger'>{userErrorMessageEmail}</p>}
            </div>
 
         
@@ -121,7 +77,7 @@ function Login() {
                 className={ "form-control "+(errors.password && touched.password ? "border-danger" : "" )}  
               />
                 {errors.password && touched.password && <p className='text-danger'>{errors.password}</p>}
-                {erreurs.password && <p className='text-danger'>{erreurs.password}</p>}
+                {userErrorMessagePassword && <p className='text-danger'>{userErrorMessagePassword}</p>}
             </div>
 
               <button type="submit" className="btn btn-primary w-100">Login</button>
