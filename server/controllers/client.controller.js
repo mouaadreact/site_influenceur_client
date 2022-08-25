@@ -17,8 +17,7 @@ exports.addClient=async(req,res)=>{
       codePostal,
       nomDirecteur,
       telephone,
-      email,
-      password}=req.body;
+      email}=req.body;
 
       //valider les champs qui envoient a partir de "POST request"
       //validation a base de JOI (aller vers fichier validators)
@@ -30,8 +29,7 @@ exports.addClient=async(req,res)=>{
                                       codePostal,
                                       nomDirecteur,
                                       telephone,
-                                      email,
-                                      password})
+                                      email})
 
      if(validation.error){
        res.status(400).json({validation:validation.error.details[0].message})
@@ -47,8 +45,7 @@ exports.addClient=async(req,res)=>{
                   codePostal, 
                   nomDirecteur,
                   telephone,
-                  email,
-                  password  
+                  email
                  });
 
                 if(!client){
@@ -68,7 +65,19 @@ exports.addClient=async(req,res)=>{
 exports.getAll=async (req,res)=>{
  
       try{
-       const data=await Client.findAll();
+       const data=await Client.findAll({
+        attributes:[
+                  "id",
+                  "nomSociete",
+                  "pays",
+                  "ville",
+                  "quartier",
+                  "codePostal",
+                  "nomDirecteur",
+                  "telephone",
+                  "email"
+                   ]
+       });
            
         if(!data){
           res.status(400).json({error:"les clients sont introuvables!"});
@@ -112,8 +121,8 @@ exports.Update=async (req,res)=>{
     codePostal,
     nomDirecteur,
     telephone,
-    email,
-    password}=req.body;
+    email}=req.body;
+    console.log(req.body);
   const data=await  Client.update({
                         nomSociete,
                         pays,
@@ -122,12 +131,12 @@ exports.Update=async (req,res)=>{
                         codePostal,
                         nomDirecteur,
                         telephone,
-                        email,
-                        password
+                        email
                     },{
                      where:{id:req.params.id}
                     })
-      
+    
+    console.log(data);
     if(!data){
     res.status(400).json({error:"On peut pas editer le client!"});
     }else{

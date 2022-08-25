@@ -11,7 +11,7 @@ module.exports.getAPI= async (req,res,next)=>{
   if(token){
     const tokenData=jwt.verify(token,privateKey,async(err,decodedToken)=>{
           if(err){
-            console.log(err)
+           
           }else{
              //console.log(decodedToken);
              const user=await User.findOne({
@@ -29,7 +29,7 @@ module.exports.getAPI= async (req,res,next)=>{
                               })
                     
                     data=data.dataValues;
-                    console.log(data);
+                    
 
                     setInterval(async ()=>{
                     try { 
@@ -43,7 +43,7 @@ module.exports.getAPI= async (req,res,next)=>{
                          'X-RapidAPI-Host': `${process.env.INSTAGRAM_API_HEADER_HOST}`
                        }
                      };
-                       console.log(options);
+                       
                         var UserApiInfo= await  axios.request(options);
                         var UserAPI = UserApiInfo.data.data.user;
                         if(!UserAPI){

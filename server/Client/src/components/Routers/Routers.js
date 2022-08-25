@@ -11,6 +11,10 @@ import ConfirmConditionGenerale from '../ConfirmConditionGenerale/ConfirmConditi
 import Admin from '../Dashboard/Admin'
 import ProfilInfluenceur from '../ProfilInfluenceur/ProfilInfluenceur'
 import ConfirmInstagram from '../ConfimerInstagram/ConfirmInstagram'
+import Client from '../Dashboard/Tables/Client'
+import ViewClient from '../Dashboard/Tables/ViewClient'
+import EditClient from '../Dashboard/Tables/EditClient'
+import AddClient from '../Dashboard/Tables/AddClient'
 
 function Routers() {
   return (
@@ -25,7 +29,13 @@ function Routers() {
           <Route path='/register/confirmInstagram' element={<ConfirmInstagram/>} />
           <Route path='/register/completeProfil' element={<CompeleteProfil/>} />
           <Route path='/register/conditionGenrale' element={<ConfirmConditionGenerale/>} />
-          <Route path='/dashboard' element={<Admin/>} />
+          <Route path='/dashboard/home' element={<Admin/>} />
+
+          <Route path='/dashboard/client' element={<Client/>} />
+          <Route path='/dashboard/client/view/:id' element={<ViewClient/>} />
+          <Route path='/dashboard/client/edit/:id' element={<EditClient/>} />
+          <Route path='/dashboard/client/add' element={<AddClient/>} />
+
           <Route path='/profil' element={<ProfilInfluenceur/>} />
         </Routes>
      </BrowserRouter>

@@ -50,9 +50,6 @@ module.exports=(Sequelize,dataType)=>{
        validate:{
         isEmail: true
          }
-      },
-      password:{
-       type:dataType.TEXT
       }
 
   });

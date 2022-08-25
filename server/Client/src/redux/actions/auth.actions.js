@@ -35,7 +35,7 @@ import cookie from 'js-cookie';
      if(res.data.status==='login'){
       switch(res.data.role){
        case "admin":
-        window.location='/dashboard'
+        window.location='/dashboard/home'
               break;
        case "influenceur":
         window.location='/profil'

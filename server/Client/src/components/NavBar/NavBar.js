@@ -1,10 +1,19 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './NavBar.css'
 import {NavLink} from 'react-router-dom'
+import {UidContext}  from '../../contexts/AppContext'
 function NavBar() { 
+  const id=useContext(UidContext);
+
  return (
-  <nav className=" bg-dark navbar navbar-light navbar-expand-md py-3" 
+  <>
+     {
+      id 
+      ?
+       <></>
+      :
+      <nav className=" bg-dark navbar navbar-light navbar-expand-md py-3" 
   style={{position:"sticky",top:"0",right:"0",zIndex:"100",width:"100%"}}>
    <div className="container">
     <button data-bs-toggle="collapse" className="navbar-toggler" data-bs-target="#navcol-3">
@@ -30,7 +39,9 @@ function NavBar() {
        </div>
    </div>
 </nav>
-   
+
+     }
+   </>
  )
 }
 

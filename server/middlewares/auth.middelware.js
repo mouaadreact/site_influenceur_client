@@ -44,12 +44,10 @@ module.exports.requireAuth=async(req,res,next)=>{
           if(err){
             console.log(err)
           }else{
-             console.log(decodedToken);
              next();         
           }
     });
   }else{
-         console.log('no token')
          res.status(400).json({error:'no token'});
   }
   
