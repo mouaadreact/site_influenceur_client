@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import {Formik,Form,Field,ErrorMessage,formik} from 'formik';
+import {Formik,Form,Field,ErrorMessage,formik} from 'formik'; 
 import { basicSchemaCompleteProfil } from '../../schemas';
 import { useLocation, useNavigate } from "react-router-dom";
 import countries from '../../assets/data/countries.json';
@@ -116,13 +116,13 @@ const handleLangue =(e)=>{
   return (
     <>
       <ToastContainer autoClose={3000}/>
+      
     <Formik
           initialValues={initialValues}
           validationSchema={basicSchemaCompleteProfil}
           onSubmit={onSubmit}
     >
 
-  
 
     {  formik => (
       <div className='container w-50 shadow-lg p-3 mb-5 bg-white roundedd ' style={{marginTop:"30px"}}>

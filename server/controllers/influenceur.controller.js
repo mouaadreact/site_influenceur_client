@@ -201,7 +201,7 @@ exports.completerProfil=async (req,res)=>{
   try{
     const {
             pays,
-            ville,
+            ville, 
             quartier,
             situationFamiliale,
             nombreEnfant,

@@ -46,22 +46,22 @@ module.exports=(Sequelize,dataType)=>{
        type:dataType.INTEGER,
        allowNull:false
       }, 
-      DescriptionOffre:{
+      descriptionOffre:{
        type:dataType.TEXT,
        allowNull:false
       },
       hashtags:{
-       type:dataType.TEXT,
+       type:dataType.TEXT, 
        allowNull:false,
        validate:{
-        is:/^(#[a-zA-Z0-9]+,? *)*#[a-zA-Z0-9]+$/gi
+        is:/^(#[a-zA-Z0-9]+,? *)*#[a-zA-Z0-9]+(\s)?$/gi
        }
       },
       compteTagger:{
        type:dataType.TEXT,
        allowNull:false,
        validate:{
-        is:/^(@[a-zA-Z0-9]+,? *)*@[a-zA-Z0-9]+$/gi
+        is:/^(@[a-zA-Z0-9]+,? *)*@[a-zA-Z0-9]+(\s)?$/gi
        }
       }
 

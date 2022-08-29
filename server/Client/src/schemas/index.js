@@ -34,3 +34,35 @@ export const basicSchemaConfirmInstagram=yup.object().shape({
     profession: yup.string().required("required"),
     //langue: yup.array().required("required")
    });
+
+
+//------------------------------
+//Campagne Shema Basic
+const hashtageRule=/^(#[a-zA-Z0-9]+,? *)*#[a-zA-Z0-9]+(\s)?$/gi;
+const compteTaggeRule=/^(@[a-zA-Z0-9]+,? *)*@[a-zA-Z0-9]+(\s)?$/gi;
+
+export const basicSchemaCampagne=yup.object().shape({
+   "titre":yup.string().required("required"),
+   "dateDebut":yup.date("date form invalid!").required("required"),
+   "dateFin":yup.date("date form invalid!").required("required"),
+   "presence":yup.boolean("doit etre oui/non").required("required"),
+   "nombreInfluenceur":yup.number().required("required"), 
+   "descriptionOffre":yup.string().required("required"),
+   "hashtags":yup.string().matches(hashtageRule,'hashtage only have forma #hashtage #hashtage').required("required"),
+   "compteTagger":yup.string().matches(compteTaggeRule,"compate Tagger have only forma @compte @compte").required("required"),
+   "ClientId":yup.number().required("required")
+})
+
+export const basicSchemaCampagneUpdate=yup.object().shape({
+   "titre":yup.string(),
+   "dateDebut":yup.date("date form invalid!"),
+   "dateFin":yup.date("date form invalid!"),
+   "presence":yup.boolean("doit etre oui/non"),
+   "nombreInfluenceur":yup.number(), 
+   "descriptionOffre":yup.string(),
+   "hashtags":yup.string().matches(hashtageRule,'hashtage only have forma #hashtage #hashtage'),
+   "compteTagger":yup.string().matches(compteTaggeRule,"compate Tagger have only forma @compte @compte"),
+   "ClientId":yup.number(),
+   
+
+})

@@ -11,10 +11,14 @@ import ConfirmConditionGenerale from '../ConfirmConditionGenerale/ConfirmConditi
 import Admin from '../Dashboard/Admin'
 import ProfilInfluenceur from '../ProfilInfluenceur/ProfilInfluenceur'
 import ConfirmInstagram from '../ConfimerInstagram/ConfirmInstagram'
-import Client from '../Dashboard/Tables/Client'
-import ViewClient from '../Dashboard/Tables/ViewClient'
-import EditClient from '../Dashboard/Tables/EditClient'
-import AddClient from '../Dashboard/Tables/AddClient'
+import Client from '../Dashboard/Tables/Client/Client'
+import ViewClient from '../Dashboard/Tables/Client/ViewClient'
+import EditClient from '../Dashboard/Tables/Client/EditClient'
+import AddClient from '../Dashboard/Tables/Client/AddClient'
+import Campagne from '../Dashboard/Tables/Campagne/Campagne'
+import ViewCampagne from '../Dashboard/Tables/Campagne/ViewCampagne'
+import EditCampagne from '../Dashboard/Tables/Campagne/EditCampagne'
+import AddCampagne from '../Dashboard/Tables/Campagne/AddCampagne'
 
 function Routers() {
   return (
@@ -30,12 +34,17 @@ function Routers() {
           <Route path='/register/completeProfil' element={<CompeleteProfil/>} />
           <Route path='/register/conditionGenrale' element={<ConfirmConditionGenerale/>} />
           <Route path='/dashboard/home' element={<Admin/>} />
-
+          {/*Client table */}
           <Route path='/dashboard/client' element={<Client/>} />
           <Route path='/dashboard/client/view/:id' element={<ViewClient/>} />
           <Route path='/dashboard/client/edit/:id' element={<EditClient/>} />
           <Route path='/dashboard/client/add' element={<AddClient/>} />
-
+          {/*Campagne table */}
+          <Route path='/dashboard/campagne' element={<Campagne/>} />
+          <Route path='/dashboard/campagne/view/:id' element={<ViewCampagne/>} />
+          <Route path='/dashboard/campagne/edit/:id' element={<EditCampagne/>} />
+          <Route path='/dashboard/campagne/add' element={<AddCampagne/>} />
+          {/*Profil influenceur */}
           <Route path='/profil' element={<ProfilInfluenceur/>} />
         </Routes>
      </BrowserRouter>

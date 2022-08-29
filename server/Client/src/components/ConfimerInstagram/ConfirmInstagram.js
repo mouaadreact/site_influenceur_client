@@ -119,7 +119,7 @@ function ConfirmInstagram({id}) {
           <div className='text-danger'>
             <ErrorMessage name='prenom'/>
         </div>
-      </div>
+      </div> 
 
       <div className="form-outline mb-4">
         <div className="form-check form-check-inline">

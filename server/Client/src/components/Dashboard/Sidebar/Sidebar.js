@@ -19,6 +19,7 @@ function Sidebar() {
     <div className="list-group list-group-flush my-3">
         <NavLink  to="/dashboard/home" className="list-group-item list-group-item-action bg-transparent second-text">Dashboard</NavLink>
         <NavLink to="/dashboard/client" className="list-group-item list-group-item-action bg-transparent second-text ">Client</NavLink>
+        <NavLink to="/dashboard/campagne" className="list-group-item list-group-item-action bg-transparent second-text ">Campagne</NavLink>
         <NavLink to="/dashboard/" className="list-group-item list-group-item-action bg-transparent second-text ">Profil</NavLink>
         <NavLink to="/dashboard/" className="list-group-item list-group-item-action bg-transparent second-text ">Statistics</NavLink>
         <NavLink to="/dashboard/" className="list-group-item list-group-item-action bg-transparent second-text ">Setting</NavLink>

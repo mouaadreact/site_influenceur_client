@@ -65,11 +65,18 @@
      //trouve tout les interet d'un campagne
     exports.getIdCampagne=async (req,res)=>{
      try{
-      const data=await InteretCampagne.findAll({
+      /*const data=await InteretCampagne.findAll({
        where:{
         CampagneId:req.params.campagneId
-       }
-      });
+       },
+       include:Interet
+      });*/
+      const data=await Campagne.findAll({
+        where:{
+          id:req.params.campagneId
+        },
+        include:[Interet]
+      })
           
           if(!data){
           res.status(400).json({error:"On peut pas trouve les interet d'un campagne"});

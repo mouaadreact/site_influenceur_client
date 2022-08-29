@@ -1,4 +1,4 @@
-const {Campagne}=require("../models");
+const {Campagne, Client, InteretCampagne, Interet}=require("../models");
 
 //-------------------------------------------------------------
 //Remarque: en besoin de utilise IF ELSE apres retourne des données
@@ -13,33 +13,34 @@ exports.addCampagne=async(req,res)=>{
      dateFin,
      presence,
      nombreInfluenceur, 
-     DescriptionOffre,
+     descriptionOffre,
      hashtags,
-     compteTagger
+     compteTagger,
+     ClientId,
     }=req.body; 
-
-    const data=await Campagne.create({
+    console.log(req.body);
+   const data=await Campagne.create({
                                 titre,
                                 dateDebut,
                                 dateFin,
                                 presence,
                                 nombreInfluenceur, 
-                                DescriptionOffre,
+                                descriptionOffre,
                                 hashtags,
-                                compteTagger
+                                compteTagger,
+                                ClientId
                                   })
-        
+
       if(!data){
       res.status(400).json({error:"On peut pas créer une campagne!"});
       }else{
       res.status(200).json(data);
+
+ 
       }
    }catch(err){  //testing error validators
     res.status(400).json({
-      error:{
-       message:err.errors[0].message,
-       attribut:err.errors[0].path
-    }
+      error:err
     }); //using 
    }
 }
@@ -49,14 +50,28 @@ exports.addCampagne=async(req,res)=>{
 //afficher tout les Campagnes
 exports.getAll=async (req,res)=>{
   try{
-   const data=await Campagne.findAll()
+   const data=await Campagne.findAll({
+    attributes:[
+      "id",
+      "titre",
+      "dateDebut",
+      "dateFin",
+      "presence",
+      "nombreInfluenceur",
+      "descriptionOffre",
+      "hashtags",
+      "compteTagger",
+      "ClientId"   
+    ],
+    include:[Client,Interet]
+   })
     if(!data){
       res.status(400).json({error:"les campagnes sont introuvables!"});
     }else{
       res.status(200).json(data);
     }
   }catch(err){
-   res.status(400).json({err:err.errors[0].message});
+   res.status(400).json({err:err});
   }
   
 }
@@ -67,7 +82,20 @@ exports.getId=async (req,res)=>{
  
   try{ 
    const data=await Campagne.findOne({
-                     where:{id:req.params.id}
+                     where:{id:req.params.id},
+                     attributes:[
+                      "id",
+                      "titre",
+                      "dateDebut",
+                      "dateFin",
+                      "presence",
+                      "nombreInfluenceur",
+                      "descriptionOffre",
+                      "hashtags",
+                      "compteTagger",
+                      "ClientId"
+                    ],
+                    include:[Client,Interet]
                      });
        
     if(!data){
@@ -86,7 +114,7 @@ exports.getId=async (req,res)=>{
 
 exports.filtrage=async (req,res)=>{
        
-      
+      //!!!!!!!
 }
 
 //-------------------------------------------------
@@ -102,20 +130,22 @@ exports.update=async (req,res)=>{
    dateFin,
    presence,
    nombreInfluenceur,  
-   DescriptionOffre,
+   descriptionOffre,
    hashtags,
-   compteTagger
+   compteTagger,
+   ClientId
   }=req.body; 
-
+ console.log(req.body);
   const data=await  Campagne.update({
                     titre,
                     dateDebut,
                     dateFin,
                     presence,
                     nombreInfluenceur, 
-                    DescriptionOffre,
+                    descriptionOffre,
                     hashtags,
-                    compteTagger
+                    compteTagger,
+                    ClientId
                      },{
                        where:{id:req.params.id}
                      })
@@ -124,9 +154,11 @@ exports.update=async (req,res)=>{
     res.status(400).json({error:"On peut pas editer la campagne!"});
     }else{
       res.status(200).json(data);
+
+  
     }
  }catch(err){
-  res.status(400).json({err:err.errors[0].message});
+  res.status(400).json({err:err});
  }
 }
 
@@ -145,6 +177,6 @@ exports.delete= async (req,res)=>{
       res.status(200).json(data);
     }
  }catch(err){
-  res.status(400).json({err:err.errors[0].message});
+  res.status(400).json({err:err});
  }
 }
