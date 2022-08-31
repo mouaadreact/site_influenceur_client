@@ -19,6 +19,7 @@ import Campagne from '../Dashboard/Tables/Campagne/Campagne'
 import ViewCampagne from '../Dashboard/Tables/Campagne/ViewCampagne'
 import EditCampagne from '../Dashboard/Tables/Campagne/EditCampagne'
 import AddCampagne from '../Dashboard/Tables/Campagne/AddCampagne'
+import GalerieCampagne from '../Dashboard/Tables/GalerieCampagne/GalerieCampagne'
 
 function Routers() {
   return (
@@ -44,7 +45,11 @@ function Routers() {
           <Route path='/dashboard/campagne/view/:id' element={<ViewCampagne/>} />
           <Route path='/dashboard/campagne/edit/:id' element={<EditCampagne/>} />
           <Route path='/dashboard/campagne/add' element={<AddCampagne/>} />
+          {/*Galerie Campage */}
+          <Route path='/dashboard/galerieCampagne' element={<GalerieCampagne/>} />
+          <Route path='/dashboard/galerieCampagne/add' element={<AddCampagne/>} />
           {/*Profil influenceur */}
+
           <Route path='/profil' element={<ProfilInfluenceur/>} />
         </Routes>
      </BrowserRouter>

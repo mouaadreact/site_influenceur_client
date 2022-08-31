@@ -14,7 +14,6 @@ exports.addClient=async(req,res)=>{
       pays,
       ville,
       quartier,
-      codePostal,
       nomDirecteur,
       telephone,
       email}=req.body;
@@ -26,7 +25,6 @@ exports.addClient=async(req,res)=>{
                                       pays,
                                       ville,
                                       quartier,
-                                      codePostal,
                                       nomDirecteur,
                                       telephone,
                                       email})
@@ -41,8 +39,7 @@ exports.addClient=async(req,res)=>{
                   nomSociete,
                   pays,
                   ville,
-                  quartier,
-                  codePostal, 
+                  quartier, 
                   nomDirecteur,
                   telephone,
                   email
@@ -72,7 +69,6 @@ exports.getAll=async (req,res)=>{
                   "pays",
                   "ville",
                   "quartier",
-                  "codePostal",
                   "nomDirecteur",
                   "telephone",
                   "email"
@@ -118,17 +114,15 @@ exports.Update=async (req,res)=>{
     pays,
     ville,
     quartier,
-    codePostal,
     nomDirecteur,
     telephone,
     email}=req.body;
-    console.log(req.body);
+   
   const data=await  Client.update({
                         nomSociete,
                         pays,
                         ville,
                         quartier,
-                        codePostal,
                         nomDirecteur,
                         telephone,
                         email
@@ -136,7 +130,7 @@ exports.Update=async (req,res)=>{
                      where:{id:req.params.id}
                     })
     
-    console.log(data);
+    
     if(!data){
     res.status(400).json({error:"On peut pas editer le client!"});
     }else{

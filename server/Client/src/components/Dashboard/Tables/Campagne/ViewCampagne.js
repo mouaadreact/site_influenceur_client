@@ -20,7 +20,7 @@ function ViewCampagne() {
 <div className="row">
     <div className="col-md-12">
         <div className="card">
-            <div className="card-header">
+            <div className="card-header"> 
                 <h4>Client View Details 
                     <a href="/dashboard/campagne" className="btn btn-danger float-end">BACK</a>
                 </h4>

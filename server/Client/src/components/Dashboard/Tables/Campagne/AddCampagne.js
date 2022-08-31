@@ -69,7 +69,7 @@ useEffect(()=>{
  
 
   const onSubmit=async (values,actions)=>{
-   
+  console.log(interetMult)
   addCampagne(values,interetMult,dispatch);
   }
   
@@ -99,7 +99,7 @@ useEffect(()=>{
             
             <div className="mb-3">
                 <label 
-                className="form-label"
+                className="form-label" 
                 htmlFor="titre"
                 >Titre</label>
 

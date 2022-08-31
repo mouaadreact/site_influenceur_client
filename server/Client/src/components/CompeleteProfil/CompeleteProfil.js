@@ -81,7 +81,7 @@ function CompeleteProfil() {
     countries.pays.forEach(ele=>{
       const op={
         key:ele.name,
-        value:ele.name
+        value:ele.name 
         }
       setOptionsPays((options)=>[...options,op])     
      })

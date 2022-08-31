@@ -55,12 +55,7 @@ function ViewClient() {
                                 {oneClientData.quartier}
                                 </p>
                             </div>
-                            <div className="mb-3">
-                                <label>Client Code Postal </label>
-                                <p className="form-control">
-                                {oneClientData.codePostal}
-                                </p>
-                            </div>
+                            
                             <div className="mb-3">
                                 <label>Client Directeur Name </label>
                                 <p className="form-control">

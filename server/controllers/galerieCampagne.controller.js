@@ -4,30 +4,44 @@ const {GalerieCampagne,Campagne}=require("../models");
 //-------------------------------------------
 //Remarque: en besoin de utilise IF ELSE apres retourne des données
 //car si n'a fait pas il exits une error d'envoyer deux(2) response --> "si on a une error dans request"
-
+ 
 //upload les images de campagne dans table GalerieCampagne
 exports.upload=async (req,res)=>{
- try{
-  const data=await GalerieCampagne.create({
-  //enregistrer URL d'image exist dans fichier upload->galerieCampagne
-    image:`${process.env.URL_SERVER}:${process.env.PORT}/api/v1/profile/${req.body.campagneId}/${req.file.filename}`,
-    //utilisant CampagneId pour specifier les images de chaque Campagne
-    CampagneId:req.body.campagneId
+
+  //console.log(req)
+  
+  /*
+  let GalerieValue=[];
+  req.files.forEach((ele)=>{
+    GalerieValue.push({
+      CampagneId:req.body.campagneId,
+      //enregistrer URL d'image exist dans fichier upload->galerieCampagne
+      image:`${process.env.URL_SERVER}:${process.env.PORT}/api/v1/galerieCampagne/${req.body.campagneId}/${ele.filename}`
+    })
   })
 
+
+  console.log(GalerieValue)
+
+    const data=await GalerieCampagne.bulkCreate(GalerieValue);
+
+
+
+  
     if(!data){
       res.status(400).json({error:"Problem dans l'upload d'image ! "});
     }
     else{
       res.status(200).json({
       access:'1',
-      'path':data.dataValues.image
+      'data':data
       })
     }
  }catch(err){
   res.status(400).json({error:err})
  }
-
+*/
+ 
 }
 
 //-------------------------------------------------------

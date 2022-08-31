@@ -1,6 +1,7 @@
 import axios from 'axios';
 import {startCampagne,errorCampagne,successCampagne,successGetAllCampagne,successGetOneCampagne} from '../reducers/campagne.reducer';
 
+
 //-------
 export const addCampagne = async (data,interetData,dispatch)=>{
   dispatch(startCampagne());
@@ -10,14 +11,8 @@ export const addCampagne = async (data,interetData,dispatch)=>{
       method:"post",
       url:`${process.env.REACT_APP_URL_SERVER}/api/v1/campagne`,
       withCredentials:true,
-      /*data:{
-        ...data,
-        interet:interetData
-      }*/
-      data
-     
-      })
-      console.log(res.data.id)
+      data });
+
       interetData.forEach(async (ele) => {
          await axios.post(`${process.env.REACT_APP_URL_SERVER}/api/v1/interetCampagne/${ele}/${res.data.id}`)
       });
@@ -79,8 +74,36 @@ export const deleteCampagne = async (id,dispatch)=>{
 }
 
 //-----------
+export const deleteInteretCampagne=async (id)=>{
+  try{
+    const res = await axios({
+      method:"delete",
+      url:`${process.env.REACT_APP_URL_SERVER}/api/v1/interetCampagne/campagne/${id}`
+    })
+  
+  }catch(err){
+    console.log(err);
+  }
+}
 
-export const updateCampagne = async (id,data,dispatch)=>{
+//------
+export const addInteretToCampagne=async (interetData,idCampagne)=>{
+  try{
+    interetData.forEach(async (ele) => {
+     const res= await axios({
+      method:"post",
+      url:`${process.env.REACT_APP_URL_SERVER}/api/v1/interetCampagne/${ele.id}/${idCampagne}`
+       });
+    window.location.href="/dashboard/campagne";
+
+   });
+  }catch(err){
+    console.log(err)
+  }
+}
+
+//-------
+export const updateCampagne = async (id,data,interetData,dispatch)=>{
   dispatch(startCampagne());
   try{
      const res = await axios({
@@ -89,11 +112,14 @@ export const updateCampagne = async (id,data,dispatch)=>{
       withCredentials:true,
       data
     })
+    
+    await deleteInteretCampagne(id);
+    await addInteretToCampagne(interetData,id);
+
     dispatch(successCampagne());
-    window.location.href="/dashboard/campagne";
+    //window.location.href="/dashboard/campagne";
      
   }catch(err){
     dispatch(errorCampagne())
   }
  }
-

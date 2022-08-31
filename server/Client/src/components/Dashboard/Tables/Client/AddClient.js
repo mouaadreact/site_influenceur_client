@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch} from 'react-redux';
 import { addClient } from '../../../../redux/actions/client.actions';
+import marocVille from '../../../../assets/data/marocAddress/ville.json'
+import marocQuartier from '../../../../assets/data/marocAddress/quartier.json'
 
 function AddClient() {
  const dispatch=useDispatch();
@@ -34,7 +36,7 @@ function AddClient() {
          <div className="col-md-12">
              <div className="card">
                  <div className="card-header">
-                     <h4>Client View Details 
+                     <h4>Client Add 
                          <a href="/dashboard/client" className="btn btn-danger float-end">BACK</a>
                      </h4>
                  </div>
@@ -52,48 +54,50 @@ function AddClient() {
                      </div>
                       
                      <div className="mb-3">
-                       <label htmlFor="pays">pays: </label>
-                        <input 
-                         name="pays"
-                         id="pays" 
-                         type="text"
-                         className="form-control" 
-                         onChange={(e)=>handleChange(e)}
-                        />
+                       <label className='mb-2'>pays: </label>
+                        <select 
+                          name="pays"
+                          className='form-control'
+                          onChange={(e)=>handleChange(e)}
+                        >
+                           <option hidden={true} className="text-muted">Selection votre Pays</option>
+                           <option value="Maroc">Maroc</option>
+                        </select>
                      </div>
 
                      <div className="mb-3">
-                       <label htmlFor="ville">ville: </label>
-                        <input 
-                         name="ville"
-                         id="ville" 
-                         type="text"
-                         className="form-control" 
-                         onChange={(e)=>handleChange(e)}
-                        />
+                        <label className='mb-2'>ville: </label>
+                        <select 
+                              name="ville"
+                              className='form-control'
+                              onChange={(e)=>handleChange(e)}
+                            >
+                              <option hidden={true} className="text-muted">Selection votre ville</option>
+                              {
+                                marocVille['ville'].map((ele,index)=>{
+                                  return <option key={index} value={ele}>{ele}</option>    
+                                })
+                              }
+                        </select>
                      </div>
 
                      <div className="mb-3">
-                       <label htmlFor="quartier">quartier: </label>
-                        <input 
-                         name="quartier"
-                         id="quartier" 
-                         type="text"
-                         className="form-control" 
-                         onChange={(e)=>handleChange(e)}
-                        />
+                        <label className='mb-2'>quartier: </label>
+                        <select 
+                              name="quartier"
+                              className='form-control'
+                              onChange={(e)=>handleChange(e)}
+                            >
+                              <option hidden={true} className="text-muted">Selection votre quartier</option>
+                              {
+                                marocQuartier[clientInputValue?.ville]?.map((ele,index)=>{
+                                  return <option key={index} value={ele}>{ele}</option>    
+                                })
+                              }
+                        </select>
                      </div>
 
-                     <div className="mb-3">
-                       <label htmlFor="codePostal">code postal: </label>
-                        <input 
-                         name="codePostal"
-                         id="codePostal" 
-                         type="text"
-                         className="form-control" 
-                         onChange={(e)=>handleChange(e)}
-                        />
-                     </div>
+                     
 
                      <div className="mb-3">
                        <label htmlFor="nomDirecteur">nom directeur: </label>

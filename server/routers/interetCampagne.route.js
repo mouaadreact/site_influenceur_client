@@ -9,9 +9,10 @@ router.route('/')
       
 router.route('/interet/:interetId')
       .get(interetCampagneController.getIdInteret)
-
+  
 router.route('/campagne/:campagneId')
       .get(interetCampagneController.getIdCampagne)
+      .delete(interetCampagneController.deleteInteretCampagne)
 
 router.route('/:interetId/:campagneId')
       .post(interetCampagneController.addInteretCampagne)

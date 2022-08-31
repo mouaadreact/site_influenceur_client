@@ -18,7 +18,7 @@ exports.addCampagne=async(req,res)=>{
      compteTagger,
      ClientId,
     }=req.body; 
-    console.log(req.body);
+    
    const data=await Campagne.create({
                                 titre,
                                 dateDebut,
@@ -135,7 +135,7 @@ exports.update=async (req,res)=>{
    compteTagger,
    ClientId
   }=req.body; 
- console.log(req.body);
+
   const data=await  Campagne.update({
                     titre,
                     dateDebut,

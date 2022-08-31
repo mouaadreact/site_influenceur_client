@@ -24,10 +24,6 @@ module.exports=(Sequelize,dataType)=>{
        type:dataType.STRING(100),
        allowNull:false
       },
-      codePostal:{
-       type:dataType.INTEGER,
-       allowNull:false
-      },
       nomDirecteur:{
        type:dataType.STRING(100),
        allowNull:false,

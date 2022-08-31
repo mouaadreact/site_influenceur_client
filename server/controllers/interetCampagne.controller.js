@@ -66,7 +66,7 @@
     exports.getIdCampagne=async (req,res)=>{
      try{
       /*const data=await InteretCampagne.findAll({
-       where:{
+       where:{ 
         CampagneId:req.params.campagneId
        },
        include:Interet
@@ -130,7 +130,7 @@
       });
           
           if(!data){
-          res.status(400).json({error:"On peut pas Supprimer l'interetCampagne !"});
+          res.status(400).json({error:"On peut pas Supprimer ligne d'interetCampagne !"});
           }else{
           res.status(200).json(data);
           } 
@@ -138,3 +138,23 @@
       res.status(400).json(err);
      }
     }
+
+//------------------------------
+exports.deleteInteretCampagne=async(req,res)=>{
+  try{
+    const data=await InteretCampagne.destroy({
+      where:{
+       CampagneId:req.params.campagneId
+      }
+     });
+
+     if(!data){
+      res.status(400).json({error:"On peut pas Supprimer l'interet d'un Campagne !"});
+      }else{
+      res.status(200).json(data);
+      } 
+
+  }catch(err){
+    res.status(400).json(err);
+  }
+}

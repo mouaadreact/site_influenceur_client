@@ -4,7 +4,7 @@ const galerieCampagneController=require("../controllers/galerieCampagne.controll
 const multer=require("multer");
 const path=require("path");
 
-//id of element 
+//id of element  
 const storage=multer.diskStorage({
  destination:'./uploads/images/galerieCampagne',
  filename:(req,file,cb)=>{ //change date vers random
@@ -21,7 +21,7 @@ const upload=multer({
 }) 
 
 router.route("/")
-      .post(upload.single('image'),galerieCampagneController.upload)
+      .post(upload.array('image'),galerieCampagneController.upload)
       .get(galerieCampagneController.getAll);
  
 router.route("/:campagneId")
