@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import {AiFillEdit,AiFillDelete} from 'react-icons/ai'
 import { useDispatch, useSelector } from 'react-redux'
 import { deleteCampagne, getAllCampagne } from '../../../../redux/actions/campagne.actions';
+import dateformat from 'dateformat'
 
 function Table({name,fieldsTable}) {
   const dispatch=useDispatch();
@@ -52,9 +53,12 @@ function Table({name,fieldsTable}) {
                   return (<tr key={index+1} className="text-center">
                       <td key={index+1}>{ele.id}</td>
                       <td>{ele.titre}</td>
-                      <td>{ele.dateDebut}</td>   
-                      <td>{ele.dateFin}</td>   
-                      <td>{ele.nombreInfluenceur}</td>  
+                      <td>{dateformat(ele.dateDebut,"dd/mm/yyyy")}</td>   
+                      <td>{dateformat(ele.dateFin,"dd/mm/yyyy")}</td>   
+                      <td>{
+                        ele.nombreInfluenceur<10 
+                        ?"0"+ele.nombreInfluenceur 
+                        : ele.nombreInfluenceur}</td>  
                       <td >
                           <div 
                           className={"btn btn-" + (ele.presence == true ? "success" : "danger")}

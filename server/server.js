@@ -73,7 +73,7 @@ app.get('/jwtid',requireAuth,(req,res)=>{
 
 //app function route
 //--------------------
-app.use(express.static('uploads/galerieCampagne'));
+app.use('/api/v1/galerieCampagne/:CampagneId',express.static('uploads/images/galerieCampagne'));
 //routers
 app.use('/api/v1/client',ClientRoute);
 app.use('/api/v1/interet',InteretRoute);

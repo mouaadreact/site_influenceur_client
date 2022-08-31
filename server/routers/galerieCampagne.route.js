@@ -21,10 +21,11 @@ const upload=multer({
 }) 
 
 router.route("/")
-      .post(upload.array('image'),galerieCampagneController.upload)
+      .post(upload.array('images'),galerieCampagneController.upload)
       .get(galerieCampagneController.getAll);
  
 router.route("/:campagneId")
-      .get(galerieCampagneController.getId);
+      .get(galerieCampagneController.getId)
+      .delete(galerieCampagneController.deleteGalerieCampagne)
 
 module.exports=router;

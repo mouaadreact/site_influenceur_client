@@ -12,6 +12,9 @@ import {useDispatch, useSelector} from 'react-redux';
 import './CompeleteProfil.css';
 import { compeleteProfil } from '../../redux/actions/register.actions';
 
+
+
+//-----
 function CompeleteProfil() {
 
  const location=useLocation();

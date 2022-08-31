@@ -82,7 +82,7 @@ function Statistics() {
                     <div className="col">
                         <table className="table bg-white rounded shadow-sm  table-hover">
                             <thead>
-                                <tr class="text-center">
+                                <tr className="text-center">
                                     <th scope="col" width="50">#</th>
                                     <th scope="col">Product</th>
                                     <th scope="col">Customer</th>
@@ -91,48 +91,48 @@ function Statistics() {
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="text-center">
+                                <tr className="text-center">
                                     <th scope="row">1</th>
                                     <td>Television</td>
                                     <td>Jonny</td>
                                     <td>$1200</td>
                                     <td>
-                                    <a href="#"  class="btn btn-warning text-white crud-btn" >edit</a>
-                                    <a href="#"  class="btn btn-danger crud-btn">delete</a>
-                                    <a href="#"  class="btn btn-success crud-btn">view</a>
+                                    <a href="#"  className="btn btn-warning text-white crud-btn" >edit</a>
+                                    <a href="#"  className="btn btn-danger crud-btn">delete</a>
+                                    <a href="#"  className="btn btn-success crud-btn">view</a>
                                     </td>
                                 </tr>
-                                <tr class="text-center">
+                                <tr className="text-center">
                                     <th scope="row">2</th>
                                     <td>Laptop</td>
                                     <td>Kenny</td>
                                     <td>$750</td>
                                     <td>
-                                    <a href="#"  class="btn btn-warning text-white crud-btn" >edit</a>
-                                    <a href="#"  class="btn btn-danger crud-btn">delete</a>
-                                    <a href="#"  class="btn btn-success crud-btn">view</a>
+                                    <a href="#"  className="btn btn-warning text-white crud-btn" >edit</a>
+                                    <a href="#"  className="btn btn-danger crud-btn">delete</a>
+                                    <a href="#"  className="btn btn-success crud-btn">view</a>
                                     </td>
                                 </tr>
-                                <tr class="text-center">
+                                <tr className="text-center">
                                     <th scope="row">3</th>
                                     <td>Cell Phone</td>
                                     <td>Jenny</td>
                                     <td>$600</td>
                                     <td>
-                                    <a href="#"  class="btn btn-warning text-white crud-btn" >edit</a>
-                                    <a href="#"  class="btn btn-danger crud-btn">delete</a>
-                                    <a href="#"  class="btn btn-success crud-btn">view</a>
+                                    <a href="#"  className="btn btn-warning text-white crud-btn" >edit</a>
+                                    <a href="#"  className="btn btn-danger crud-btn">delete</a>
+                                    <a href="#"  className="btn btn-success crud-btn">view</a>
                                     </td>
                                 </tr>
-                                <tr class="text-center">
+                                <tr className="text-center">
                                     <th scope="row">4</th>
                                     <td>Fridge</td>
                                     <td>Killy</td>
                                     <td>$300</td>
                                     <td>
-                                    <a href="#" class="btn btn-warning text-white crud-btn" >edit</a>
-                                    <a href="#" class="btn btn-danger crud-btn">delete</a>
-                                    <a href="#" class="btn btn-success crud-btn">view</a>
+                                    <a href="#" className="btn btn-warning text-white crud-btn" >edit</a>
+                                    <a href="#" className="btn btn-danger crud-btn">delete</a>
+                                    <a href="#" className="btn btn-success crud-btn">view</a>
                                     </td>
                                 </tr>
                                 

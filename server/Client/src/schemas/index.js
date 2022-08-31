@@ -43,8 +43,19 @@ const compteTaggeRule=/^(@[a-zA-Z0-9]+,? *)*@[a-zA-Z0-9]+(\s)?$/gi;
 
 export const basicSchemaCampagne=yup.object().shape({
    "titre":yup.string().required("required"),
-   "dateDebut":yup.date("date form invalid!").required("required"),
-   "dateFin":yup.date("date form invalid!").required("required"),
+   "dateDebut":yup.date("date form invalid!").min(new Date(),'Please choose future date').required("required"),
+   "dateFin":yup.date("date form invalid!")
+   .when('dateDebut',
+                    (dateDebut, schema) => {
+                                if (dateDebut) {
+                                const dayAfter = new Date(dateDebut.getTime() + 86400000);
+                              
+                                    return schema.min(dayAfter, 'End date has to be after than start date');
+                                  }
+                              
+                                  return schema;
+                                
+                            }).required("required"),
    "presence":yup.boolean("doit etre oui/non").required("required"),
    "nombreInfluenceur":yup.number().required("required"), 
    "descriptionOffre":yup.string().required("required"),

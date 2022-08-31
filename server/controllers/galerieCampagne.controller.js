@@ -8,24 +8,20 @@ const {GalerieCampagne,Campagne}=require("../models");
 //upload les images de campagne dans table GalerieCampagne
 exports.upload=async (req,res)=>{
 
-  //console.log(req)
   
-  /*
+  
+  try{
   let GalerieValue=[];
   req.files.forEach((ele)=>{
     GalerieValue.push({
-      CampagneId:req.body.campagneId,
+      CampagneId:req.body.CampagneId,
       //enregistrer URL d'image exist dans fichier upload->galerieCampagne
-      image:`${process.env.URL_SERVER}:${process.env.PORT}/api/v1/galerieCampagne/${req.body.campagneId}/${ele.filename}`
+      image:`${process.env.URL_SERVER}:${process.env.PORT}/api/v1/galerieCampagne/${req.body.CampagneId}/${ele.filename}`
     })
   })
 
 
-  console.log(GalerieValue)
-
     const data=await GalerieCampagne.bulkCreate(GalerieValue);
-
-
 
   
     if(!data){
@@ -40,7 +36,7 @@ exports.upload=async (req,res)=>{
  }catch(err){
   res.status(400).json({error:err})
  }
-*/
+
  
 }
 
@@ -82,4 +78,26 @@ exports.getId=async (req,res)=>{
   res.status(400).json({error:err})
  }
 
+}
+
+exports.deleteGalerieCampagne=async (req,res)=>{
+  try{
+    const {url}=req.query; 
+    
+    const data=await GalerieCampagne.destroy({
+      where:{
+        CampagneId:req.params.campagneId,
+        image:url
+      }
+     })
+     //fs.rmdirSync('...',{recursive:true})
+   
+       if(!data){
+         res.status(400).json({error:"On peut supprimer l'image de cette campagne"})
+       }else{
+         res.status(200).json(data);
+       }
+  }catch(err){
+
+  }
 }

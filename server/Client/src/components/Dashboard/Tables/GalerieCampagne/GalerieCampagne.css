@@ -4,10 +4,12 @@
     border: 0;
     color: #FFF;
     border-radius: 6px;
-    margin-top: 5px;
+    margin-top: 2px;
+    margin-bottom: 8px;
     float: right;
 }
 
 .button-delete:hover{
  background-color: rgb(228, 75, 75);
 }
+

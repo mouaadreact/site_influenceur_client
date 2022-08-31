@@ -1,30 +1,39 @@
 import React, { useState } from 'react'
-import axios from 'axios'
+import { useDispatch, useSelector} from 'react-redux';
+import { uploadGalerieCampagne } from '../../../../redux/actions/galerieCampagne.actions';
+import { ToastContainer, toast } from 'react-toastify'; 
+import 'react-toastify/dist/ReactToastify.css';
 
-function AddGalerieCampagne({handleAdd,CampagneData}) {
-
+//-----
+function AddGalerieCampagne({handleChangeButton,CampagneData}) {
+  const dispatch=useDispatch();
   const [CampagneId,setCampagneId]=useState("");
   const [files,setFiles]=useState([]);
+  
 
   const handleChangeFiles=(e)=>{
-    e.preventDefault();
-    setFiles(e.target.files)
+      e.preventDefault();
+      setFiles(e.target.files)
   }
   const handleSubmit=async(e)=>{
-    e.preventDefault()
+     e.preventDefault()
+
      const data=new FormData();
      data.append('CampagneId',CampagneId);
-     console.log(files.length)
+
      for(let i=0;i<files.length;i++)
-       {data.append('file',files[i])}
-     await axios.post(`${process.env.REACT_APP_URL_SERVER}/api/v1/galerieCampagne`,data);
+       {data.append('images',files[i])}
+
+     uploadGalerieCampagne(data,dispatch);
   }
  
   return (
     <>
+      <ToastContainer autoClose={2000}/>
+
      <div className="card-header">
      <a 
-     onClick={(e)=>handleAdd(e)}
+     onClick={(e)=>handleChangeButton(e)}
      className="btn btn-success float-end">
      view Galerie</a>
      <h4>Galerie Campagne</h4>

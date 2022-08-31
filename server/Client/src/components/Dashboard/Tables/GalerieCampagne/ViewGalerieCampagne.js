@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllCampagne } from '../../../../redux/actions/campagne.actions';
@@ -9,6 +10,8 @@ function ViewGalerieCampagne() {
  const {allCampagneData}=useSelector(state=>state.campagne);
  const [optionsClient,setOptionsClient]=useState([]);
  const [add,setAdd]=useState(false);
+
+ const [idCampagne,setIdCampagne]=useState("");
 
  const fetchDataCampagne = useCallback(() => {
   getAllCampagne(dispatch);
@@ -23,14 +26,30 @@ useEffect(() => {
    fetchDataCampagne();
 },[fetchDataCampagne]);
 
-  const handleAdd=(event)=>{
+  const handleChangeButton=(event)=>{
    event.preventDefault();
    setAdd(!add);
   }
 
+  const handleChange=async (e)=>{
+    
+    setIdCampagne(e.target.value);
+   /*try{
+       const res=await axios.get(`${process.env.REACT_APP_URL_SERVER}/api/v1/galerieCampagne/${e.target.value}`)
+       if(res){
+        setImages(res.data);
+       }
+      }catch(err){
+       console.log(err);
+    }*/
+  } 
+
+
+
   return (
 
    <div className="container-fluid px-4">
+       
       <div className="container mt-5 w-100 mb-5">
         <div className="row">
             <div className="col-md-12">
@@ -41,7 +60,7 @@ useEffect(() => {
                    <>
                     <div className="card-header">
                      <a 
-                      onClick={(e)=>handleAdd(e)}
+                      onClick={(e)=>handleChangeButton(e)}
                       className="btn btn-primary float-end">
                       + add Galerie</a>
                      <h4>Galerie Campagne</h4>
@@ -49,7 +68,10 @@ useEffect(() => {
                      <form >
                       <div className='mb-3'>
                        <label style={{marginRight:"10px"}}>Campagne ID</label>
-                       <select name="CampagneId" className='w-25'>
+                       <select 
+                       name="CampagneId" 
+                       className='w-25'
+                       onChange={(e)=>handleChange(e)}>
                        <option value="" hidden={true}>Veuillez select Campagne ID</option>
                        {
                              allCampagneData.map((ele)=>{
@@ -62,12 +84,13 @@ useEffect(() => {
                       
                       </form>
                     </div>
-                    <div className='card-body'>
-                            <PreviewGalerieCampagne/>
+                   
+                    <div className='card-body'> 
+                            <PreviewGalerieCampagne idCampagne={idCampagne} />
                      </div>
                      </>
                     :
-                    <AddGalerieCampagne handleAdd={handleAdd} CampagneData={allCampagneData}/>
+                    <AddGalerieCampagne handleChangeButton={handleChangeButton} CampagneData={allCampagneData}/>
 
                   }
                     

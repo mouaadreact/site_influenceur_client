@@ -60,7 +60,10 @@ function ViewCampagne() {
                             <div className="mb-3">
                                 <label>Campagne nombre des influenceurs</label>
                                 <p className="form-control bg-secondary">
-                                {oneCampagneData.nombreInfluenceur}
+                                {
+                                oneCampagneData.nombreInfluenceur<10 
+                                ?"0"+oneCampagneData.nombreInfluenceur 
+                                : oneCampagneData.nombreInfluenceur}
                                 </p>
                             </div>
                             <div className="mb-3">
