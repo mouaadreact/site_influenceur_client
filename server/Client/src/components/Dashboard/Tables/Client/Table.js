@@ -5,6 +5,7 @@ import { deleteClient, getAllClient } from '../../../../redux/actions/client.act
 
 function Table({name,fieldsTable}) {
   const dispatch=useDispatch();
+  const [q,setQ]=useState("");
   const {allClientData,loading}=useSelector(state=>state.client);
   const [data,setData]=useState([]);
   useEffect(() => {
@@ -20,6 +21,18 @@ function Table({name,fieldsTable}) {
     setData(allClientData);
   }
 
+  const search=(rows)=>{
+    return rows.filter(
+      (row)=>
+         row.id==parseInt(q) ||
+         row.nomSociete.toLowerCase().indexOf(q.toLowerCase())>-1 ||
+         row.nomDirecteur.toLowerCase().indexOf(q.toLowerCase())>-1 ||
+         row.telephone.toLowerCase().indexOf(q.toLowerCase())>-1 ||
+         row.email.toLowerCase().indexOf(q.toLowerCase())>-1 
+             
+      )
+  }
+
   return (
    <div className="container-fluid px-4">
 
@@ -30,13 +43,21 @@ function Table({name,fieldsTable}) {
              <a href={`/dashboard/client/add`} className='btn btn-primary float-end'>+ add Client</a>
           </h4>
         </div>
-     
+
+        <div className='card-hearder mb-3'>
+         <input 
+         className='p-1 form-control w-25' 
+         placeholder='search ..'
+         value={q}
+         onChange={(e)=>setQ(e.target.value)}
+         />
+        </div>
   
       <div className="col">
           <table className="table bg-white rounded shadow-sm  table-hover">
             <thead>
                   <tr className="text-center">
-                  <th scope="col" width="50">#</th>
+                  <th scope="col" className='text-warning'width="50">ID</th>
                      {
                        fieldsTable.map((ele,index)=>{
                          return <th key={index} scope="col">{ele}</th>
@@ -46,9 +67,13 @@ function Table({name,fieldsTable}) {
                   </tr>
               </thead>
               <tbody>
-              { allClientData?.map((ele,index)=>{
+              { search(allClientData)?.map((ele,index)=>{
                   return (<tr key={index+1} className="text-center">
-                      <td key={index+1}>{ele.id}</td>
+                      <td key={index+1} className="text-warning">{
+                        ele.id<10 
+                        ?"0"+ele.id
+                        : ele.id
+                      }</td>
                       <td>{ele.nomSociete}</td>
                       <td>{ele.nomDirecteur}</td>   
                       <td>{ele.telephone}</td>   

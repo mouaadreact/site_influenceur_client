@@ -2,6 +2,7 @@ import {configureStore} from '@reduxjs/toolkit';
 import authReducer from './reducers/auth.reducer'
 import campagneReducer from './reducers/campagne.reducer';
 import clientReducer from './reducers/client.reducer';
+import filterReducer from './reducers/filter.reducer';
 import galerieCampagneReducer from './reducers/galerieCampagne.reducer';
 import interetReducer from './reducers/interet.reducer';
 import langueReducer from './reducers/langue.reducer';
@@ -15,7 +16,8 @@ import registerReducer from './reducers/register.reducer';
    client:clientReducer,
    campagne:campagneReducer,
    interet:interetReducer,
-   galerieCampagne:galerieCampagneReducer
+   galerieCampagne:galerieCampagneReducer,
+   filter:filterReducer
   }
 });
 
