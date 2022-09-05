@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { errorAuth, startAuth, successJwt, successLogin } from '../reducers/auth.reducer';
 import cookie from 'js-cookie';
+import {toast } from 'react-toastify'; 
 
 //----
  export const authJwt = async (dispatch)=>{
@@ -31,8 +32,11 @@ import cookie from 'js-cookie';
       withCredentials:true,
       data
     });
-     dispatch(successLogin(res.data));
+
+   
+
      if(res.data.status==='login'){
+      dispatch(successLogin(res.data));
       switch(res.data.role){
        case "admin":
         window.location='/dashboard/home'
@@ -52,6 +56,8 @@ import cookie from 'js-cookie';
      }
       else if(res.data.status==='conditionGenrale'){
         window.location=`/register/conditionGenrale?id=${res.data.id}`;
+     }else if(res.data.status==="ActiveCompte"){
+      toast.error("cette Compte est desactiver");
      }
 
   }catch(error){

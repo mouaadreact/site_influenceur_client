@@ -21,7 +21,9 @@ function ConfirmInstagram({id}) {
     prenom:"",
     genre:"",
     dateNaissance:"",
-    instagramUsernameCompte:""
+    facebookUsernameCompte:"",
+    youtubeUsernameCompte:"",
+    instagramUsernameCompte:""  
   }
  //on submit afficher instagram data
   const onSubmit= async (values,actions)=>{
@@ -161,6 +163,34 @@ function ConfirmInstagram({id}) {
             <ErrorMessage name='dateNaissance'/>
         </div>
       </div>
+
+      
+      <div className="form-outline mb-4">
+          <label className="form-label" htmlFor="facebookUsernameCompte">facebook Username</label>
+          <Field 
+            type="text" 
+            id="facebookUsernameCompte" 
+            name='facebookUsernameCompte'
+            className="form-control"
+          />
+          <div className='text-danger'>
+            <ErrorMessage name='facebookUsernameCompte'/>
+        </div>
+      </div>
+
+
+      <div className="form-outline mb-4">
+          <label className="form-label" htmlFor="youtubeUsernameCompte">youtube Username</label>
+          <Field 
+            type="text" 
+            id="youtubeUsernameCompte" 
+            name='youtubeUsernameCompte'
+            className="form-control"
+          />
+          <div className='text-danger'>
+            <ErrorMessage name='youtubeUsernameCompte'/>
+        </div>
+      </div>
         
       <div className="form-outline mb-4">
           <label className="form-label" htmlFor="instagramUsernameCompte">Instagram Username</label>
@@ -174,6 +204,8 @@ function ConfirmInstagram({id}) {
             <ErrorMessage name='instagramUsernameCompte'/>
         </div>
       </div>
+
+
 
           <button type="submit" className="btn btn-primary w-100">Submit</button>
         </Form>

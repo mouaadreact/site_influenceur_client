@@ -1,19 +1,25 @@
 import {createSlice} from '@reduxjs/toolkit'
 
 const filterReducer=createSlice({
- name:'client',
+ name:'filter',
  initialState:{
    centreInteret:[],
+   statusCampagne:[],
    loading:null,
-   error:false
+   error:false 
  },
  reducers:{
    startFilter:(state)=>{
      state.loading=true;
    },
    successAddCentreInteret:(state,action)=>{
-    state.centreInteret=[...action.payload];
+    state.centreInteret=action.payload;
     state.loading=false
+   },
+   successAddStatusCampagne:(state,action)=>{
+     state.statusCampagne=action.payload;
+    
+     state.loading=false
    },
    errorFilter:(state)=>{
     state.loading=false;
@@ -23,5 +29,10 @@ const filterReducer=createSlice({
 
 });
 
-export const {startFilter,errorFilter,successAddCentreInteret}=filterReducer.actions;
+export const {
+  startFilter,
+  errorFilter,
+  successAddCentreInteret,
+  successAddStatusCampagne
+  }=filterReducer.actions;
 export default filterReducer.reducer;

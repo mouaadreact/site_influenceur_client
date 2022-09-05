@@ -11,16 +11,14 @@ function ConfimerEmail() {
  const dispatch=useDispatch();
 
  useEffect(()=>{
-  
-  const fetchUser=async ()=>{
+     
      const Querys=new URLSearchParams(location.search);
      const queryToken=Querys.get('token');
      confirmEmail(queryToken,dispatch);
       
-  }
-  fetchUser()
   },[]);
-
+  //slow enregistrer idUser??????
+  console.log(localStorage.getItem("idUser"))
   return (
    <>
      <ToastContainer autoClose={3000}/>

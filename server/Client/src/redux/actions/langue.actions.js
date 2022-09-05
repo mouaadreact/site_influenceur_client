@@ -4,7 +4,7 @@ import axios from 'axios';
 export const getAllLangue=async (dispatch)=>{
  dispatch(startLangue());
  try{
-   const res=await axios({
+   const res=await axios({ 
     method:"get",
     url:`${process.env.REACT_APP_URL_SERVER}/api/v1/langue`,
     withCredentials:true
@@ -16,3 +16,4 @@ export const getAllLangue=async (dispatch)=>{
    dispatch(errorLangue());
  }
 }
+

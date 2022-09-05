@@ -6,6 +6,8 @@ import {UidContext}  from '../../contexts/AppContext'
 import { useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import { authLogin } from '../../redux/actions/auth.actions'
+import { ToastContainer} from 'react-toastify'; 
+import 'react-toastify/dist/ReactToastify.css';
 import './Login.css'
 
 
@@ -46,6 +48,7 @@ function Login() {
          :        
          (
           <>
+          <ToastContainer autoClose={3000}/>
           <div className='m-5'>
           <div className='container w-50 shadow-lg p-3 mb-5 bg-white roundedd'>
           <div className='text-center p-3'>Login</div>

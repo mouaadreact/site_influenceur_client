@@ -27,6 +27,7 @@ const GalerieCampagneRoute=require("./routers/galerieCampagne.route");
 const UserRoute=require("./routers/user.route");
 const RoleRoute=require("./routers/role.route");
 const AuthRoute=require("./routers/auth.route");
+const ApiInstagramHistoryRoute=require("./routers/apiInstragramHistory.route")
 //utils route:
 const CountriesRoute=require("./utils/addresses");
 //route of influenceur:
@@ -49,6 +50,7 @@ const corsOptions = {
 
 }
 app.use(cors(corsOptions));
+
 //security header of request
 //app.use(helmet());
 if(process.env.NODE_ENV=='development'){
@@ -72,8 +74,10 @@ app.get('/jwtid',requireAuth,(req,res)=>{
 });
 
 //app function route
-//--------------------
+//-------------------- 
 app.use('/api/v1/galerieCampagne/:CampagneId',express.static('uploads/images/galerieCampagne'));
+app.use('/api/v1/Api/:InfluenceurId',express.static('uploads/Api'));
+
 //routers
 app.use('/api/v1/client',ClientRoute);
 app.use('/api/v1/interet',InteretRoute);
@@ -86,6 +90,7 @@ app.use('/api/v1/interetInfluenceur',InteretInfleunceurRoute);
 app.use('/api/v1/langueInfluenceur',LangueInfluenceurRoute);
 app.use('/api/v1/interetCampagne',InteretCampagneRoute);
 app.use('/api/v1/galerieCampagne',GalerieCampagneRoute); 
+app.use("/api/v1/apiInstagramHistory",ApiInstagramHistoryRoute)
 //-----
 app.use('/api/v1/user',UserRoute);
 app.use('/api/v1/role',RoleRoute);

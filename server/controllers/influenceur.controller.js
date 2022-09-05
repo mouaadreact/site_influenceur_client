@@ -1,8 +1,8 @@
 
-const {Influenceur,User,LangueInfluenceur}=require("../models");
+const {Influenceur,User,LangueInfluenceur, Interet, Langue, ApiInstagramHistory, InteretInfluenceur}=require("../models");
 const SchemaValidation=require("../validators/influenceur.validator")
 const UsernameByEmail=require("../utils/usernameByEmail");
-const axios=require("axios");
+const axios=require("axios"); 
 const fs=require("fs")
 const jwt=require("jsonwebtoken");
 const privateKey=process.env.PRIVATE_KEY_AUTHORIZATION; 
@@ -85,6 +85,8 @@ exports.afficherCompteInstagram=async (req,res)=>{
             prenom,
             genre,
             dateNaissance,
+            facebookUsernameCompte,
+            youtubeUsernameCompte,
             instagramUsernameCompte, //add after compte youtube,facebook
           }=req.body;
       console.log(req.body);
@@ -94,11 +96,13 @@ exports.afficherCompteInstagram=async (req,res)=>{
             prenom,
             genre,
             dateNaissance,
+            facebookUsernameCompte,
+            youtubeUsernameCompte,
             instagramUsernameCompte
             },{
               where:{id:req.params.id}
             })
-          console.log(data);
+          
         if(data<=0){
            res.status(400).json({error:"On peut pas valideCompte instagram!"});
         }else{
@@ -112,8 +116,8 @@ exports.afficherCompteInstagram=async (req,res)=>{
                 'X-RapidAPI-Key': `${process.env.INSTAGRAM_API_HEADER_KEY}`,
                 'X-RapidAPI-Host': `${process.env.INSTAGRAM_API_HEADER_HOST}`
               }
-            };
-              console.log(options);
+            }; 
+            
                var UserApiInfo= await  axios.request(options);
                var UserAPI = UserApiInfo.data.data.user;
                if(!UserAPI){
@@ -130,19 +134,7 @@ exports.afficherCompteInstagram=async (req,res)=>{
                     link: UserAPI.external_url
                   });
                
-               /* enregistrer Api so form json dans Uploads->Api */
-               console.log(`uploads/Api/${instagramUsernameCompte}/${instagramUsernameCompte}_${req.params.id}_${FormatDate(new Date())}.json`)
-               var dir=`uploads/Api/${instagramUsernameCompte}`
-               if (!fs.existsSync(dir)){
-                 fs.mkdirSync(dir); 
-               }
-               fs.writeFile(`uploads/Api/${instagramUsernameCompte}/${instagramUsernameCompte}_${req.params.id}_${FormatDate(new Date())}.json`,JSON.stringify(UserAPI,null,2),err=>{
-                if(err){
-                  console.log(err);
-                }else{
-                  console.log("file write successful !! ")
-                }
-              });
+              
                
               }
 
@@ -168,6 +160,63 @@ exports.valideCompteInstagram=async (req,res)=>{
        res.status(400).json({err:"on peut pas valider CompteInstag "});
     }else{
        res.status(200).json(data);
+
+       //------------------------------ add compte instagram
+       try { 
+            
+        let data=await Influenceur.findOne({
+            where:{id:req.params.id}
+          });
+
+        data=data.dataValues;
+        console.log(data)
+        const options = {
+          method: 'GET',
+          url: `${process.env.INSTAGRAM_API_URL}`,
+          params: {user_name: `${data.instagramUsernameCompte}`},
+          headers: {
+            'X-RapidAPI-Key': `${process.env.INSTAGRAM_API_HEADER_KEY}`,
+            'X-RapidAPI-Host': `${process.env.INSTAGRAM_API_HEADER_HOST}`
+          }
+        };
+          console.log(options);
+           var UserApiInfo= await  axios.request(options);
+           var UserAPI = UserApiInfo.data.data.user;
+           if(!UserAPI){
+              res.status(400).json({err:"on peut pas envoyer Instagram Info ! "});
+           }else{
+              
+           /* enregistrer Api so form json dans Uploads->Api */
+         /*  var dir=`uploads/Api/${data.instagramUsernameCompte}`
+           if (!fs.existsSync(dir)){
+             fs.mkdirSync(dir); 
+           }*/
+
+           //----
+           fs.writeFile(`uploads/Api/${data.instagramUsernameCompte}_${req.params.id}_${FormatDate(new Date())}.json`,JSON.stringify(UserAPI,null,2),async (err)=>{
+            if(err){
+              console.log(err);
+            }else{
+              console.log("file write successful !! ")
+              const result=await ApiInstagramHistory.create({
+                 InfluenceurId:req.params.id,
+                 path:`${process.env.URL_SERVER}:${process.env.PORT}/api/v1/Api/${req.params.id}/${data.instagramUsernameCompte}_${req.params.id}_${FormatDate(new Date())}.json`
+              });
+              if(result){
+                console.log("resultat enregsitrer")
+              }
+
+            }
+
+          });
+           
+          }
+
+       }catch(err){
+          res.status(400).json(err);
+       }
+
+       
     }
 
   }catch(err){
@@ -207,9 +256,8 @@ exports.completerProfil=async (req,res)=>{
             nombreEnfant,
             niveauEtude,
             profession, 
-            //LangueId
-            langue
-            //commentaire
+            langue,
+            interet
           }=req.body;
    
       const data=await Influenceur.update({
@@ -230,21 +278,32 @@ exports.completerProfil=async (req,res)=>{
         if(data<=0){
           res.status(400).json({error:"On peut pas complete Compte!"});
         }else{
-            res.status(200).json(data);
-            //Add in table LangueInfluenceur 
-            //utilise ca dans partir jointure
-            console.log(req.body);
 
-           /* const langueData=LangueInfluenceur.create({
-              LangueId,
-              InfluenceurId:req.params.id,
-            }); */
+            //--add langue
             let langueReq=[];
             langue.forEach((ele)=>{
               langueReq.push({"LangueId":ele,"InfluenceurId":req.params.id})
             })
-            const langueData=LangueInfluenceur.bulkCreate(langueReq); 
-        }
+            const langueData=await LangueInfluenceur.bulkCreate(langueReq); 
+             if(langueData){
+               console.log("add succes langue data")
+             }
+      //------------------------------------
+            //-add interet
+            let interetReq=[];
+            interet.forEach((ele)=>{
+              interetReq.push({"InteretId":ele,"InfluenceurId":req.params.id})
+            })
+
+            const interetData=await InteretInfluenceur.bulkCreate(interetReq); 
+            if(interetData){
+              console.log("add succes interet data")
+            }
+
+
+            res.status(200).json(data);
+          
+          }
     }catch(err){
      res.status(400).json(err); 
     }
@@ -314,7 +373,9 @@ exports.completerProfil=async (req,res)=>{
 //afficher tout les influenceurs
 exports.getAll=async (req,res)=>{
   try{
-   const data=await Influenceur.findAll()
+   const data=await Influenceur.findAll({
+      include:[User,Interet,Langue]
+   })
       if(!data){
         res.status(400).json({error:"les influenceurs sont introuvables !"});
       }else{
@@ -332,12 +393,14 @@ exports.getId=async (req,res)=>{
  
   try{
    const data=await Influenceur.findOne({
-                     where:{id:req.params.id}
+                     where:{id:req.params.id},
+                     include:[User,Interet,Langue]
                      });
        
     if(!data){
       res.status(400).json({error:"l'influenceur est introuvable!"});
     }else{
+
       res.status(200).json(data);
     }
   }catch(err){

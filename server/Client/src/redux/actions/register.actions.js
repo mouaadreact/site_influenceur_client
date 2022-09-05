@@ -28,11 +28,10 @@ import { errorRegister, startRegister, successAfficherCompteInstg, successConfir
         const res = await axios({
          method:"get",
          url:`${process.env.REACT_APP_URL_SERVER}/api/v1/influenceur/confirmer-email?token=${token}`
-     });
+             });
          localStorage.setItem("idUser",res.data.id);
-         dispatch(successRegister(res.data.id));
          toast.success("Success Confirm Email");
-
+         dispatch(successRegister(res.data.id));
 
      }catch(err){
       console.log(err)
@@ -73,12 +72,13 @@ import { errorRegister, startRegister, successAfficherCompteInstg, successConfir
 
  //----
 //compelete profil :
- export const compeleteProfil=async (id,data,langueMult,dispatch)=>{
+ export const compeleteProfil=async (id,data,langueMult,interetMult,dispatch)=>{
   dispatch(startRegister());
   try{
     const res=await axios.put(`${process.env.REACT_APP_URL_SERVER}/api/v1/influenceur/complete/${id}`,{
       ...data,
-      langue:langueMult
+      langue:langueMult,
+      interet:interetMult
     });
 
     window.location.href=`/register/conditionGenrale?id=${id}`;

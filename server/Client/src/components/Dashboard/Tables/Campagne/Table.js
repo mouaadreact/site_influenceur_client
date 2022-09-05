@@ -8,10 +8,14 @@ function Table({name,fieldsTable}) {
   const dispatch=useDispatch();
   const [q,setQ]=useState("");
   const [data,setData]=useState([]);
-
+  const [searchField,setSearchField]=useState({
+    search:"",
+    status:[]
+  });
+   
   const {allCampagneData,loading}=useSelector(state=>state.campagne);
-  const {centreInteret}=useSelector(state=>state.filter);
-
+  const {centreInteret,statusCampagne}=useSelector(state=>state.filter);
+ 
   useEffect(() => {
     getAllCampagne(dispatch); 
     setData(allCampagneData);
@@ -22,13 +26,11 @@ function Table({name,fieldsTable}) {
     deleteCampagne(id,dispatch)
     setData(allCampagneData);
   }
-  /*row.id==parseInt(q) ||
-         row.titre.toLowerCase().indexOf(q.toLowerCase())>-1 ||
-         row.nombreInfluenceur==parseInt(q)*/
  
+  
   const search=(rows)=>{
-    console.log(rows);
-    return rows.filter(
+
+   let tableFilterInteret =  rows.filter(
       (ele)=>{
         let ok=false;
          
@@ -43,22 +45,49 @@ function Table({name,fieldsTable}) {
         }
         return ok;
         })
+        
+        let tableFilterStatus=tableFilterInteret.filter((row)=>{
+           if(statusCampagne.length>0){
+              console.log(statusCampagne.includes(row.presence));
+              return statusCampagne.includes(row.presence.toString())
+           }
+           else 
+             return row
+        })
+
+          console.log(tableFilterStatus)
+     
+        return tableFilterStatus.filter((row)=>{
+         
+             if(q===""){
+                return row
+ 
+             }else{
+              return ( 
+               row[searchField.search]?.toString().toLowerCase().indexOf(q?.toString().toLowerCase())>-1
+                
+                )
+             }
+
+        })
+
+       
+        
       
+}
 
-    }
-
-  useEffect(()=>{
-     // const data=allCampagneData.filter(ele=>ele.Interets.forEach(interet=>centreInteret.includes(interet.interetNom)))
-      const rows=allCampagneData.filter(ele=>ele.id==1)
-      console.log(rows)
-      search(data);
-  },[centreInteret])
+useEffect(()=>{
+  search(data);
+},[centreInteret])
 
 
   return (
    <div className="container-fluid px-4">
 
-   <div className="row my-5">
+<div  className="row my-5  p-4" 
+     style={{width:"750px",
+             backgroundColor:"#DDD",
+             borderRadius:"10px"}}>
      
         <div className='card-hearder mb-3'>
           <h4>{name} Table
@@ -68,13 +97,45 @@ function Table({name,fieldsTable}) {
      
         <div className='card-hearder mb-3'>
          <input 
-         className='p-1 form-control w-25' 
+         className='p-1 form-control w-25 mb-2'
          placeholder='search ..'
          value={q}
          onChange={(e)=>setQ(e.target.value)}
          />
+         <label htmlFor="id" style={{fontWeight:"bold"}}>Search : </label>
+        <input 
+                id="id" 
+                name="searchDField" 
+                type="radio" 
+                value="id"
+                style={{marginLeft:"10px"}}
+                onChange={(e)=>setSearchField((prev)=>({...prev,search:e.target.value}))}
+                />
+        <label htmlFor="id">ID</label>
+
+        <input 
+                id="id" 
+                name="searchDField" 
+                type="radio" 
+                value="titre"
+                style={{marginLeft:"10px"}}
+                onChange={(e)=>setSearchField((prev)=>({...prev,search:e.target.value}))}
+                />
+        <label htmlFor="id">Titre</label>
+
+        <input 
+                id="id" 
+                name="searchDField" 
+                type="radio" 
+                value="nombreInfluenceur"
+                style={{marginLeft:"10px"}}
+                onChange={(e)=>setSearchField((prev)=>({...prev,search:e.target.value}))}
+                />          
+        <label htmlFor="id">Nombre influenceur</label>
+         
+         
         </div>
-      <div className="col">
+      <div className="table-responsive">
           <table  className="table bg-white rounded shadow-sm  table-hover">
             <thead>
                   <tr className="text-center">
@@ -92,7 +153,7 @@ function Table({name,fieldsTable}) {
               <tbody>
               { search(allCampagneData)?.map((ele,index)=>{
                   return (<tr key={index+1} className="text-center">
-                      <td key={index+1} className="text-warning">{
+                      <td className="text-warning">{
                         ele.id<10 
                         ?"0"+ele.id
                         : ele.id

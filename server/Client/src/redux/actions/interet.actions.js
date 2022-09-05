@@ -3,7 +3,7 @@ import {startInteret,errorInteret,successGetAllInteret, successGetOneInteret, su
 
 //-------
 export const addInteret = async (data,dispatch)=>{
-  dispatch(startInteret());
+  dispatch(startInteret()); 
   try{
      const res = await axios({
       method:"post",

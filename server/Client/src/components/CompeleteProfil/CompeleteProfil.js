@@ -2,8 +2,6 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import {Formik,Form,Field,ErrorMessage,formik} from 'formik'; 
 import { basicSchemaCompleteProfil } from '../../schemas';
 import { useLocation, useNavigate } from "react-router-dom";
-import countries from '../../assets/data/countries.json';
-import cities from '../../assets/data/cities.json';
 import Select from 'react-select';
 import { ToastContainer, toast } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css';
@@ -11,24 +9,32 @@ import { getAllLangue } from '../../redux/actions/langue.actions';
 import {useDispatch, useSelector} from 'react-redux';
 import './CompeleteProfil.css';
 import { compeleteProfil } from '../../redux/actions/register.actions';
+import { getAllInteret } from '../../redux/actions/interet.actions';
+
+import marocVille from '../../assets/data/marocAddress/ville.json'
+import marocQuartier from '../../assets/data/marocAddress/quartier.json'
 
 
-
-//-----
 function CompeleteProfil() {
 
- const location=useLocation();
  const [langueMult,setLangueMult]=useState([]);
+ const [interetMult,setInteretMult]=useState([]);
+
+  const location=useLocation();
  const Querys=new URLSearchParams(location.search);
  const queryIds=Querys.get('id');
  let navigate=useNavigate();
  const dispatch=useDispatch();
  const {langueData}=useSelector(state=>state.langue);
-
+ const {allInteretData}=useSelector(state=>state.interet);
 
  //------------------
  const [optionsLangue,setOptionsLangue]=useState([{
   label:"veuillez entre langue",value:0
+ }]);
+
+ const [optionsInteret,setOptionsInteret]=useState([{
+  label:"veuillez entre Interet",value:0
  }]);
 //----
  const [optionsPays,setOptionsPays]=useState([{
@@ -37,10 +43,12 @@ function CompeleteProfil() {
  //---
  const [optionsVille,setOptionsVille]=useState([{
   key:"veuillez entre ville",value:""
- },
-{
-  key:"tanger",value:"tanger"
-}
+ }
+]);
+
+const [optionsQuartier,setOptionsQuartier]=useState([{
+  key:"veuillez entre quartier",value:""
+ }
 ]);
 //---
  const SituationFamilialeOptions=[
@@ -72,27 +80,37 @@ function CompeleteProfil() {
         value:ele.id
         }
       setOptionsLangue((options)=>[...options,op]) 
-      console.log("render")        
-});
-	}, [langueData[0]?.id]);
+           
+    });
+}, [langueData[0]?.id]);
 
    useEffect(() => {
       fetchDataLangue();
    },[fetchDataLangue]);
 
-   useEffect(()=>{
-    countries.pays.forEach(ele=>{
-      const op={
-        key:ele.name,
-        value:ele.name 
-        }
-      setOptionsPays((options)=>[...options,op])     
-     })
-   },[])
+   //---------------------------
 
-  const handleCities= async (e)=>{
-    setOptionsVille([{key:"veuillez entre ville",value:""}])
-    cities[e.target.value]?.forEach(ele=>{
+   const fetchDataInteret = useCallback(() => {
+    getAllInteret(dispatch);
+    allInteretData.forEach(ele=>{
+      const op={
+      label:ele.interetNom,
+      value:ele.id
+      }
+    setOptionsInteret((options)=>[...options,op]) 
+           
+  });
+}, [allInteretData[0]?.id]);
+
+useEffect(() => {
+  fetchDataInteret();
+},[fetchDataInteret]);
+
+
+   //--------------------------
+   useEffect(()=>{
+    setOptionsPays((options)=>[...options,{key:"Maroc",value:"Maroc"}])
+    marocVille["ville"].forEach(ele=>{
        const op={
         key:ele,
         value:ele
@@ -100,6 +118,18 @@ function CompeleteProfil() {
       setOptionsVille((options)=>[...options,op])
 
    });
+
+   },[])
+
+  const handleQuartier= async (e)=>{
+    marocQuartier[e.target.value].forEach(ele=>{
+      const op={
+       key:ele,
+       value:ele
+       }
+     setOptionsQuartier((options)=>[...options,op])
+
+  });
   }
 
   const onSubmit= async (values,actions)=>{
@@ -108,12 +138,16 @@ function CompeleteProfil() {
         toast.error("erreur célébataire a 0 enfants ");
        }
       else{
-           compeleteProfil(queryIds,values,langueMult,dispatch);
+           compeleteProfil(queryIds,values,langueMult,interetMult,dispatch);
       }
     }
 //-------------------
 const handleLangue =(e)=>{
   setLangueMult(Array.isArray(e)?e.map(x=>x.value):[]);
+}
+//--------
+const handleInteret =(e)=>{
+  setInteretMult(Array.isArray(e)?e.map(x=>x.value):[]);
 }
  //---------------
   return (
@@ -141,7 +175,7 @@ const handleLangue =(e)=>{
             id="pays" 
             className="form-control"
             options={optionsPays}
-            onClick={(e)=>{handleCities(e)}}
+            
           >
           {
            optionsPays.map(ele=>{
@@ -163,6 +197,7 @@ const handleLangue =(e)=>{
             id="ville" 
             className="form-control"
             options={optionsVille}
+            onClick={(e)=>{handleQuartier(e)}}
           >
           {
            optionsVille.map(ele=>{
@@ -178,15 +213,24 @@ const handleLangue =(e)=>{
 
       <div className="form-outline mb-4">
           <label className="form-label" htmlFor="quartier">Quartier</label>
-          <Field 
+          <Field  
+            as="select"
             name='quartier'
-            type="text" 
             id="quartier" 
-            className="form-control" 
-          />
+            className="form-control"
+            options={optionsQuartier}
+            onClick={(e)=>{handleQuartier(e)}}
+          >
+          {
+           optionsQuartier.map(ele=>{
+            return (<option value={ele.value} key={ele.value}>{ele.key}</option>)
+             })
+          }
+          </Field>
           <div className='text-danger'>
             <ErrorMessage name='quartier'/>
         </div>
+         
       </div>
 
       
@@ -263,6 +307,21 @@ const handleLangue =(e)=>{
         </div>
          
       </div>
+
+
+      <div className="form-outline mb-4">
+          <label className="form-label" htmlFor="interet">Centre Interet</label>
+          
+          <Select required={true} isMulti options={optionsInteret} id='interet' name='interet' onChange={handleInteret} ></Select>
+          
+          
+          
+          <div className='text-danger'>
+            <ErrorMessage name='interet'/>
+        </div>
+         
+      </div>
+
           <button type="submit" className="btn btn-primary w-100">Submit</button>
         </Form>
         </div>

@@ -86,7 +86,7 @@ exports.login= async (req,res)=>{
                            else{
                               
                               if(influenceurData.statusEtatActiver==false){
-                                 res.status(400).json({
+                                 res.status(200).json({
                                     status:"ActiveCompte",
                                     message:"compte not active",
                                     id:influenceurData.id
@@ -175,7 +175,7 @@ exports.registerInfluenceur=async(req,res)=>{
 
          jwt.sign({id:result.id,email:result.email,role:"influenceur"},privateKey,{
             expiresIn:3*24*60*60*1000 },(err,token)=>{
-           // console.log(token);
+           console.log(`http://localhost:5000/api/v1/influenceur/confirmer-email?token=${token}`);
             SendEmail.ContactUs(req.body.email,`comfirmer votre email`,`Click in : http://localhost:3000/register/confirmEmail?token=${token}`);
               });
    

@@ -20,6 +20,8 @@ export const basicSchemaConfirmInstagram=yup.object().shape({
  prenom:yup.string().required("required"),
  genre:yup.string().required("required"),
  dateNaissance:yup.date("date form invalid!").max(yesterday).required("required"),
+ facebookUsernameCompte:yup.string(),
+ youtubeUsernameCompte:yup.string(),
  instagramUsernameCompte:yup.string().required("required"),
 });
 
@@ -32,7 +34,6 @@ export const basicSchemaConfirmInstagram=yup.object().shape({
     nombreEnfant: yup.number().required("required"),
     niveauEtude: yup.string().required("required"),
     profession: yup.string().required("required"),
-    //langue: yup.array().required("required")
    });
 
 

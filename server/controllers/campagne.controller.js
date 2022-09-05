@@ -1,5 +1,5 @@
 const {Campagne, Client, InteretCampagne, Interet}=require("../models");
-
+ 
 //-------------------------------------------------------------
 //Remarque: en besoin de utilise IF ELSE apres retourne des données
 //car si n'a fait pas il exits une error d'envoyer deux(2) response --> "si on a une error dans request"

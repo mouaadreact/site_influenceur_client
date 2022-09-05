@@ -98,51 +98,7 @@ function FilterSidebar() {
              </tbody>
           </table>
 
-          <table>
-           <thead>
-              <tr>
-                <th>Status Campagne</th>
-              </tr>
-            </thead> 
-            <tbody>
-             
-                    <tr>
-                       <td >
-                       <input 
-                      
-                       type="checkbox" 
-                       id="status1" 
-                       name="status"
-                       value={true}
-                       onChange={e=>handleChangeStatusCampagne(e)}
-                              />
-                       <label
-                       
-                       style={{marginLeft:"10px"}} 
-                       htmlFor="status1">Presence</label>
-                      </td> 
-                   </tr>
-
-                   <tr>
-                       <td >
-                       <input 
-                      
-                       type="checkbox" 
-                       id="status2" 
-                       name="status"
-                       value={false}
-                       onChange={e=>handleChangeStatusCampagne(e)}
-                              />
-                       <label
-                       
-                       style={{marginLeft:"10px"}} 
-                       htmlFor="status2">Online</label>
-                      </td> 
-                   </tr>
-              
-             </tbody>
-          </table>
-
+          
        </div>
 
     </div>

@@ -15,12 +15,16 @@ import Client from '../Dashboard/Tables/Client/Client'
 import ViewClient from '../Dashboard/Tables/Client/ViewClient'
 import EditClient from '../Dashboard/Tables/Client/EditClient'
 import AddClient from '../Dashboard/Tables/Client/AddClient'
+
 import Campagne from '../Dashboard/Tables/Campagne/Campagne'
 import ViewCampagne from '../Dashboard/Tables/Campagne/ViewCampagne'
 import EditCampagne from '../Dashboard/Tables/Campagne/EditCampagne'
 import AddCampagne from '../Dashboard/Tables/Campagne/AddCampagne'
-import GalerieCampagne from '../Dashboard/Tables/GalerieCampagne/GalerieCampagne'
 
+import GalerieCampagne from '../Dashboard/Tables/GalerieCampagne/GalerieCampagne'
+import Influenceur from '../Dashboard/Tables/Influenceur/Influenceur'
+import ViewInfluenceur from '../Dashboard/Tables/Influenceur/ViewInfluenceur'
+import EditInfluenceur from '../Dashboard/Tables/Influenceur/EditInfluenceur'
 function Routers() {
   return (
    <BrowserRouter>
@@ -48,8 +52,11 @@ function Routers() {
           {/*Galerie Campage */}
           <Route path='/dashboard/galerieCampagne' element={<GalerieCampagne/>} />
           <Route path='/dashboard/galerieCampagne/add' element={<AddCampagne/>} />
-          {/*Profil influenceur */}
-
+          {/*table influenceur */}
+          <Route path='/dashboard/influenceur' element={<Influenceur/>} />
+          <Route path='/dashboard/influenceur/view/:id' element={<ViewInfluenceur/>} />
+          <Route path='/dashboard/influenceur/edit/:id' element={<EditInfluenceur/>} />
+            
           <Route path='/profil' element={<ProfilInfluenceur/>} />
         </Routes>
      </BrowserRouter>
