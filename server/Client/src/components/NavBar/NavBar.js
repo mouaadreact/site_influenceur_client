@@ -5,7 +5,10 @@ import {NavLink} from 'react-router-dom'
 import {UidContext}  from '../../contexts/AppContext'
 function NavBar() { 
   const id=useContext(UidContext);
-
+  if(window.location.href.includes("dashboard")){
+    //console.log(window.location.href)
+  }
+  
  return (
   <>
      {

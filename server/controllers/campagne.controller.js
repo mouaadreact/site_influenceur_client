@@ -12,7 +12,7 @@ exports.addCampagne=async(req,res)=>{
      dateDebut,
      dateFin,
      presence,
-     nombreInfluenceur, 
+     nombreInfluenceur,  
      descriptionOffre,
      hashtags,
      compteTagger,
@@ -107,15 +107,6 @@ exports.getId=async (req,res)=>{
    res.status(400).json(err);
   }
 }
-//--------------------------------------------
-//-------------------------------------------
-//filtrage : age,ville,quartier,genre,situation familiale,
-//niveau d'etude,langue
-
-exports.filtrage=async (req,res)=>{
-       
-      //!!!!!!!
-}
 
 //-------------------------------------------------
 //editer une campagne 
@@ -179,4 +170,114 @@ exports.delete= async (req,res)=>{
  }catch(err){
   res.status(400).json({err:err});
  }
+}
+
+
+//?------------------------------------------------------------
+
+
+//filtrage centre interet , clientId
+exports.filtrage=async (req,res)=>{
+  try{
+    //* date debut max min
+  const {
+    dateDebutMin,
+    dateDebutMax,
+    dateFinMin,
+    dateFinMax,
+    presence,
+    nombreInfluenceur, 
+    ClientId,
+    interet
+  }=req.body;
+
+  console.log(req.body)
+
+   var obj={};
+
+   if(presence=="true"){
+    obj.presence=true;
+   } 
+   if(presence=="false"){
+    obj.presence=false;
+   }
+   //*----------------------------
+   if(nombreInfluenceur){
+    obj.nombreInfluenceur=nombreInfluenceur;
+  }
+  if(ClientId){
+    obj.ClientId=ClientId;
+  }
+
+   
+    var data=await Campagne.findAll({
+      where:obj,
+      include:[Interet]
+    })
+      if(!data){
+        res.status(400).json({error:"On peut pas filtrer Influenceur !"});
+      }else{
+        
+            
+            //*---------------------------------------
+            //*interet:
+           if(interet?.length>0){
+            console.log("interet")
+               data = data.filter(
+                (ele)=>{
+                  let ok=false;
+                   
+                   for(let i=0;i<ele.dataValues.Interets.length;i++){     
+                       interet.forEach((itr)=>{
+                        if(itr==ele.dataValues.Interets[i].id){ 
+                          ok=true;
+                          
+                       }
+                      })
+                       if(interet.length==0){
+                         ok=true 
+                       }
+                       
+                        
+                  }
+                  return ok;
+                  })
+            }
+
+          
+            
+            
+       if(dateDebutMin){
+          data=data.filter((ele,index)=>{  
+           return (
+            new Date(ele.dateDebut).getTime()>=new Date(dateDebutMin).getTime() 
+            &&
+            new Date(ele.dateDebut).getTime()<=new Date(dateDebutMax).getTime()
+             );      
+          });
+
+        }
+
+        if(dateFinMin){
+            data=data.filter((ele)=>{  
+             return (
+              new Date(ele.dateFin).getTime()>=new Date(dateFinMin).getTime() 
+              &&
+              new Date(ele.dateFin).getTime()<=new Date(dateFinMax).getTime()
+               );      
+            });
+  
+          }
+      
+
+
+        res.status(200).json(data);
+        
+        
+       
+      }
+  }catch(err){
+   res.status(400).json(err);
+  }
+  
 }

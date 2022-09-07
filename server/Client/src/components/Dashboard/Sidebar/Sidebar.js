@@ -18,6 +18,8 @@ function Sidebar() {
             className="fas fa-user-secret me-2"></i>InfluenceurSite</div>
     <div className="list-group list-group-flush my-3">
         <NavLink  to="/dashboard/home" className="list-group-item list-group-item-action bg-transparent second-text">Dashboard</NavLink>
+        <NavLink  to="/dashboard/langue" className="list-group-item list-group-item-action bg-transparent second-text">Langue</NavLink>
+        <NavLink  to="/dashboard/interet" className="list-group-item list-group-item-action bg-transparent second-text">Interet</NavLink>
         <NavLink to="/dashboard/client" className="list-group-item list-group-item-action bg-transparent second-text ">Client</NavLink>
         <NavLink to="/dashboard/campagne" className="list-group-item list-group-item-action bg-transparent second-text ">Campagne</NavLink>
         <NavLink to="/dashboard/galerieCampagne" className="list-group-item list-group-item-action bg-transparent second-text ">Galerie Campagne</NavLink>

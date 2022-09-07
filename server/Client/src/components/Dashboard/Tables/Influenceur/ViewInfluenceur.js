@@ -15,6 +15,8 @@ function ViewInfluenceur() {
     nombrepost:0,
     nombreAbonne:0,
     nombreAbonnement:0,
+    nombreLike:0,
+    nombreCommentaire:0
 
  });
 
@@ -30,10 +32,26 @@ function ViewInfluenceur() {
     console.log(instagramFilePath?.path)
    axios.get(instagramFilePath?.path)
           .then((res)=>{
+            var CommentCount=0;
+            var LikeCount=0;
+
+            for(var i=0;i<res.data.edge_owner_to_timeline_media.edges.length;i++){
+              
+              CommentCount+=res.data.edge_owner_to_timeline_media.edges[i].node.edge_media_to_comment.count;
+              LikeCount+=res.data.edge_owner_to_timeline_media.edges[i].node.edge_liked_by.count;
+         
+              }
+
+            for(var i=0;i<res.data.edge_felix_video_timeline.edges.length;i++){
+                CommentCount+=res.data.edge_felix_video_timeline.edges[i].node.edge_media_to_comment.count;
+                LikeCount+=res.data.edge_felix_video_timeline.edges[i].node.edge_liked_by.count;
+            }
             setCompteInstagram({
                 nombrepost:res.data.edge_owner_to_timeline_media.count,
                 nombreAbonne:res.data.edge_followed_by.count,
                 nombreAbonnement:res.data.edge_follow.count,
+                nombreCommentaire:CommentCount,
+                nombreLike:LikeCount
 
             })
           })
@@ -41,7 +59,19 @@ function ViewInfluenceur() {
    }
   },[instagramFilePath?.path])
 
- 
+ /*
+  var like_sum=0;
+    var comment_sum=0;
+      loop at all post
+        if(date_of_post <= 30 ){        
+          comment_sum+=response.data.data.user.
+                  edge_owner_to_timeline_media.edges[i].node.
+                    edge_media_to_comment.count
+
+          like_sum+=response.data.data.user.
+                  edge_owner_to_timeline_media.edges[i].node.
+                    edge_liked_by.count
+ */
 
   return (
 <div className="container-fluid px-4">
@@ -101,9 +131,26 @@ function ViewInfluenceur() {
                             </div>
                         </div>
                     </div>
+               
+
+                <div className="col-md-3">
+                        <div className="p-3 primary-bg shadow-sm d-flex justify-content-around align-items-center rounded">
+                            <div>
+                                <h3 className="fs-2">{compteInstagram.nombreLike}</h3>
+                                <p className="fs-5">Nombre Like</p>
+                            </div>
+                        </div>
                 </div>
 
-                        
+                <div className="col-md-3">
+                        <div className="p-3 primary-bg shadow-sm d-flex justify-content-around align-items-center rounded">
+                            <div>
+                                <h3 className="fs-2">{compteInstagram.nombreCommentaire}</h3>
+                                <p className="fs-5">Nombre Commentaire</p>
+                            </div>
+                        </div>
+                </div>
+            </div>
 
                             <div className="mb-3">
                                 <label>Influenceur full name: </label>

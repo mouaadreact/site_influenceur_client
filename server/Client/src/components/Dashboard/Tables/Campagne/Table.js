@@ -8,14 +8,11 @@ function Table({name,fieldsTable}) {
   const dispatch=useDispatch();
   const [q,setQ]=useState("");
   const [data,setData]=useState([]);
-  const [searchField,setSearchField]=useState({
-    search:"",
-    status:[]
-  });
+  const [searchField,setSearchField]=useState("");
    
   const {allCampagneData,loading}=useSelector(state=>state.campagne);
   const {centreInteret,statusCampagne}=useSelector(state=>state.filter);
- 
+  
   useEffect(() => {
     getAllCampagne(dispatch); 
     setData(allCampagneData);
@@ -29,42 +26,15 @@ function Table({name,fieldsTable}) {
  
   
   const search=(rows)=>{
-
-   let tableFilterInteret =  rows.filter(
-      (ele)=>{
-        let ok=false;
-         
-         for(let i=0;i<ele.Interets.length;i++){          
-             if(centreInteret.includes(ele.Interets[i].interetNom)){ 
-                 ok=true;
-              }
-              if(centreInteret.length==0){
-                ok=true
-              }
-              
-        }
-        return ok;
-        })
-        
-        let tableFilterStatus=tableFilterInteret.filter((row)=>{
-           if(statusCampagne.length>0){
-              console.log(statusCampagne.includes(row.presence));
-              return statusCampagne.includes(row.presence.toString())
-           }
-           else 
-             return row
-        })
-
-          console.log(tableFilterStatus)
      
-        return tableFilterStatus.filter((row)=>{
+        return rows.filter((row)=>{
          
              if(q===""){
                 return row
  
              }else{
               return ( 
-               row[searchField.search]?.toString().toLowerCase().indexOf(q?.toString().toLowerCase())>-1
+               row[searchField]?.toString().toLowerCase().indexOf(q?.toString().toLowerCase())>-1
                 
                 )
              }
@@ -84,7 +54,7 @@ useEffect(()=>{
   return (
    <div className="container-fluid px-4">
 
-<div  className="row my-5  p-4" 
+   <div  className="row my-5  p-4" 
      style={{width:"750px",
              backgroundColor:"#DDD",
              borderRadius:"10px"}}>
@@ -109,7 +79,7 @@ useEffect(()=>{
                 type="radio" 
                 value="id"
                 style={{marginLeft:"10px"}}
-                onChange={(e)=>setSearchField((prev)=>({...prev,search:e.target.value}))}
+                onChange={(e)=>setSearchField(e.target.value)}
                 />
         <label htmlFor="id">ID</label>
 
@@ -119,19 +89,11 @@ useEffect(()=>{
                 type="radio" 
                 value="titre"
                 style={{marginLeft:"10px"}}
-                onChange={(e)=>setSearchField((prev)=>({...prev,search:e.target.value}))}
+                onChange={(e)=>setSearchField(e.target.value)}
                 />
         <label htmlFor="id">Titre</label>
 
-        <input 
-                id="id" 
-                name="searchDField" 
-                type="radio" 
-                value="nombreInfluenceur"
-                style={{marginLeft:"10px"}}
-                onChange={(e)=>setSearchField((prev)=>({...prev,search:e.target.value}))}
-                />          
-        <label htmlFor="id">Nombre influenceur</label>
+       
          
          
         </div>

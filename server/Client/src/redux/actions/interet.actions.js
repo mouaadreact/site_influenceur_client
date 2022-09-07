@@ -52,7 +52,7 @@ export const getOneInteret = async (id,dispatch)=>{
 //-----
 export const deleteInteret = async (id,dispatch)=>{
  dispatch(startInteret());
- try{
+ try{ 
     const res = await axios({
      method:"delete",
      url:`${process.env.REACT_APP_URL_SERVER}/api/v1/interet/${id}`,

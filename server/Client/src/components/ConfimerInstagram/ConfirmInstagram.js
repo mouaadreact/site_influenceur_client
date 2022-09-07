@@ -27,6 +27,7 @@ function ConfirmInstagram({id}) {
   }
  //on submit afficher instagram data
   const onSubmit= async (values,actions)=>{
+     
      afficherCompteInstagram(queryId,values,dispatch);
    }
  //on cancel et on confirm instagram data

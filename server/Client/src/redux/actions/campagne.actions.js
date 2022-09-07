@@ -12,7 +12,7 @@ export const addCampagne = async (data,interetData,dispatch)=>{
       url:`${process.env.REACT_APP_URL_SERVER}/api/v1/campagne`,
       withCredentials:true,
       data });
-
+ 
       interetData.forEach(async (ele) => {
          await axios.post(`${process.env.REACT_APP_URL_SERVER}/api/v1/interetCampagne/${ele}/${res.data.id}`)
       });
@@ -123,3 +123,25 @@ export const updateCampagne = async (id,data,interetData,dispatch)=>{
     dispatch(errorCampagne())
   }
  }
+
+
+ //!---------------------------------------------------------
+
+ 
+export const filterCampagne= async (data,interet,dispatch)=>{
+  dispatch(startCampagne());
+  try{
+     const res = await axios.post(
+      `${process.env.REACT_APP_URL_SERVER}/api/v1/campagne/filtrage`,
+        {
+          ...data,
+          interet
+        }
+      )
+
+    dispatch(successGetAllCampagne(res.data));
+    
+  }catch(err){
+    dispatch(errorCampagne())
+  }
+}

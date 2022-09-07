@@ -1,26 +1,20 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import Sidebar from '../../Sidebar/Sidebar';
-import FilterSidebar from './FilterSidebar';
 import Table from './Table';
 
-function Influenceur() {
+function Langue() {
  const fieldsTable=[
-    "Nom",
-    "Prenom",
-    "Username Instagram",
-    "Commentaire",
-    "StatusActiverCompte"
+    "Langue",
  ]
 
 
   return (
    <div className="d-flex" id="wrapper">
           <Sidebar/>
-          <Table name="Influenceur" fieldsTable={fieldsTable} />
-          <FilterSidebar/>
+          <Table name="Langue" fieldsTable={fieldsTable} />
    </div>
   )
 }
 
-export default Influenceur
+export default Langue

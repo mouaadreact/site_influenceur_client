@@ -414,49 +414,125 @@ exports.getId=async (req,res)=>{
 exports.filtrage=async (req,res)=>{
   try{
 
+  const {
+    ville,
+    statusEtatActiver,
+    quartier,
+    genre,
+    ageMin,
+    ageMax,
+    situationFamiliale,
+    niveauEtude,
+    langue,
+    interet
+  }=req.body;
+
+  console.log(req.body);
    var obj={};
-   var resultat=[];
-   if(req.query.ville){
-     obj.ville=req.query.ville;
+   if(ville){
+     obj.ville=ville.toUpperCase();
    }
-   if(req.query.quartier){
-    obj.quartier=req.query.quartier;
+   if(quartier){
+    obj.quartier=quartier.toUpperCase();
    }
-   if(req.query.genre){
-    obj.genre=req.query.genre;
+   //*----------------------------
+   if(statusEtatActiver==="true"){
+    obj.statusEtatActiver=true;
+  }
+  if(statusEtatActiver==="false"){
+    obj.statusEtatActiver=false;
+  }
+  //*-------------------------------
+   if(genre){
+    obj.genre=genre;
    }
-   if(req.query.pays){
-    obj.pays=req.query.pays;
+   if(situationFamiliale){
+    obj.situationFamiliale=situationFamiliale
    }
-   if(req.query.situationFamiliale){
-    obj.situationFamiliale=req.query.situationFamiliale
-   }
-   if(req.query.niveauEtude){
-    obj.niveauEtude=req.query.niveauEtude
-   }
-   
+   if(niveauEtude){
+    obj.niveauEtude=niveauEtude
+   } 
+
+
     
    
-    const data=await Influenceur.findAll({
-      where:obj
+    var data=await Influenceur.findAll({
+      where:obj,
+      include:[Langue,Interet]
     })
       if(!data){
         res.status(400).json({error:"On peut pas filtrer Influenceur !"});
       }else{
+        
+            
+            //*---------------------------------------
+            //*interet:
+           if(interet?.length>0){
+            console.log("interet")
+               data = data.filter(
+                (ele)=>{
+                  let ok=false;
+                   
+                   for(let i=0;i<ele.dataValues.Interets.length;i++){     
+                       interet.forEach((itr)=>{
+                        if(itr==ele.dataValues.Interets[i].id){ 
+                          ok=true;
+                          
+                       }
+                      })
+                       if(interet.length==0){
+                         ok=true 
+                       }
+                       
+                        
+                  }
+                  return ok;
+                  })
+            }
 
-         if(req.query.age){
+          
+            //*--------------------------------------
+            //*langues:
+            if(langue?.length>0){
+              console.log('langue')
+              data = data.filter(
+                (ele)=>{
+                  let ok=false;
+                   
+                   for(let i=0;i<ele.dataValues.Langues.length;i++){     
+                       langue.forEach((itr)=>{
+                        if(itr==ele.dataValues.Langues[i].id){ 
+                          ok=true;
+                          
+                       }
+                      })
+                       if(langue.length==0){
+                         ok=true 
+                       }
+                       
+                        
+                  }
+                  return ok;
+                  })
+            }
+            
+         if(ageMin){
+          data=data.filter((ele)=>{  
+          var YearDateNaissance=ele.dataValues.dateNaissance.getFullYear();
+          return (
+            new Date().getFullYear()-YearDateNaissance>=ageMin
+            &&
+            new Date().getFullYear()-YearDateNaissance<=ageMax
+          )
 
-            data.forEach(ele=>{  
-            var YearDateNaissance=ele.dataValues.dateNaissance.getFullYear();
-            if(new Date().getFullYear()-YearDateNaissance==req.query.age){
-                resultat.push(ele.dataValues);
-              }
-            });
-           res.status(200).json(resultat);
+          });
 
-         }else{
-            res.status(400).json(data);
-         }
+        }
+
+           //---------------------------------------- 
+            //console.log(data);
+            res.status(200).json(data);
+        
         
        
       }

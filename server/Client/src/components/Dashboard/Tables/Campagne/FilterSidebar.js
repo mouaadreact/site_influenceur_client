@@ -3,63 +3,70 @@ import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllInteret } from '../../../../redux/actions/interet.actions';
 import { filterCentreInteret, filterStatusCampagne } from '../../../../redux/actions/filter.actions';
+import { getAllClient } from '../../../../redux/actions/client.actions';
+import { filterCampagne } from '../../../../redux/actions/campagne.actions';
 
 function FilterSidebar() {
  
   const dispatch=useDispatch();
-
   const {allInteretData}=useSelector(state=>state.interet);
-  const { statusCampagne}=useSelector(state=>state.filter);
-
-  const [centreInteretFilter,setCentreInteretFilter]=useState([]);
-  const [statusCampagneFilter,setStatusCampagneFilter]=useState([]);
+  const {allClientData}=useSelector(state=>state.client);
 
   const [optionsInteret,setOptionsInteret]=useState([]);
 
-  const fetchDataInteret = useCallback(() => {
- 
-   getAllInteret(dispatch);
-   allInteretData.forEach(ele=>{
-   setOptionsInteret((options)=>[...options,ele.interetNom])         
-    });
-  }, [allInteretData[0]?.id]);
- 
+  //* useState of data filter
+  const [centreInteretFilter,setCentreInteretFilter]=useState([]);
+  const [filterData,setFilterData]=useState({
+    presence:"", 
+    dateDebutMin:"",
+    dateDebutMax:"",
+    dateFinMin:"",
+    dateFinMax:"",
+    nombreInfluenceur:"", 
+    ClientId:"",
+  })
+
+
+  //* fetch all interet data
 
   useEffect(()=>{
-  fetchDataInteret();
-  },[ fetchDataInteret]);
+   getAllInteret(dispatch);
+   getAllClient(dispatch);
+  },[]);
 
   const handleChangeInteret=(e)=>{
-       const data=[...centreInteretFilter]
-        if(e.target.checked){
-          if(!data.includes(e.target.value)){
-             data.push(e.target.value)
-          }
-         
-        }else{
-           data.pop(e.target.value)
-        }
-        setCentreInteretFilter(data);
-        filterCentreInteret(data,dispatch);       
+   const { value, checked } = e.target;
+   //add 
+   if (checked) {
+       setCentreInteretFilter([...centreInteretFilter, value]);
+    }
+  
+    // remove
+    else {
+      setCentreInteretFilter(centreInteretFilter.filter((e) => e !== value));
+    }
+    
     }
 
+//!---------------------------------------------------------
 
-    const handleChangeStatusCampagne=(e)=>{
-     
-      const data=[...statusCampagneFilter]
-       if(e.target.checked){
-         if(!data.includes(e.target.value)){
-            data.push(e.target.value)
-         }
-        
-       }else{
-          data.pop(e.target.value)
-       }
-       setStatusCampagneFilter(data);
-       filterStatusCampagne(data,dispatch);       
-   }
+const handleChangeFilter=(e)=>{
  
-  
+   setFilterData((prev)=>({...prev,[e.target.name]:e.target.value}))
+}
+
+console.log(allClientData)
+
+//*filterCampagne
+
+const handleSubmitFilter=(e)=>{
+   e.preventDefault();
+   filterCampagne(filterData,centreInteretFilter,dispatch)
+
+}
+
+
+//!-----------------------------------------------------------  
   return (
   <div className="bg-white" id="sidebar-wrapper">
     <div className="sidebar-heading primary-bg text-center py-3 text-white fs-4 fw-bold text-uppercase border-bottom"><i
@@ -67,7 +74,41 @@ function FilterSidebar() {
             ></i>Filter</div>
     <div className="list-group list-group-flush my-3">
        <div style={{marginLeft:"10px"}} >
-          
+       <form onSubmit={(e)=>handleSubmitFilter(e)}>
+       <table>
+           <thead>
+              <tr>
+                <th>Centre Interet</th>
+              </tr>
+            </thead> 
+            <tbody>
+              <tr>
+                <td>
+               {
+                  <>
+                  <select  
+                    name="ClientId"
+                    className='form-control'
+                    onChange={(e)=>handleChangeFilter(e)} 
+                      >
+                      <option 
+                        className="text-muted"
+                        value="">Client ID</option>
+                        {
+                          allClientData?.map((ele)=>{
+                              return <option key={ele.id} value={ele.id}>{ele.id}</option>    
+                            })
+                        }
+                      </select>                  
+                        
+                  </>
+               }
+               </td> 
+              </tr>
+             </tbody>
+          </table>
+
+
           <table>
            <thead>
               <tr>
@@ -76,7 +117,7 @@ function FilterSidebar() {
             </thead> 
             <tbody>
               {
-               optionsInteret && optionsInteret.map((ele,index)=>(
+               allInteretData?.map((ele,index)=>(
                     <tr key={index+1} >
                        <td >
                        <input 
@@ -84,13 +125,13 @@ function FilterSidebar() {
                        type="checkbox" 
                        id="scales" 
                        name="scales"
-                       value={ele}
+                       value={ele.id}
                        onChange={e=>handleChangeInteret(e)}
                               />
                        <label
                        
                        style={{marginLeft:"10px"}} 
-                       htmlFor="scales">{ele}</label>
+                       htmlFor="scales">{ele.interetNom}</label>
                       </td> 
                    </tr>
                ))
@@ -110,11 +151,11 @@ function FilterSidebar() {
                        <td >
                        <input 
                       
-                       type="checkbox" 
+                       type="radio" 
                        id="status1" 
-                       name="status"
+                       name="presence"
                        value={true}
-                       onChange={e=>handleChangeStatusCampagne(e)}
+                       onChange={e=>handleChangeFilter(e)}
                               />
                        <label
                        
@@ -127,11 +168,11 @@ function FilterSidebar() {
                        <td >
                        <input 
                       
-                       type="checkbox" 
+                       type="radio" 
                        id="status2" 
-                       name="status"
+                       name="presence"
                        value={false}
-                       onChange={e=>handleChangeStatusCampagne(e)}
+                       onChange={e=>handleChangeFilter(e)}
                               />
                        <label
                        
@@ -139,12 +180,160 @@ function FilterSidebar() {
                        htmlFor="status2">Online</label>
                       </td> 
                    </tr>
+                   <tr>
+                       <td >
+                       <input 
+                      
+                       type="radio" 
+                       id="status3" 
+                       name="presence"
+                       value=""
+                       onChange={e=>handleChangeFilter(e)}
+                              />
+                       <label
+                       
+                       style={{marginLeft:"10px"}} 
+                       htmlFor="status3">All</label>
+                      </td> 
+                   </tr>
+
               
              </tbody>
           </table>
 
-       </div>
+          
+          <table>
+           <thead>
+              <tr>
+                <th>Date Debut :</th>
+              </tr>
+            </thead> 
+            <tbody>
+             
+                    <tr>
+                       <td >
+                       <label
+                       style={{marginRight:"10px"}} 
+                       htmlFor="dateDebutMin">Min :</label>
+                       <input 
+                      
+                       type="date" 
+                       id="dateDebutMin" 
+                       name="dateDebutMin"
+                       onChange={e=>handleChangeFilter(e)}
+                              />
+                       
+                      </td> 
+                   </tr>
 
+                   <tr>
+                       <td >
+                       <label
+                       style={{marginRight:"10px"}} 
+                       htmlFor="dateDebutMax">Max :</label>
+                       <input 
+                      
+                       type="date" 
+                       id="dateDebutMax" 
+                       name="dateDebutMax"
+                       onChange={e=>handleChangeFilter(e)}
+                              />
+                       
+                      </td> 
+                   </tr>
+
+              
+             </tbody>
+          </table>
+
+
+
+          <table>
+           <thead>
+              <tr>
+                <th>Date Fin :</th>
+              </tr>
+            </thead> 
+            <tbody>
+             
+                    <tr>
+                       <td >
+                       <label
+                       style={{marginRight:"10px"}} 
+                       htmlFor="dateFinMin">Min :</label>
+                       <input 
+                      
+                       type="date" 
+                       id="dateFinMin" 
+                       name="dateFinMin"
+                       onChange={e=>handleChangeFilter(e)}
+                              />
+                       
+                      </td> 
+                   </tr>
+
+                   <tr>
+                       <td >
+                       <label
+                       style={{marginRight:"10px"}} 
+                       htmlFor="dateFinMax">Max :</label>
+                       <input 
+                      
+                       type="date" 
+                       id="dateFinMax" 
+                       name="dateFinMax"
+                       onChange={e=>handleChangeFilter(e)}
+                              />
+                       
+                      </td> 
+                   </tr>
+
+              
+             </tbody>
+          </table>
+
+
+          <table>
+           <thead>
+              <tr>
+                <th>Nombre Influenceur:</th>
+              </tr>
+            </thead> 
+            <tbody>
+             
+                    <tr>
+                       <td >
+                       <input 
+                        type="number" 
+                        id="nombreInfluenceur" 
+                        name="nombreInfluenceur"
+                        className='form-control'
+                        onChange={e=>handleChangeFilter(e)}
+                              />
+                       
+                      </td> 
+                   </tr>
+
+             </tbody>
+          </table>
+
+          <table>
+            <thead>
+            <tr>
+               <td>
+                 <button 
+                 type="submit" 
+                 className="btn btn-primary mt-3">
+                   Filter Campagne
+                 </button>
+               
+               </td>
+            </tr>
+            </thead>
+          </table>
+         </form>
+
+       </div>
     </div>
   </div>
 

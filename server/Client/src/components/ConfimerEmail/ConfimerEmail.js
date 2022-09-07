@@ -10,15 +10,20 @@ function ConfimerEmail() {
  const location=useLocation();
  const dispatch=useDispatch();
 
+
  useEffect(()=>{
      
      const Querys=new URLSearchParams(location.search);
      const queryToken=Querys.get('token');
      confirmEmail(queryToken,dispatch);
-      
   },[]);
-  //slow enregistrer idUser??????
-  console.log(localStorage.getItem("idUser"))
+
+  const handlegetUserId=(e)=>{
+    e.preventDefault();
+   window.location.href=`/register/confirmInstagram?id=${localStorage.getItem("idUser")}`
+
+  }
+
   return (
    <>
      <ToastContainer autoClose={3000}/>
@@ -28,10 +33,13 @@ function ConfimerEmail() {
           <div className="card-body">
             <p className="card-text">Complete votre compte instagram et compete register</p>
           </div>
-          <NavLink  
-          className="btn btn-primary w-30 m-1" 
-          to={`/register/confirmInstagram?id=${localStorage.getItem('idUser')}`}
-           >Go Complete</NavLink>
+         <form onSubmit={(e)=>handlegetUserId(e)}>
+          <input  
+           className="btn btn-primary w-30 m-1"
+           type="submit"
+            value="confirmer votre compte"
+           />
+         </form>
         </div>
         </div>
 

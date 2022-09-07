@@ -1,33 +1,33 @@
 import React, { useEffect, useState } from 'react'
-import {AiFillEdit,AiFillDelete} from 'react-icons/ai'
+import {AiFillDelete} from 'react-icons/ai'
 import { useDispatch, useSelector } from 'react-redux'
-import { deleteClient, getAllClient } from '../../../../redux/actions/client.actions';
+import { deleteInteret, getAllInteret } from '../../../../redux/actions/interet.actions';
 
 function Table({name,fieldsTable}) {
   const dispatch=useDispatch();
   const [q,setQ]=useState("");
-  const {allClientData,loading}=useSelector(state=>state.client);
+  const {allInteretData}=useSelector(state=>state.interet);
+
   useEffect(() => {
-    getAllClient(dispatch); 
+    getAllInteret(dispatch); 
+  
   }, []);
  
-  
 
   const handleDelete=(event,id)=>{
-    deleteClient(id,dispatch)
-
+    deleteInteret(id,dispatch)
   }
 
-  const search=(rows)=>{
-    return rows.filter(
-      (row)=>
-         row.id==parseInt(q) ||
-         row.nomSociete.toLowerCase().indexOf(q.toLowerCase())>-1 ||
-         row.nomDirecteur.toLowerCase().indexOf(q.toLowerCase())>-1 ||
-         row.telephone.toLowerCase().indexOf(q.toLowerCase())>-1 ||
-         row.email.toLowerCase().indexOf(q.toLowerCase())>-1 
-             
+  const search=(rows)=>{   
+    if(q){  
+      return rows.filter((row)=>{
+        return row.interetNom.toLowerCase().includes(q.toLowerCase())
+      }     
       )
+    }else{
+      return rows
+    }
+    
   }
 
   return (
@@ -37,14 +37,14 @@ function Table({name,fieldsTable}) {
      
         <div className='card-hearder mb-3'>
           <h4>{name} Table
-             <a href={`/dashboard/client/add`} className='btn btn-primary float-end'>+ add Client</a>
+             <a href={`/dashboard/interet/add`} className='btn btn-primary float-end'>+ add Interet</a>
           </h4>
         </div>
 
         <div className='card-hearder mb-3'>
          <input 
          className='p-1 form-control w-25' 
-         placeholder='search ..'
+         placeholder='search interet ...'
          value={q}
          onChange={(e)=>setQ(e.target.value)}
          />
@@ -64,20 +64,15 @@ function Table({name,fieldsTable}) {
                   </tr>
               </thead>
               <tbody>
-              { search(allClientData)?.map((ele,index)=>{
+              { search(allInteretData)?.map((ele,index)=>{
                   return (<tr key={index+1} className="text-center">
                       <td key={index+1} className="text-warning">{
                         ele.id<10 
                         ?"0"+ele.id
                         : ele.id
                       }</td>
-                      <td>{ele.nomSociete}</td>
-                      <td>{ele.nomDirecteur}</td>   
-                      <td>{ele.telephone}</td>   
-                      <td>{ele.email}</td>   
+                      <td>{ele.interetNom}</td>                     
                       <td scope="col" width="150">
-                      <a href={`/dashboard/client/view/${ele.id}`} className="text-success" style={{fontSize:"16px",marginRight:"10px"}}>view</a>
-                      <a href={`/dashboard/client/edit/${ele.id}`}  className="text-warning" style={{fontSize:"18px",marginRight:"10px"}}><AiFillEdit/></a>
                       <a className="text-danger" style={{fontSize:"18px"}} onClick={(event)=>handleDelete(event,ele.id)}><AiFillDelete/></a>
                       </td>
                   </tr>)

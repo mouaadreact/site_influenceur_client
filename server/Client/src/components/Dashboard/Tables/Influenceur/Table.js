@@ -6,25 +6,46 @@ import { changeEtatCompteInfluenceur, deleteInfluenceur, getAllInfluenceur } fro
 function Table({name,fieldsTable}) {
   const dispatch=useDispatch();
   const [data,setData]=useState([]);
+  const [q,setQ]=useState("");
+  const [searchField,setSearchField]=useState("id");
 
   const {allInfluenceurData,loading}=useSelector(state=>state.influenceur);
- 
+  
   useEffect(() => {
     getAllInfluenceur(dispatch); 
     setData(allInfluenceurData);
   }, []);
  
+  //!-----------------------------------------
  
   const handleChangeStatusActive=(e,id,status)=>{
         e.preventDefault();
         changeEtatCompteInfluenceur(id,status,dispatch);
   }
 
+  //******************************************
+
+  const search=(rows)=>{
+    return rows?.filter((row)=>{
+         
+      if(q===""){
+         return row
+
+      }else{
+       return ( 
+        row[searchField]?.toString().toLowerCase().indexOf(q?.toString().toLowerCase())>-1
+         
+         )
+      }
+
+ })
+
+  }
 
   return (
    <div className="container-fluid px-4">
 
-<div  className="row my-5  p-4" 
+   <div  className="row my-5  p-4" 
      style={{ backgroundColor:"#DDD",
              borderRadius:"10px"}}>
      
@@ -33,6 +54,59 @@ function Table({name,fieldsTable}) {
           </h4>
         </div>
      
+
+        <div className='card-hearder mb-3'>
+         <input 
+         className='p-1 form-control w-25 mb-2'
+         placeholder='search ..'
+         value={q}
+
+         onChange={(e)=>setQ(e.target.value)}
+         />
+         <label htmlFor="id" style={{fontWeight:"bold"}}>Search : </label>
+        <input 
+                id="id1" 
+                name="searchDField" 
+                type="radio" 
+                value="id"
+                defaultChecked="checked"
+                style={{marginLeft:"10px"}}
+                onChange={(e)=>setSearchField(e.target.value)}
+                />
+        <label htmlFor="id1">ID</label>
+
+        <input 
+                id="id2" 
+                name="searchDField" 
+                type="radio" 
+                value="nom"
+                style={{marginLeft:"10px"}}
+                onChange={(e)=>setSearchField(e.target.value)}
+                />
+        <label htmlFor="id2">Nom</label>
+
+        <input 
+                id="id3" 
+                name="searchDField" 
+                type="radio" 
+                value="prenom"
+                style={{marginLeft:"10px"}}
+                onChange={(e)=>setSearchField(e.target.value)}
+                />          
+        <label htmlFor="id3">Prenom</label>
+
+        <input 
+                id="id3" 
+                name="searchDField" 
+                type="radio" 
+                value="instagramUsernameCompte"
+                style={{marginLeft:"10px"}}
+                onChange={(e)=>setSearchField(e.target.value)}
+                />          
+        <label htmlFor="id3">Username Instagram</label>
+         
+         
+        </div>
  
          
          
@@ -53,7 +127,7 @@ function Table({name,fieldsTable}) {
                   </tr>
               </thead>
               <tbody>
-              {allInfluenceurData?.map((ele,index)=>{
+              {search(allInfluenceurData)?.map((ele,index)=>{
                   return (<tr key={index+1} className="text-center">
                       <td className="text-warning">{
                         ele.id<10 

@@ -20,7 +20,7 @@ import { errorRegister, startRegister, successAfficherCompteInstg, successConfir
        dispatch(errorRegister(err.response.data.errors[0].message))
      }
  }
-
+ 
  export const confirmEmail=async (token,dispatch)=>{
   dispatch(startRegister());
     
@@ -72,14 +72,16 @@ import { errorRegister, startRegister, successAfficherCompteInstg, successConfir
 
  //----
 //compelete profil :
- export const compeleteProfil=async (id,data,langueMult,interetMult,dispatch)=>{
+ export const compeleteProfil=async (id,data,dispatch)=>{
   dispatch(startRegister());
   try{
-    const res=await axios.put(`${process.env.REACT_APP_URL_SERVER}/api/v1/influenceur/complete/${id}`,{
-      ...data,
-      langue:langueMult,
-      interet:interetMult
-    });
+    const res=axios({
+      method:"put",
+      url:`${process.env.REACT_APP_URL_SERVER}/api/v1/influenceur/complete/${id}`,
+      data
+      });
+      
+      console.log(res);
 
     window.location.href=`/register/conditionGenrale?id=${id}`;
 

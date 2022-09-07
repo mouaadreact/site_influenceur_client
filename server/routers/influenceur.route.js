@@ -13,7 +13,7 @@ router.route("/confirmer-email")
 
 //filtrage:
 router.route("/filtrage")
-      .get(influenceurController.filtrage);
+      .post(influenceurController.filtrage);
 
 //crud influenceur
 router.route("/:id")

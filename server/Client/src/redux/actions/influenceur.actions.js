@@ -79,3 +79,27 @@ export const addCommentaire= async (id,commentaire,dispatch)=>{
   }
 }
 //--------------------------------------------------------
+
+
+
+export const filterInfluenceur= async (data,langue,interet,dispatch)=>{
+  dispatch(startInfluenceur());
+  console.log(langue);
+  try{
+     const res = await axios.post(
+      `${process.env.REACT_APP_URL_SERVER}/api/v1/influenceur/filtrage`,
+        {
+          ...data,
+          langue,
+          interet
+        }
+      )
+
+    
+
+    dispatch(successGetAllInfluenceur(res.data));
+    
+  }catch(err){
+    dispatch(errorInfluenceur())
+  }
+}

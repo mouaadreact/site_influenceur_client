@@ -9,11 +9,48 @@ export const getAllLangue=async (dispatch)=>{
     url:`${process.env.REACT_APP_URL_SERVER}/api/v1/langue`,
     withCredentials:true
    });
-   console.log(res.data);
+   
    dispatch(successGetAllLangue(res.data));
    
  }catch(err){
    dispatch(errorLangue());
  }
 }
+
+ 
+ export const addLangue=async (data,dispatch)=>{
+  dispatch(startLangue());
+  try{
+    const res=await axios({ 
+     method:"post",
+     url:`${process.env.REACT_APP_URL_SERVER}/api/v1/langue`,
+     withCredentials:true,
+     data
+    });
+
+    //getAllInteret(dispatch);
+    window.location.href="/dashboard/langue";
+    
+  }catch(err){
+    dispatch(errorLangue());
+  }
+ }
+
+ 
+ export const deleteLangue=async (id,dispatch)=>{
+  dispatch(startLangue());
+  try{
+    const res = await axios({
+      method:"delete",
+      url:`${process.env.REACT_APP_URL_SERVER}/api/v1/langue/${id}`,
+      withCredentials:true
+     });
+
+    getAllLangue(dispatch)
+    
+  }catch(err){
+    dispatch(errorLangue());
+  }
+ }
+ 
 

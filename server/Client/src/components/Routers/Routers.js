@@ -1,5 +1,6 @@
-import React from 'react'
-import {BrowserRouter,Route,Routes} from 'react-router-dom'
+import React, { useEffect } from 'react'
+import {BrowserRouter,Route,Routes,useHistory, useNavigate} from 'react-router-dom'
+
 import Home from '../Home/Home'
 import NavBar from '../NavBar/NavBar'
 import Login from '../Login/Login'
@@ -25,18 +26,29 @@ import GalerieCampagne from '../Dashboard/Tables/GalerieCampagne/GalerieCampagne
 import Influenceur from '../Dashboard/Tables/Influenceur/Influenceur'
 import ViewInfluenceur from '../Dashboard/Tables/Influenceur/ViewInfluenceur'
 import EditInfluenceur from '../Dashboard/Tables/Influenceur/EditInfluenceur'
+import CompeleteProfilV2 from '../CompeleteProfil/CompeleteProfilV2'
+import Redirect from '../Home/Redirect'
+import Langue from '../Dashboard/Tables/Langue/Langue'
+import AddLangue from '../Dashboard/Tables/Langue/AddLangue'
+import Interet from '../Dashboard/Tables/Interet/Interet'
+import AddInteret from '../Dashboard/Tables/Interet/AddInteret'
 function Routers() {
+
+
+
   return (
+
    <BrowserRouter>
         <NavBar/>
         <Routes>
-          <Route path='/' element={<Home />} />
+          <Route path='/' element={<Redirect />} />
+          <Route path='/home' element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path='/register' element={<Register/>} />
           <Route path='/register/verifierEmail' element={<VerifierEmail />} />
           <Route path='/register/confirmEmail' element={<ConfimerEmail/>} />
           <Route path='/register/confirmInstagram' element={<ConfirmInstagram/>} />
-          <Route path='/register/completeProfil' element={<CompeleteProfil/>} />
+          <Route path='/register/completeProfil' element={<CompeleteProfilV2/>} />
           <Route path='/register/conditionGenrale' element={<ConfirmConditionGenerale/>} />
           <Route path='/dashboard/home' element={<Admin/>} />
           {/*Client table */}
@@ -56,7 +68,14 @@ function Routers() {
           <Route path='/dashboard/influenceur' element={<Influenceur/>} />
           <Route path='/dashboard/influenceur/view/:id' element={<ViewInfluenceur/>} />
           <Route path='/dashboard/influenceur/edit/:id' element={<EditInfluenceur/>} />
-            
+          {/* table langue */}
+          <Route path='/dashboard/langue' element={<Langue/>} />
+          <Route path='/dashboard/langue/add' element={<AddLangue/>} />
+          {/* table Interet */}
+          <Route path='/dashboard/interet' element={<Interet/>} />
+          <Route path='/dashboard/interet/add' element={<AddInteret/>} />
+          {/**************************************** */}
+          {/*profil */}
           <Route path='/profil' element={<ProfilInfluenceur/>} />
         </Routes>
      </BrowserRouter>

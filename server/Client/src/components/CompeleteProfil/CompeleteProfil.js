@@ -20,7 +20,7 @@ function CompeleteProfil() {
  const [langueMult,setLangueMult]=useState([]);
  const [interetMult,setInteretMult]=useState([]);
 
-  const location=useLocation();
+ const location=useLocation();
  const Querys=new URLSearchParams(location.search);
  const queryIds=Querys.get('id');
  let navigate=useNavigate();
@@ -109,37 +109,34 @@ useEffect(() => {
 
    //--------------------------
    useEffect(()=>{
-    setOptionsPays((options)=>[...options,{key:"Maroc",value:"Maroc"}])
+    setOptionsPays([{
+      key:"veuillez entre pays",value:""
+     },
+     {key:"Maroc",value:"Maroc"}
+    ]);
+   const villeElements=[]
     marocVille["ville"].forEach(ele=>{
        const op={
-        key:ele,
+        label:ele,
         value:ele
-        }
-      setOptionsVille((options)=>[...options,op])
+        } 
+      villeElements.push(op);
 
    });
+   setOptionsVille(villeElements)
 
    },[])
 
-  const handleQuartier= async (e)=>{
-    marocQuartier[e.target.value].forEach(ele=>{
-      const op={
-       key:ele,
-       value:ele
-       }
-     setOptionsQuartier((options)=>[...options,op])
-
-  });
-  }
 
   const onSubmit= async (values,actions)=>{
 
-      if(values.situationFamiliale==="célébataire" && values.nombreEnfant!=0)  {
+      /*if(values.situationFamiliale==="célébataire" && values.nombreEnfant!=0)  {
         toast.error("erreur célébataire a 0 enfants ");
        }
       else{
            compeleteProfil(queryIds,values,langueMult,interetMult,dispatch);
-      }
+      }*/
+      console.log(values);
     }
 //-------------------
 const handleLangue =(e)=>{
@@ -148,6 +145,24 @@ const handleLangue =(e)=>{
 //--------
 const handleInteret =(e)=>{
   setInteretMult(Array.isArray(e)?e.map(x=>x.value):[]);
+}
+
+//--------
+
+const handleQuartier=  (e)=>{
+  console.log(e.value)
+  setOptionsQuartier([])
+  const quartierElements=[{
+    key:"veuillez entre quartier",value:""
+   }]
+  marocQuartier[e.value]?.forEach(ele=>{
+    const op={
+     key:ele,
+     value:ele
+     }
+    quartierElements.push(op)
+});
+setOptionsQuartier(quartierElements)
 }
  //---------------
   return (
@@ -159,8 +174,7 @@ const handleInteret =(e)=>{
           validationSchema={basicSchemaCompleteProfil}
           onSubmit={onSubmit}
     >
-
-
+   
     {  formik => (
       <div className='container w-50 shadow-lg p-3 mb-5 bg-white roundedd ' style={{marginTop:"30px"}}>
       <div className='text-center p-3'>Complete Profil</div>
@@ -190,6 +204,16 @@ const handleInteret =(e)=>{
       </div>
 
       <div className="form-outline mb-4">
+        <label className="form-label" htmlFor="ville">Ville</label>
+        <Select 
+            required={true}  
+            options={optionsVille} 
+            id='ville' 
+            name='ville' 
+            onChange={handleQuartier} ></Select>
+      </div>
+
+      {/*<div className="form-outline mb-4">
           <label className="form-label" htmlFor="ville">Ville</label>
           <Field  
             as="select"
@@ -197,7 +221,8 @@ const handleInteret =(e)=>{
             id="ville" 
             className="form-control"
             options={optionsVille}
-            onClick={(e)=>{handleQuartier(e)}}
+            value={formik.values.ville}
+            onChange={(e)=>{handleQuartier(e)}}
           >
           {
            optionsVille.map(ele=>{
@@ -210,6 +235,7 @@ const handleInteret =(e)=>{
         </div>
          
       </div>
+    */}
 
       <div className="form-outline mb-4">
           <label className="form-label" htmlFor="quartier">Quartier</label>
@@ -219,7 +245,6 @@ const handleInteret =(e)=>{
             id="quartier" 
             className="form-control"
             options={optionsQuartier}
-            onClick={(e)=>{handleQuartier(e)}}
           >
           {
            optionsQuartier.map(ele=>{
@@ -312,7 +337,13 @@ const handleInteret =(e)=>{
       <div className="form-outline mb-4">
           <label className="form-label" htmlFor="interet">Centre Interet</label>
           
-          <Select required={true} isMulti options={optionsInteret} id='interet' name='interet' onChange={handleInteret} ></Select>
+          <Select 
+          required={true} 
+          isMulti 
+          options={optionsInteret} 
+          id='interet' 
+          name='interet' 
+          onChange={handleInteret} ></Select>
           
           
           

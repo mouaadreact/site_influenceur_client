@@ -31,17 +31,8 @@ useEffect(() => {
    setAdd(!add);
   }
 
-  const handleChange=async (e)=>{
-    
+  const handleChange=async (e)=>{   
     setIdCampagne(e.target.value);
-   /*try{
-       const res=await axios.get(`${process.env.REACT_APP_URL_SERVER}/api/v1/galerieCampagne/${e.target.value}`)
-       if(res){
-        setImages(res.data);
-       }
-      }catch(err){
-       console.log(err);
-    }*/
   } 
 
 
