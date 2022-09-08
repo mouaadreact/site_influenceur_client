@@ -7,6 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './ConfimInstagram.css'
 import { afficherCompteInstagram, validerCompteInstagram } from '../../redux/actions/register.actions';
+import Loading from '../Loading/Loading';
 
 function ConfirmInstagram({id}) {
   const location=useLocation();
@@ -52,7 +53,7 @@ function ConfirmInstagram({id}) {
       loading 
       ? 
       <>
-        <p className='btn bg-primary'>Loading .... </p>
+         <Loading/>
       </>
       :
       <>

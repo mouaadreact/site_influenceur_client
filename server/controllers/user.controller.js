@@ -1,5 +1,5 @@
 
-const {User, Role}=require("../models");
+const {User, Role, Influenceur}=require("../models");
 const SchemaValidation=require("../validators/manager.validator");
 const bcrypt=require("bcrypt");
 
@@ -16,7 +16,7 @@ const bcrypt=require("bcrypt");
 exports.getAll=async (req,res)=>{
   try{
     
-   const data=await User.findAll({include:[Role]});
+   const data=await User.findAll({include:[Role,Influenceur]});
     if(!data){
       res.status(400).json({error:"les users sont introuvables !"});
     }else{

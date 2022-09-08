@@ -32,6 +32,11 @@ import Langue from '../Dashboard/Tables/Langue/Langue'
 import AddLangue from '../Dashboard/Tables/Langue/AddLangue'
 import Interet from '../Dashboard/Tables/Interet/Interet'
 import AddInteret from '../Dashboard/Tables/Interet/AddInteret'
+import EtatPaiment from '../Dashboard/Tables/EtatPaiment/EtatPaiment'
+import EditEtatPaiment from '../Dashboard/Tables/EtatPaiment/EditEtatPaiment'
+import AddEtatPaiment from '../Dashboard/Tables/EtatPaiment/AddEtatPaiment'
+import NewOffre from '../ProfilInfluenceur/NewOffre'
+import HistoryOffre from '../ProfilInfluenceur/HistoryOffre'
 function Routers() {
 
 
@@ -74,9 +79,17 @@ function Routers() {
           {/* table Interet */}
           <Route path='/dashboard/interet' element={<Interet/>} />
           <Route path='/dashboard/interet/add' element={<AddInteret/>} />
+          {/*add Etat Paiment*/}
+          <Route path='/dashboard/etatPaiment' element={<EtatPaiment/>} />
+          <Route path='/dashboard/etatPaiment/edit/:campagneId/:influenceurId' element={<EditEtatPaiment/>} />
+          <Route path='/dashboard/etatPaiment/add' element={<AddEtatPaiment/>} />
+
           {/**************************************** */}
           {/*profil */}
-          <Route path='/profil' element={<ProfilInfluenceur/>} />
+          <Route path='/profil/home' element={<ProfilInfluenceur/>} />
+          <Route path='/profil/newOffre' element={<NewOffre/>} />
+          <Route path='/profil/historyOffre' element={<HistoryOffre/>} />
+
         </Routes>
      </BrowserRouter>
   )

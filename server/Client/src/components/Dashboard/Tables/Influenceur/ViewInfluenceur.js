@@ -84,7 +84,7 @@ function ViewInfluenceur() {
                     <a href="/dashboard/influenceur" className="btn btn-danger float-end">BACK</a>
                 </h4>
             </div>
-            <div className="card-body">
+            <div className="card-body"> 
 
         
             <div className="mb-3">

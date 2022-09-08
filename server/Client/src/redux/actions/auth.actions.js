@@ -42,7 +42,7 @@ import {toast } from 'react-toastify';
         window.location='/dashboard/home'
               break;
        case "influenceur":
-        window.location='/profil'
+        window.location='/profil/home'
              break;
        default:
              break;

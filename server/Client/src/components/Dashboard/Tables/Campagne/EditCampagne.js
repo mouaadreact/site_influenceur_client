@@ -73,6 +73,10 @@ function EditCampagne() {
    
   }
 
+  console.log(oneCampagneData.dateDebut)
+  console.log(dateformat(oneCampagneData.dateDebut,"yyyy-mm-dd"))
+  console.log("default"+dateformat(oneCampagneData.dateDebut,"yyyy-mm-dd"))
+
 
   return (
     <div className="container-fluid px-4">
@@ -81,7 +85,7 @@ function EditCampagne() {
          <div className="col-md-12">
              <div className="card">
                  <div className="card-header">
-                     <h4>Client Update
+                     <h4>Campagne Update
                          <a href="/dashboard/campagne" className="btn btn-danger float-end">BACK</a>
                      </h4>
                  </div>
@@ -129,7 +133,7 @@ function EditCampagne() {
                          id="dateDebut" 
                          type="date"
                          className="form-control" 
-                         defaultValue={dateformat(oneCampagneData.dateDebut,"yyyy-mm-dd")}
+                         value={dateformat(campagneInputValue.dateDebut,"yyyy-mm-dd")}
                          onChange={(e)=>handleChange(e)}
                         />
                      </div>
@@ -141,7 +145,7 @@ function EditCampagne() {
                          id="dateFin" 
                          type="date"
                          className="form-control" 
-                         defaultValue={dateformat(oneCampagneData.dateFin,"yyyy-mm-dd")}
+                         value={dateformat(campagneInputValue.dateFin,"yyyy-mm-dd")}
                          onChange={(e)=>handleChange(e)}
                         />
                      </div>

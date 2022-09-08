@@ -3,7 +3,7 @@ import apiInstagramHistoryReducer from './reducers/apiInstagramHistory.reducer';
 import authReducer from './reducers/auth.reducer'
 import campagneReducer from './reducers/campagne.reducer';
 import clientReducer from './reducers/client.reducer';
-import etatPaimentReducer from './reducers/EtatPaiment.reducer';
+import etatPaimentReducer from './reducers/etatPaiment.reducer';
 import filterReducer from './reducers/filter.reducer';
 import galerieCampagneReducer from './reducers/galerieCampagne.reducer';
 import influenceurReducer from './reducers/influenceur.reducer';

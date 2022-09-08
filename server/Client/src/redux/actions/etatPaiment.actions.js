@@ -1,17 +1,16 @@
 import axios from 'axios';
-import {startEtatPaiment,errorEtatPaiment,successGetAllEtatPaiment, successGetOneEtatPaiment, successEtatPaiment} from '../reducers/EtatPaiment.reducer';
 
-//-------
+import {startEtatPaiment,errorEtatPaiment,successEtatPaiment,successGetAllEtatPaiment,successGetOneEtatPaiment} from '../reducers/etatPaiment.reducer'
+//!--------------------------------------
 export const addEtatPaiment = async (data,dispatch)=>{
   dispatch(startEtatPaiment());
-  try{
+  try{ 
      const res = await axios({
       method:"post",
       url:`${process.env.REACT_APP_URL_SERVER}/api/v1/etatPaiment`,
       withCredentials:true,
       data
     })
-    getAllEtatPaiment(dispatch);
     window.location.href="/dashboard/etatPaiment";
      
   }catch(err){
@@ -19,28 +18,29 @@ export const addEtatPaiment = async (data,dispatch)=>{
   }
  }
 
-//---------
-export const getAllEtatPaiment = async (dispatch)=>{
+//!---------------------------------
+export const getAllEtatPaiment = async (CampagneId,dispatch)=>{
  dispatch(startEtatPaiment());
- try{
+   try{
     const res = await axios({
      method:"get",
-     url:`${process.env.REACT_APP_URL_SERVER}/api/v1/etatPaiment`,
+     url:`${process.env.REACT_APP_URL_SERVER}/api/v1/etatPaiment/campagne/${CampagneId}`,
      withCredentials:true
    })
     dispatch(successGetAllEtatPaiment(res.data));
  }catch(err){
    dispatch(errorEtatPaiment())
  }
-}
 
-//-------
-export const getOneEtatPaiment = async (id,dispatch)=>{
+}
+//!--------------------------------------
+
+export const getOneEtatPaiment = async (CampagneId,InfluenceurId,dispatch)=>{
   dispatch(startEtatPaiment());
   try{
      const res = await axios({
       method:"get",
-      url:`${process.env.REACT_APP_URL_SERVER}/api/v1/etatPaiment/${id}`,
+      url:`${process.env.REACT_APP_URL_SERVER}/api/v1/etatPaiment/${CampagneId}/${InfluenceurId}`,
       withCredentials:true
     })
      dispatch(successGetOneEtatPaiment(res.data));
@@ -49,30 +49,33 @@ export const getOneEtatPaiment = async (id,dispatch)=>{
   }
  }
 
-//-----
-export const deleteEtatPaiment = async (id,dispatch)=>{
+
+//!-----------------------------------
+export const deleteEtatPaiment = async (CampagneId,InfluenceurId,dispatch)=>{
  dispatch(startEtatPaiment());
  try{
     const res = await axios({
      method:"delete",
-     url:`${process.env.REACT_APP_URL_SERVER}/api/v1/etatPaiment/${id}`,
+     url:`${process.env.REACT_APP_URL_SERVER}/api/v1/etatPaiment/${CampagneId}/${InfluenceurId}`,
      withCredentials:true
     });
-       getAllEtatPaiment(dispatch)
+
+   //?--> probelem afficher ID
+    getAllEtatPaiment("",dispatch)
 
  }catch(err){
    dispatch(errorEtatPaiment())
  }
 }
 
-//-----------
+//!-------------------------------------------
 
-export const updateEtatPaiment = async (id,data,dispatch)=>{
+export const updateEtatPaiment = async (CampagneId,InfluenceurId,data,dispatch)=>{
   dispatch(startEtatPaiment());
   try{
      const res = await axios({
       method:"put",
-      url:`${process.env.REACT_APP_URL_SERVER}/api/v1/etatPaiment/${id}`,
+      url:`${process.env.REACT_APP_URL_SERVER}/api/v1/etatPaiment/${CampagneId}/${InfluenceurId}`,
       withCredentials:true,
       data
     })

@@ -7,8 +7,8 @@
     //etatPaiment est une table creer a base
     // de association many to many de campagne et influenceur
     //primary key est CampagneId et influenceurId
-   //----------------------------------------------------
-    //Ajouter une etatPaiment:
+   //*----------------------------------------------------
+    //!Ajouter une etatPaiment:
     exports.addEtatPaiment=async (req,res)=>{
     
       try{
@@ -30,9 +30,40 @@
        res.status(400).json(err);
       }
     }
+    //*-------------------------------------------
+    //! add etat payment but using req.body 
     
-    //-----------------------------------------------
-    //afficher les EtatPaiments
+     //!Ajouter une etatPaiment:
+     exports.addEtatPaimentBody=async (req,res)=>{
+    
+      try{
+        const { 
+          campagneId,
+          influenceurId,
+          tarif,
+          dateReglement
+        } =req.body;
+       const data=await EtatPaiment.create({
+                              CampagneId:campagneId,
+                              InfluenceurId:influenceurId,
+                              tarif:tarif, //double
+                              dateReglement:dateReglement,//date
+                                    })
+
+
+           
+        if(!data){
+          res.status(400).json({error:"On peut pas créer une etatPaiment by Body!"});
+        }else{
+          res.status(200).json(data);
+        }
+      }catch(err){
+       res.status(400).json(err);
+      }
+    }
+
+    //*-----------------------------------------------
+    //!afficher les EtatPaiments
     exports.getAll=async (req,res)=>{
      try{
       const data=await EtatPaiment.findAll();
@@ -47,8 +78,8 @@
      }
     }
     
-    //------------------------------------------------------
-    //afficher une seul EtatPaiment
+    //*------------------------------------------------------
+    //!afficher une seul EtatPaiment
     exports.getId=async (req,res)=>{
      try{
       const data=await EtatPaiment.findOne({
@@ -67,11 +98,54 @@
       res.status(400).json(err);
      }
     }
-    //--------------------------------------------------------------
-    //editer une EtatPaiment
+    //*--------------------------------------------------------------
+    
+    //get by id campagne
+
+    exports.getIdCampagne=async (req,res)=>{
+      try{
+       const data=await EtatPaiment.findAll({
+        where:{
+         CampagneId:req.params.campagneId,
+        }
+       });
+           
+         if(!data){
+         res.status(400).json({error:"l'etatPaiment est introuvable by id Campagne!"});
+         }else{
+         res.status(200).json(data);
+         } 
+      }catch(err){
+       res.status(400).json(err);
+      }
+     }
+    
+     //*---------------------------------------------------
+     //!get by id influenceur:
+
+    exports.getIdInfluenceur=async (req,res)=>{
+      try{
+       const data=await EtatPaiment.findAll({
+        where:{
+          InfluenceurId:req.params.influenceurId
+        }
+       });
+           
+         if(!data){
+         res.status(400).json({error:"l'etatPaiment est introuvable by id Influenceur!"});
+         }else{
+         res.status(200).json(data);
+         } 
+      }catch(err){
+       res.status(400).json(err);
+      }
+     }
+    
+    //*---------------------------------------------------
+    //!editer une EtatPaiment
     exports.update=async (req,res)=>{
      try{
-      const data=await EtatPaiment.update(
+      const data=await EtatPaiment.update( 
        {
         tarif:req.body.tarif,
         dateReglement:req.body.dateReglement,
@@ -93,8 +167,8 @@
     }
     
     
-    //-----------------------------------------------
-    //supprimer une EtatPaiment
+    //*-----------------------------------------------
+    //!supprimer une EtatPaiment
     exports.delete=async (req,res)=>{
      try{
       const data=await EtatPaiment.destroy({

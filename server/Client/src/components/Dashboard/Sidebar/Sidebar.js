@@ -24,7 +24,8 @@ function Sidebar() {
         <NavLink to="/dashboard/campagne" className="list-group-item list-group-item-action bg-transparent second-text ">Campagne</NavLink>
         <NavLink to="/dashboard/galerieCampagne" className="list-group-item list-group-item-action bg-transparent second-text ">Galerie Campagne</NavLink>
         <NavLink to="/dashboard/influenceur" className="list-group-item list-group-item-action bg-transparent second-text ">Influenceur</NavLink>
-        
+        <NavLink to="/dashboard/offre" className="list-group-item list-group-item-action bg-transparent second-text ">Offre</NavLink>
+        <NavLink to="/dashboard/etatPaiment" className="list-group-item list-group-item-action bg-transparent second-text ">Etat Paiment</NavLink>
         
         <NavLink
          to=""

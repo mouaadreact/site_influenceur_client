@@ -1,0 +1,143 @@
+import React, { useEffect, useState } from "react";
+import { AiFillEdit, AiFillDelete } from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux";
+import { getAllCampagne } from "../../../../redux/actions/campagne.actions";
+import dateformat from 'dateformat'
+import {
+  deleteEtatPaiment,
+  getAllEtatPaiment,
+} from "../../../../redux/actions/etatPaiment.actions";
+import Loading from "../../../Loading/Loading";
+
+function Table({ name, fieldsTable }) {
+
+  const [CampagneId,setCampagneId]=useState("");
+  const dispatch = useDispatch();
+  const {loading,allEtatPaiment } = useSelector((state) => state.etatPaiment);
+  const { allCampagneData } = useSelector((state) => state.campagne);
+
+  //!----------------------------------
+  useEffect(() => {
+    getAllEtatPaiment(CampagneId,dispatch);
+    getAllCampagne(dispatch);
+  }, [CampagneId]);
+
+  const handleDelete = (idCampagne,idInfluencuer) => {
+    deleteEtatPaiment(idCampagne,idInfluencuer,dispatch)
+  };
+
+  const handleChangeCampagneId=(e)=>{
+      setCampagneId(e.target.value);
+  }
+
+  // console.log()
+  //?---------------------------------------
+  return (
+   
+    <>
+     {
+
+      loading
+      ?
+       <>
+        <Loading/>
+       </>
+      :
+       <>
+       <div className="container-fluid px-4">
+      <div className="row my-5">
+        <div className="card-hearder mb-3">
+          <h4>
+            {name} Table
+            <a
+              href={`/dashboard/etatPaiment/add`}
+              className="btn btn-primary float-end"
+            >
+              + add EtatPaiment
+            </a>
+          </h4>
+        </div>
+
+        <div className="card-header ml-3" style={{marginLeft:"10px"}}> 
+            <div className="mb-3">
+              <label style={{ marginRight: "10px" }}>Campagne ID</label>
+              <select
+                name="CampagneId"
+                className="w-25"
+               onChange={(e) => handleChangeCampagneId(e)}
+              >
+                <option value="">
+                  Veuillez select Campagne ID
+                </option>
+                {allCampagneData.map((ele) => {
+                  return (
+                    <option value={ele.id} key={ele.id}>
+                      {ele.id}
+                    </option>
+                  );
+                })}
+              </select>
+            </div> 
+        </div>
+
+        <div className="col">
+          <table className="table bg-white rounded shadow-sm  table-hover">
+            <thead>
+              <tr className="text-center">
+                <th scope="col" className="text-warning" width="50">
+                  ID
+                </th>
+                {fieldsTable.map((ele, index) => {
+                  return (
+                    <th key={index} scope="col">
+                      {ele}
+                    </th>
+                  );
+                })}
+                <th scope="col">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {allEtatPaiment?.map((ele, index) => {
+                return (
+                  <tr key={index + 1} className="text-center">
+                    <td key={index + 1} className="text-warning">
+                      {index + 1 < 10 ? "0" + (index + 1) : index + 1}
+                    </td>
+                    <td>{ele.CampagneId}</td>
+                    <td>{ele.InfluenceurId}</td>
+                    <td>{dateformat(ele.dateReglement,"dd/mm/yyyy")}</td>
+                    <td>{ele.tarif}</td>
+                    <td scope="col" width="150">
+                      <a
+                        href={`/dashboard/etatPaiment/edit/${ele.CampagneId}/${ele.InfluenceurId}`}
+                        className="text-warning"
+                        style={{ fontSize: "18px", marginRight: "10px" }}
+                      >
+                        <AiFillEdit />
+                      </a>
+                      <a
+                        className="text-danger"
+                        style={{ fontSize: "18px" }}
+                        onClick={() => handleDelete(ele.CampagneId,ele.InfluenceurId)}
+                      >
+                        <AiFillDelete />
+                      </a>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+       </div>
+    
+    </div>
+       </>
+      }
+     </>
+   
+  );
+}
+
+export default Table;
