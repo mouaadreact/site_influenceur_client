@@ -35,11 +35,13 @@ import AddInteret from '../Dashboard/Tables/Interet/AddInteret'
 import EtatPaiment from '../Dashboard/Tables/EtatPaiment/EtatPaiment'
 import EditEtatPaiment from '../Dashboard/Tables/EtatPaiment/EditEtatPaiment'
 import AddEtatPaiment from '../Dashboard/Tables/EtatPaiment/AddEtatPaiment'
-import NewOffre from '../ProfilInfluenceur/NewOffre'
-import HistoryOffre from '../ProfilInfluenceur/HistoryOffre'
+
+
+import NewOffre from '../ProfilInfluenceur/NewOffre/NewOffre'
+import HistoryOffre from '../ProfilInfluenceur/HistoryOffre/HistoryOffre'
+import EditProfil from '../ProfilInfluenceur/EditProfil/EditProfil'
+import Offre from '../Dashboard/Tables/Offre/Offre'
 function Routers() {
-
-
 
   return (
 
@@ -84,9 +86,13 @@ function Routers() {
           <Route path='/dashboard/etatPaiment/edit/:campagneId/:influenceurId' element={<EditEtatPaiment/>} />
           <Route path='/dashboard/etatPaiment/add' element={<AddEtatPaiment/>} />
 
+          {/*Offre */}
+          <Route path='/dashboard/offre' element={<Offre/>} />
+
           {/**************************************** */}
           {/*profil */}
           <Route path='/profil/home' element={<ProfilInfluenceur/>} />
+          <Route path='/profil/edit/:id' element={<EditProfil/>} />
           <Route path='/profil/newOffre' element={<NewOffre/>} />
           <Route path='/profil/historyOffre' element={<HistoryOffre/>} />
 

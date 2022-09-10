@@ -4,8 +4,8 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { authLogout } from '../../redux/actions/auth.actions';
-import Sidebar from './Sidebar';
-import Profil from './Profil';
+import Sidebar from './Sidebar/Sidebar';
+import Profil from './Profil/Profil';
 
 function ProfilInfluenceur() {
   const dispatch=useDispatch();

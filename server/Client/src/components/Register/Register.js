@@ -35,7 +35,7 @@ function Register() {
    <div className='text-center p-3'>Register</div>
    <form onSubmit={handleSubmit}>
   
-
+ 
    <div className="form-outline mb-4">
       <label className="form-label" htmlFor="username">Username</label>
       <input 
@@ -90,9 +90,9 @@ function Register() {
     </div>
 
 
-    <p className='text-danger'>{errorMessage}</p>
-    <button disabled={isSubmitting} type="submit" className="btn btn-primary w-100">Register</button>
- </form>
+     <p className='text-danger'>{errorMessage}</p>
+     <button disabled={isSubmitting} type="submit" className="btn btn-primary w-100">Register</button>
+  </form>
      </div>
    </div>
     </>

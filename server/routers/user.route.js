@@ -7,6 +7,7 @@ router.route("/")
       .get(UserController.getAll)
  
 
+
 router.route("/:id")
        .get(UserController.getId)
        .put(UserController.update)

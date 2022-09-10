@@ -1,5 +1,5 @@
 
-const {User, Role, Influenceur}=require("../models");
+const {User, Role, Influenceur, Interet}=require("../models");
 const SchemaValidation=require("../validators/manager.validator");
 const bcrypt=require("bcrypt");
 
@@ -35,7 +35,7 @@ exports.getId=async (req,res)=>{
   try{
    const data=await User.findOne({
                      where:{id:req.params.id},
-                     include:[Role]
+                     include:[Role,Influenceur]
                      });
        
     if(!data){
@@ -71,11 +71,12 @@ exports.getEmail=async (req,res)=>{
 //editer un user
 exports.update=async (req,res)=>{
 
- try{
+
+  const {newPassword}=req.body
+  bcrypt.hash(newPassword,10).then(async (passwordCrypt)=>{
+  try{
   const data=await  User.update({
-                    email:req.body.email, 
-                    username:req.body.username,
-                    password:req.body.password, 
+                    password:passwordCrypt
                     },{
                      where:{id:req.params.id}
                     })
@@ -89,7 +90,13 @@ exports.update=async (req,res)=>{
  }catch(err){
   res.status(400).json({err:err.errors[0].message});
  }
+
+})
 }
+
+
+
+
 
  
 //delete user(influenceur dans table temporaire delete??)
@@ -110,5 +117,3 @@ exports.delete= async (req,res)=>{
   res.status(400).json({err:err});
  }
 }
-
-//---------------------

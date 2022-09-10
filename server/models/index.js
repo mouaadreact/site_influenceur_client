@@ -34,15 +34,10 @@ const Role=RoleModel(db,Sequelize);
 
    //--offre (campagne , influenceur)
    const Offre=db.define("Offre",{
-    statusAccepter:{
-     type:Sequelize.BOOLEAN,
+    status:{
+     type:Sequelize.STRING(250),
      allowNull:true,
      default:false,
-    },
-    statusNouveau:{
-     type:Sequelize.BOOLEAN,
-     allowNull:true,
-     default:true,
     }
   });
    // etatPaiment(campagne, influenceur)

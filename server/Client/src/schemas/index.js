@@ -78,3 +78,13 @@ export const basicSchemaCampagneUpdate=yup.object().shape({
    
 
 })
+
+
+
+
+//!---------------------------------------------------------
+
+export const basicSchemaChangePasswordProfil=yup.object().shape({
+   newPassword:yup.string().min(8,"minimum 8 character").required("required"),//.matches(passwordRules,{message:"entrer strong password"})
+   confirmPassword:yup.string().oneOf([yup.ref('newPassword'),null],'password must match').required('required')
+  });

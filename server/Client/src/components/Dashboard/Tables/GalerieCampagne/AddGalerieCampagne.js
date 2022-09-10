@@ -26,7 +26,7 @@ function AddGalerieCampagne({handleChangeButton,CampagneData}) {
 
      uploadGalerieCampagne(data,dispatch);
   }
- 
+  
   return (
     <>
       <ToastContainer autoClose={2000}/>

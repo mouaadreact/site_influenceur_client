@@ -7,14 +7,23 @@ router.route('/')
       .get(offreController.getAll)
 
 // I will delete this route after execute front end
-router.route('/oldOffre/:campagneId/:influenceurId')
-     .get(offreController.oldOffre)
+router.route('/newOffre/:influenceurId')
+      .get(offreController.newOffre)
+
+router.route('/campagne/:campagneId')
+     .get(offreController.getCampagneId)     
+
+router.route('/campagne')
+     .get(offreController.getAll)   
+
+router.route('/offreAccepter/:influenceurId')
+      .get(offreController.getOffreAccepterByInfluenceurId) 
 
 router.route('/accepterOffre/:campagneId/:influenceurId')
-     .get(offreController.accepterOffre)
+      .put(offreController.accepterOffre)
 
 router.route('/refuserOffre/:campagneId/:influenceurId')
-     .get(offreController.refuserOffre)
+     .put(offreController.refuserOffre)
 
 router.route('/:campagneId/:influenceurId')
       .post(offreController.addOffre)

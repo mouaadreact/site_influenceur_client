@@ -178,7 +178,6 @@ const handleSubmit=(e)=>{
           <option hidden={true} className="text-muted">Selection votre Situation Familiale</option>
           <option value="célébataire">célébataire</option>
           <option value="marié">marié</option>
-          <option value="célébataire">célébataire</option>
           <option value="divorcé">divorcé</option>
           <option value="veuf">veuf</option>
           </select> 

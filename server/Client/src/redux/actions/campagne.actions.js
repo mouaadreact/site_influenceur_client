@@ -101,7 +101,7 @@ export const addInteretToCampagne=async (interetData,idCampagne)=>{
     console.log(err)
   }
 }
-
+ 
 //-------
 export const updateCampagne = async (id,data,interetData,dispatch)=>{
   dispatch(startCampagne());

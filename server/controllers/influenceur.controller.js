@@ -408,6 +408,31 @@ exports.getId=async (req,res)=>{
   }
 }
 //-------------------------------------------
+
+
+//afficher tout une influenceur BY UserID
+exports.getByUserId=async (req,res)=>{
+ 
+  try{
+   const data=await Influenceur.findOne({
+                     where:{UserId:req.params.id},
+                     include:[User,Interet,Langue]
+                     });
+       
+    if(!data){
+      res.status(400).json({error:"l'influenceur est introuvable!"});
+    }else{
+
+      res.status(200).json(data);
+    }
+  }catch(err){
+   res.status(400).json(err);
+  }
+}
+//-------------------------------------------
+
+
+
 //filtrage : age,ville,quartier,genre,situation familiale,
 //niveau d'etude,langue
 

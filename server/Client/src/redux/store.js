@@ -9,10 +9,13 @@ import galerieCampagneReducer from './reducers/galerieCampagne.reducer';
 import influenceurReducer from './reducers/influenceur.reducer';
 import interetReducer from './reducers/interet.reducer';
 import langueReducer from './reducers/langue.reducer';
+import offreReducer from './reducers/offre.reducer';
 import registerReducer from './reducers/register.reducer';
+import userReducer from './reducers/user.reducer';
 
  const store=configureStore({
   reducer:{
+   user:userReducer,
    auth:authReducer,
    register:registerReducer,
    langue:langueReducer, 
@@ -23,7 +26,8 @@ import registerReducer from './reducers/register.reducer';
    filter:filterReducer,
    influenceur:influenceurReducer,
    apiInstagram:apiInstagramHistoryReducer,
-   etatPaiment:etatPaimentReducer
+   etatPaiment:etatPaimentReducer,
+   offre:offreReducer
   }
 });
 

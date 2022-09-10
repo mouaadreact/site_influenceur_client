@@ -15,6 +15,9 @@ router.route("/confirmer-email")
 router.route("/filtrage")
       .post(influenceurController.filtrage);
 
+router.route("/user/:id")
+      .get(influenceurController.getByUserId);
+
 //crud influenceur
 router.route("/:id")
        .get(influenceurController.getId)

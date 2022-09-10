@@ -1,4 +1,6 @@
 const {Offre}=require("../models");
+const Op = require('Sequelize').Op
+const sequelize=require('Sequelize');
 //-------------------------------------------
 //Remarque: en besoin de utilise IF ELSE apres retourne des données
 //car si n'a fait pas il exits une error d'envoyer deux(2) response --> "si on a une error dans request"
@@ -11,8 +13,7 @@ exports.addOffre=async (req,res)=>{
    const data=await Offre.create({
                           CampagneId:req.params.campagneId,
                           InfluenceurId:req.params.influenceurId,
-                          statusAccepter:false,
-                          statusNouveau:true
+                          status:"En cours traitement"
                                 })
        
     if(!data){
@@ -65,14 +66,62 @@ exports.getId=async (req,res)=>{
   res.status(400).json(err);
  }
 }
+
+//!---------------------------------------------------------
+
+//afficher l'offre by id
+exports.getCampagneId=async (req,res)=>{
+  try{
+   const data=await Offre.findAll({
+    where:{
+      InfluenceurId:req.params.influenceurId
+     }
+   });
+       
+     if(!data){
+     res.status(400).json({error:"trouve l'Offre using campagne Id!"});
+     }else{
+     res.status(200).json(data);
+     }
+ 
+  }catch(err){
+   res.status(400).json(err);
+  }
+ }
+
+ //!----------------------------------------------------------
+
+ 
+//afficher l'offre by id
+exports.getOffreAccepterByInfluenceurId=async (req,res)=>{
+  try{
+   const data=await Offre.findAll({
+    where:{
+      [Op.and]:[
+       {InfluenceurId:req.params.influenceurId},
+       { status:"Accepter"},       
+      ]
+
+      }
+   });
+       
+     if(!data){
+     res.status(400).json({error:"trouve l'Offre accepter using Influenceur Id!"});
+     }else{
+     res.status(200).json(data);
+     }
+ 
+  }catch(err){
+   res.status(400).json(err);
+  }
+ }
 //--------------------------------------------------------------
 //no means i change this after 
 exports.update=async (req,res)=>{
  try{
   const data=await Offre.update(
    {
-    statusAccepter:req.body.statusAccepter,
-    statusNouveau:req.body.statusNouveau
+    status:req.body.status,
    },{
     where:{
      CampagneId:req.params.campagneId,
@@ -90,24 +139,34 @@ exports.update=async (req,res)=>{
   res.status(400).json(err);
  }
 }
-
+ 
 //---------------------------------------------
 //change new to old offre:
 
-exports.oldOffre=async (req,res)=>{
+exports.newOffre=async (req,res)=>{
  try{
-  const data=await Offre.update(
-   {
-    statusNouveau:false
-   },{
+  const data=await Offre.findAll({
     where:{
-     CampagneId:req.params.campagneId,
-     InfluenceurId:req.params.influenceurId
+     [Op.and]:[
+      {InfluenceurId:req.params.influenceurId},
+      {
+        [Op.and]:[
+         
+           { status:{ [Op.ne]:"Accepter"}},
+           { status:{ [Op.ne]:"Refuser"}}
+          
+        ]
+      }
+      
+    ]
+     }
     }
-  });
+  )
+
+ // const data=await sequelize.query('select * from offres')
       
     if(!data){ 
-    res.status(400).json({error:"on peut pas change status offre tout old!"});
+    res.status(400).json({error:"Not found new Offre!"});
     }else{
     res.status(200).json(data);
     }
@@ -123,7 +182,7 @@ exports.accepterOffre=async (req,res)=>{
  try{
   const data=await Offre.update(
    {
-    statusAccepter:true
+    status:"Accepter"
    },{
     where:{
      CampagneId:req.params.campagneId,
@@ -148,7 +207,7 @@ exports.refuserOffre=async (req,res)=>{
   try{
    const data=await Offre.update(
     {
-     statusNouveau:false
+     status:"Refuser"
     },{
      where:{
       CampagneId:req.params.campagneId,
