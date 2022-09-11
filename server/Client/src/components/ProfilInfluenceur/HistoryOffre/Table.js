@@ -64,6 +64,31 @@ function Table({name,fieldsTable,id}) {
               })}
             </tbody>
           </table>
+
+         <div className='d-flex justify-content-center'>
+         <div class="row">
+
+            <div class="col-sm-9 mb-4" style={{width:"900px"}}>
+              <div class="card">
+                <div class="card-body">
+                  <h5 class="card-title">
+                  <span>Campagne name : </span>
+                     test
+                  </h5>
+                  <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
+                 <span>Status: </span>
+                 <a 
+                 class="btn btn-primary" 
+                 style={{marginRight:"10px"}}>
+                 Go somewhere</a>
+                </div>
+                </div>
+            </div>
+
+        </div>
+         </div>
+
+
         </div>
        </div>
     

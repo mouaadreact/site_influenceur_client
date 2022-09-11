@@ -34,7 +34,6 @@ function Table({name,fieldsTable,id}) {
 
   return (
    <>
-      
     <div className="container-fluid px-4">
       <div className="row my-5">
         <div className="card-hearder mb-3">

@@ -160,7 +160,7 @@ const handleQuartier=  (e)=>{
      key:ele,
      value:ele
      }
-    quartierElements.push(op)
+    quartierElements.push(op) 
 });
 setOptionsQuartier(quartierElements)
 }

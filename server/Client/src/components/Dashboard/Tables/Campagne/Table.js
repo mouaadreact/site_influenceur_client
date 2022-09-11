@@ -61,7 +61,7 @@ useEffect(()=>{
      
         <div className='card-hearder mb-3'>
           <h4>{name} Table
-             <a href={`/dashboard/campagne/add`} className='btn btn-primary float-end'>+ add Campagne</a>
+             <a href={`/dashboard/campagne/add`} className='btn primary-bg white-text float-end'>+ add Campagne</a>
           </h4>
         </div>
      

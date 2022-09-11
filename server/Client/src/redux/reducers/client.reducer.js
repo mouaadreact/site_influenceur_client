@@ -2,9 +2,10 @@ import {createSlice} from '@reduxjs/toolkit'
 
 const clientReducer=createSlice({
  name:'client',
- initialState:{
+ initialState:{ 
    allClientData:[],
    oneClientData:{},
+   countClient:0,
    loading:null,
    error:false
  },
@@ -20,6 +21,10 @@ const clientReducer=createSlice({
     state.oneClientData=action.payload;
     state.loading=false
    },
+   successGetCountClient:(state,action)=>{
+    state.countClient=action.payload;
+    state.loading=false
+   },
    successClient:(state)=>{
      state.loading=false
    },
@@ -31,5 +36,12 @@ const clientReducer=createSlice({
 
 });
 
-export const {startClient,errorClient,successClient,successGetAllClient,successGetOneClient}=clientReducer.actions;
+export const {
+  startClient,
+  errorClient,
+  successClient,
+  successGetAllClient,
+  successGetCountClient,
+  successGetOneClient
+}=clientReducer.actions;
 export default clientReducer.reducer;

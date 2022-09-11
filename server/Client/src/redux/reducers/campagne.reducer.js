@@ -2,9 +2,10 @@ import {createSlice} from '@reduxjs/toolkit'
 
 const campagneReducer=createSlice({
  name:'campagne',
- initialState:{
+ initialState:{ 
    allCampagneData:[],
    oneCampagneData:{},
+   countCampagne:0,
    loading:null,
    error:false
  },
@@ -20,6 +21,10 @@ const campagneReducer=createSlice({
     state.oneCampagneData=action.payload;
     state.loading=false
    },
+   successGetCountCampagne:(state,action)=>{
+    state.countCampagne=action.payload;
+    state.loading=false
+   },
    successCampagne:(state)=>{
      state.loading=false
    },
@@ -31,5 +36,11 @@ const campagneReducer=createSlice({
 
 });
 
-export const {startCampagne,successCampagne,successGetAllCampagne,successGetOneCampagne,errorCampagne}=campagneReducer.actions;
+export const {
+  startCampagne,
+  successCampagne,
+  successGetAllCampagne,
+  successGetOneCampagne,
+  successGetCountCampagne,
+  errorCampagne}=campagneReducer.actions;
 export default campagneReducer.reducer;

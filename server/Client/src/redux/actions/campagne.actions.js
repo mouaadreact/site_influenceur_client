@@ -1,25 +1,26 @@
 import axios from 'axios';
-import {startCampagne,errorCampagne,successCampagne,successGetAllCampagne,successGetOneCampagne} from '../reducers/campagne.reducer';
+import {startCampagne,errorCampagne,successCampagne,successGetAllCampagne,successGetOneCampagne, successGetCountCampagne} from '../reducers/campagne.reducer';
 
 
 //-------
-export const addCampagne = async (data,interetData,dispatch)=>{
+export const addCampagne = async (data,interetData,listInfluenceur,dispatch)=>{
   dispatch(startCampagne());
   try{
-    console.log(interetData);
      const res = await axios({
       method:"post",
       url:`${process.env.REACT_APP_URL_SERVER}/api/v1/campagne`,
       withCredentials:true,
-      data });
- 
+      data:{
+        ...data,
+        listInfluenceur:listInfluenceur
+      } 
+    });
+  
       interetData.forEach(async (ele) => {
          await axios.post(`${process.env.REACT_APP_URL_SERVER}/api/v1/interetCampagne/${ele}/${res.data.id}`)
       });
 
-
-      getAllCampagne(dispatch);
-      window.location.href="/dashboard/campagne";
+     window.location.href="/dashboard/campagne";
      
   }catch(err){
     dispatch(errorCampagne())
@@ -145,3 +146,21 @@ export const filterCampagne= async (data,interet,dispatch)=>{
     dispatch(errorCampagne())
   }
 }
+
+//!------------------------------------------
+ 
+export const getCountCampagne=async (dispatch)=>{
+  dispatch(startCampagne())
+  try{
+    const res = await axios({
+      method:"get",
+      url:`${process.env.REACT_APP_URL_SERVER}/api/v1/campagne/count`,
+      withCredentials:true
+    })
+    dispatch(successGetCountCampagne(res.data))
+
+  }catch(err)
+  {
+  dispatch(errorCampagne())
+  }
+ }

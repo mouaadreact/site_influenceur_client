@@ -92,6 +92,9 @@ function Table({ name, fieldsTable }) {
                       {
                         ele.status==="Refuser" && <div className="btn btn-danger">{ele.status}</div> 
                       }
+                      {
+                        ele.status==="Late" && <div className="btn btn-info">{ele.status}</div> 
+                      }
                       
 
                       </td> 

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {startClient,errorClient,successGetAllClient, successGetOneClient, successClient} from '../reducers/client.reducer';
+import {startClient,errorClient,successGetAllClient, successGetOneClient, successClient, successGetCountClient} from '../reducers/client.reducer';
 
 //-------
 export const addClient = async (data,dispatch)=>{
@@ -46,7 +46,7 @@ export const getOneClient = async (id,dispatch)=>{
      dispatch(successGetOneClient(res.data));
   }catch(err){
     dispatch(errorClient())
-  }
+  } 
  }
 
 //-----
@@ -84,3 +84,23 @@ export const updateClient = async (id,data,dispatch)=>{
   }
  }
 
+
+
+ //!------------------------------------------
+ 
+ export const getCountClient=async (dispatch)=>{
+  dispatch(startClient())
+  try{
+    const res = await axios({ 
+      method:"get",
+      url:`${process.env.REACT_APP_URL_SERVER}/api/v1/client/count`,
+      withCredentials:true
+    })
+    dispatch(successGetCountClient(res.data))
+
+  }catch(err)
+  {
+    dispatch(errorClient())
+
+  }
+ }

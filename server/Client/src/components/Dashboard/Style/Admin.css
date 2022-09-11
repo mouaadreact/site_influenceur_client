@@ -11,7 +11,9 @@ a{
 .primary-text {
  color: var(--main-text-color);
 }
-
+.white-text{
+color:#FFF
+}
 .second-text {
  color: var(--second-text-color);
 }

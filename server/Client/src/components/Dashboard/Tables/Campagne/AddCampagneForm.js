@@ -6,9 +6,13 @@ import { basicSchemaCampagne } from '../../../../schemas';
 import { getAllClient } from '../../../../redux/actions/client.actions';
 import { getAllInteret } from '../../../../redux/actions/interet.actions';
 import Select from 'react-select';
+import { getAllInfluenceur } from '../../../../redux/actions/influenceur.actions';
+import { ToastContainer, toast } from 'react-toastify'; 
+import 'react-toastify/dist/ReactToastify.css';
 
 function AddCampagneForm() {
  const dispatch=useDispatch();
+ const {allInfluenceurData}=useSelector(state=>state.influenceur);
  const {allClientData}=useSelector(state=>state.client);
  const {allInteretData}=useSelector(state=>state.interet);
  const [interetMult,setInteretMult]=useState([]);
@@ -56,6 +60,12 @@ useEffect(()=>{
   fetchDataInteret();
 },[ fetchDataInteret]);
 
+//!-----------------------------------
+//*listInfluenceur
+useEffect(() => {
+  getAllInfluenceur(dispatch); 
+}, []);
+//!---------------------------------------
  const initialValues={
   "titre":"",
   "dateDebut":"",
@@ -68,18 +78,33 @@ useEffect(()=>{
   "ClientId":""
  }
  
-
-  const onSubmit=async (values,actions)=>{
-  console.log(interetMult)
-  addCampagne(values,interetMult,dispatch);
-  }
-  
   const handleInteret =(e)=>{
      setInteretMult(Array.isArray(e)?e.map(x=>x.value):[]);
   }
 
-  return (
 
+  const onSubmit=async (values,actions)=>{
+    let listInfluenceur=[]
+    allInfluenceurData.forEach((ele)=>{
+      let op={
+        id:ele.id,
+        email:ele.User.email
+      }
+      listInfluenceur.push(op)
+    })
+
+      if(values.nombreInfluenceur>listInfluenceur.length){
+        toast.error("nombre influenceur most be last or egal nombre of influenceur list filtering ")
+      }else{  
+      addCampagne(values,interetMult,listInfluenceur,dispatch);
+      }
+    }
+  
+    
+
+  return (
+  <>
+  <ToastContainer autoClose={3000}/>
   <div className="container-fluid px-4 w-75">
   <div className="row">
     <div className="col-md-12">
@@ -315,6 +340,7 @@ useEffect(()=>{
          </div>
      </div>
      </div>
+     </>
   )
 }
 

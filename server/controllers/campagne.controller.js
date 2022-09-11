@@ -1,5 +1,6 @@
-const {Campagne, Client, InteretCampagne, Interet}=require("../models");
+const {Campagne, Client, InteretCampagne, Interet, Offre}=require("../models");
  
+const {SendOffre}=require("../utils/SendMailOffreToInfluenceurs")
 //-------------------------------------------------------------
 //Remarque: en besoin de utilise IF ELSE apres retourne des données
 //car si n'a fait pas il exits une error d'envoyer deux(2) response --> "si on a une error dans request"
@@ -15,9 +16,11 @@ exports.addCampagne=async(req,res)=>{
      nombreInfluenceur,  
      descriptionOffre,
      hashtags,
-     compteTagger,
+     compteTagger, 
      ClientId,
+     listInfluenceur
     }=req.body; 
+  
     
    const data=await Campagne.create({
                                 titre,
@@ -34,8 +37,17 @@ exports.addCampagne=async(req,res)=>{
       if(!data){
       res.status(400).json({error:"On peut pas créer une campagne!"});
       }else{
-      res.status(200).json(data);
+         
+        listInfluenceur.forEach(async (ele)=>{
+          const resultatOffre=await Offre.create({
+            CampagneId:data.dataValues.id,
+            InfluenceurId:ele.id,
+            status:"En cours traitement"
+               })
+        })
 
+      SendOffre(listInfluenceur,`New Offre in Plateforme`,descriptionOffre)
+      res.status(200).json(data);
  
       }
    }catch(err){  //testing error validators
@@ -280,4 +292,18 @@ exports.filtrage=async (req,res)=>{
    res.status(400).json(err);
   }
   
+}
+
+
+//!------------------------------------------------------
+
+//* get count of all campagne
+exports.getCountAllCampagne=async (req,res)=>{
+ 
+  try{
+   const data=await Campagne.count();
+   res.status(200).json(data);
+  }catch(err){
+   res.status(400).json(err);
+  } 
 }

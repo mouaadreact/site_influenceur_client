@@ -1,7 +1,7 @@
 const nodemailer=require("nodemailer") 
  
 //send verifier email
-module.exports.ContactUs=(email,subject,text)=>{
+module.exports.SendOffre= async (mails,subject,text)=>{
  //code verification iujypqrgtevjdltp
 
  let transporter=nodemailer.createTransport({
@@ -14,25 +14,27 @@ module.exports.ContactUs=(email,subject,text)=>{
      } 
   })//.authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 
-  let mailOptions={
-      form:"influenceur.client.mail2022@gmail.com",
-      to:email,
-      subject:`
-      Message from email : influenceur.client.mail2022@gmail.com , 
-      subject : ${subject}`,
-      "text":` 
-         ${text}
-      `
-  };
 
-  transporter.sendMail(mailOptions,(err,success)=>{
-      if(err) {
-         console.log(err);
-      }
-      else {
-         console.log("Email send successfully ");
-      }
-  });
+  //loop
+ 
+  try {
+   const mailerPromises = mails.map((mail) => transporter.sendMail({
+    form:"influenceur.client.mail2022@gmail.com",
+    to:mail.email,
+    subject:`
+    Message from email : influenceur.client.mail2022@gmail.com , 
+    subject : ${subject}`,
+    "text":` 
+       ${text}
+    `
+}));
+   const responses = await Promise.all(mailerPromises);
+   console.log(responses, "All Mails Have Been Sent Successfully");
+ } catch (e) {
+   console.log(e);
+ }
+
+
 }
 
 /*

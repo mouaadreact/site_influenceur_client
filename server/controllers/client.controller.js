@@ -84,7 +84,9 @@ exports.getAll=async (req,res)=>{
        res.status(400).json(err);
       } 
     }
-  
+//!---------------------------------------------------  
+
+
 //afficher un seul client utilisant Id
 exports.getId=async (req,res)=>{
  
@@ -158,4 +160,18 @@ exports.Delete= async (req,res)=>{
  }catch(err){
   res.status(400).json({err:err.errors[0].message});
  }
+}
+
+//!-------------------------------------
+//* get count of all client
+
+exports.getCountAllClient=async (req,res)=>{
+ 
+  try{
+   const data=await Client.count();
+   res.status(200).json(data);
+    
+  }catch(err){
+   res.status(400).json(err);
+  } 
 }

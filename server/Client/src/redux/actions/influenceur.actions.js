@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { errorInfluenceur, startInfluenceur, successGetAllInfluenceur, successGetOneInfluenceur, successInfluenceur } from '../reducers/influenceur.reducer';
+import { errorInfluenceur, startInfluenceur, successGetAllInfluenceur, successGetCountInfluenceur, successGetOneInfluenceur, successInfluenceur } from '../reducers/influenceur.reducer';
 
 
 
@@ -104,7 +104,7 @@ export const addCommentaire= async (id,commentaire,dispatch)=>{
 
 
 export const filterInfluenceur= async (data,langue,interet,dispatch)=>{
-  dispatch(startInfluenceur());
+  dispatch(startInfluenceur()); 
   console.log(langue);
   try{
      const res = await axios.post(
@@ -217,5 +217,23 @@ export const updateInfluenceur = async (id,data,langueData,interetData,dispatch)
     window.location.href="/profil/home"
   }catch(err){
     dispatch(errorInfluenceur())
+  }
+ }
+
+ //!------------------------------------------
+ 
+ export const getCountInfluenceur=async (dispatch)=>{
+  dispatch(startInfluenceur())
+  try{
+    const res = await axios({
+      method:"get",
+      url:`${process.env.REACT_APP_URL_SERVER}/api/v1/influenceur/count`,
+      withCredentials:true
+    }) 
+    dispatch(successGetCountInfluenceur(res.data))
+
+  }catch(err)
+  {
+  dispatch(errorInfluenceur())
   }
  }

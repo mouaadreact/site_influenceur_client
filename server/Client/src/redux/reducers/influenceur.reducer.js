@@ -2,9 +2,10 @@ import {createSlice} from '@reduxjs/toolkit'
 
 const influenceurReducer=createSlice({
  name:'influenceur',
- initialState:{
+ initialState:{ 
    allInfluenceurData:[],
    oneInfluenceurData:{},
+   countInfluenceur:0,
    loading:null,
    error:false
  },
@@ -20,6 +21,10 @@ const influenceurReducer=createSlice({
     state.oneInfluenceurData=action.payload;
     state.loading=false
    },
+   successGetCountInfluenceur:(state,action)=>{
+    state.countInfluenceur=action.payload;
+    state.loading=false
+   },
    successInfluenceur:(state)=>{
      state.loading=false
    },
@@ -31,5 +36,12 @@ const influenceurReducer=createSlice({
 
 });
 
-export const {startInfluenceur,errorInfluenceur,successGetAllInfluenceur,successGetOneInfluenceur,successInfluenceur}=influenceurReducer.actions;
+export const {
+  startInfluenceur,
+  errorInfluenceur,
+  successGetAllInfluenceur,
+  successGetOneInfluenceur,
+  successGetCountInfluenceur,
+  successInfluenceur
+}=influenceurReducer.actions;
 export default influenceurReducer.reducer;

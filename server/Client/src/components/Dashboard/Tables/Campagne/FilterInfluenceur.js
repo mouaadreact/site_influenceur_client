@@ -89,7 +89,6 @@ const handleChangeFilter=(e)=>{
 
 const handleSubmitFilter=(e)=>{
    e.preventDefault();
-   //console.log(centreInteretFilter)
    filterInfluenceur(filterData,langueFilter,centreInteretFilter,dispatch)
 
 }

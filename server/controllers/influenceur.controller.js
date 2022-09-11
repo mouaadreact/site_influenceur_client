@@ -479,11 +479,11 @@ exports.filtrage=async (req,res)=>{
    } 
 
 
-    
+     
    
     var data=await Influenceur.findAll({
       where:obj,
-      include:[Langue,Interet]
+      include:[Langue,Interet,User]
     })
       if(!data){
         res.status(400).json({error:"On peut pas filtrer Influenceur !"});
@@ -642,4 +642,18 @@ exports.delete= async (req,res)=>{
  }catch(err){
   res.status(400).json({err:err.errors[0].message});
  }
+}
+
+
+//!------------------------------------------------------
+
+//* get count of all influenceur
+exports.getCountAllInfluenceur=async (req,res)=>{
+ 
+  try{
+   const data=await Influenceur.count();
+   res.status(200).json(data);
+  }catch(err){
+   res.status(400).json(err);
+  } 
 }

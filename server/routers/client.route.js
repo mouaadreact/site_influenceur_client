@@ -7,6 +7,9 @@ router.route("/")
       .get(clientController.getAll) 
       .post(clientController.addClient)
  
+router.route('/count')
+      .get(clientController.getCountAllClient)
+      
 router.route("/:id")
        .get(clientController.getId)
        .put(clientController.Update)

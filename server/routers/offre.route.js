@@ -6,15 +6,20 @@ const offreController=require("../controllers/offre.controller");
 router.route('/')
       .get(offreController.getAll)
 
+//*counter of all offre
+router.route('/count')
+      .get(offreController.getCountAllOffre)
+
 // I will delete this route after execute front end
 router.route('/newOffre/:influenceurId')
       .get(offreController.newOffre)
 
-router.route('/campagne/:campagneId')
-     .get(offreController.getCampagneId)     
 
 router.route('/campagne')
-     .get(offreController.getAll)   
+      .get(offreController.getAll)  
+       
+router.route('/campagne/:campagneId')
+     .get(offreController.getCampagneId)     
 
 router.route('/offreAccepter/:influenceurId')
       .get(offreController.getOffreAccepterByInfluenceurId) 

@@ -5,8 +5,9 @@ import {
   errorOffre,
   successOffre,
   successGetAllOffre,
-  successGetHistoryOffre,
-  successGetNewOffre} from '../reducers/offre.reducer'
+  successGetHistoryOffre, 
+  successGetNewOffre,
+  successGetCountOffre} from '../reducers/offre.reducer'
 //!--------------------------------------
 export const addOffre = async (data,dispatch)=>{
   dispatch(startOffre());
@@ -89,6 +90,7 @@ export const AccepterOffre = async (CampagneId,InfluenceurId,dispatch)=>{
       withCredentials:true
     })
      getNewOffre(InfluenceurId,dispatch);
+     getAllOffre(CampagneId,dispatch)
   }catch(err){
     dispatch(errorOffre())
   }
@@ -109,5 +111,25 @@ export const RefuserOffre = async (CampagneId,InfluenceurId,dispatch)=>{
      getNewOffre(InfluenceurId,dispatch);
   }catch(err){
     dispatch(errorOffre())
+  }
+ }
+
+
+ //!------------------------------------------
+ 
+ export const getCountOffre=async (dispatch)=>{
+  dispatch(startOffre())
+  try{
+    const res = await axios({
+      method:"get",
+      url:`${process.env.REACT_APP_URL_SERVER}/api/v1/offre/count`,
+      withCredentials:true
+    })
+    dispatch(successGetCountOffre(res.data))
+
+  }catch(err)
+  {
+    dispatch(errorOffre())
+
   }
  }

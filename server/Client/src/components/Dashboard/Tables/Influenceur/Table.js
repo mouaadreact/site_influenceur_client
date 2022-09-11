@@ -13,7 +13,7 @@ function Table({name,fieldsTable}) {
   
   useEffect(() => {
     getAllInfluenceur(dispatch); 
-    setData(allInfluenceurData);
+    setData(allInfluenceurData); 
   }, []);
  
   //!-----------------------------------------

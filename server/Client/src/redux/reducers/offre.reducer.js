@@ -6,6 +6,7 @@ const offreReducer=createSlice({
    allOffreData:[],
    newOffreData:[],
    historyOffreData:[], 
+   countOffre:0,
    loading:null, 
    error:false
  },
@@ -25,6 +26,10 @@ const offreReducer=createSlice({
     state.historyOffreData=action.payload;
     state.loading=false
    },
+   successGetCountOffre:(state,action)=>{
+    state.countOffre=action.payload;
+    state.loading=false
+   },
    successOffre:(state)=>{
      state.loading=false
    },
@@ -42,5 +47,6 @@ errorOffre,
 successOffre,
 successGetAllOffre,
 successGetHistoryOffre,
+successGetCountOffre,
 successGetNewOffre}=offreReducer.actions;
 export default offreReducer.reducer;

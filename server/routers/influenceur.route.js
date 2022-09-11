@@ -7,6 +7,9 @@ router.route("/")
       .get(influenceurController.getAll)
 
 
+router.route('/count')
+      .get(influenceurController.getCountAllInfluenceur)
+
 //corfimer l'email pour allez vers l'etape 2
 router.route("/confirmer-email")
       .get(influenceurController.validerCompteParEmail)
