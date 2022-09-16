@@ -17,9 +17,8 @@ exports.addCampagne=async(req,res)=>{
      descriptionOffre,
      hashtags,
      compteTagger, 
-     ClientId,
-     listInfluenceur
-    }=req.body; 
+     ClientId
+    }=req.body;  
   
     
    const data=await Campagne.create({
@@ -37,16 +36,8 @@ exports.addCampagne=async(req,res)=>{
       if(!data){
       res.status(400).json({error:"On peut pas créer une campagne!"});
       }else{
-         
-        listInfluenceur.forEach(async (ele)=>{
-          const resultatOffre=await Offre.create({
-            CampagneId:data.dataValues.id,
-            InfluenceurId:ele.id,
-            status:"En cours traitement"
-               })
-        })
-
-      SendOffre(listInfluenceur,`New Offre in Plateforme`,descriptionOffre)
+      //console.log(data)
+        
       res.status(200).json(data);
  
       }
@@ -220,6 +211,7 @@ exports.filtrage=async (req,res)=>{
   if(ClientId){
     obj.ClientId=ClientId;
   }
+  
 
    
     var data=await Campagne.findAll({

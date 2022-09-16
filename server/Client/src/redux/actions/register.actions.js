@@ -23,7 +23,7 @@ import { errorRegister, startRegister, successAfficherCompteInstg, successConfir
  
  export const confirmEmail=async (token,dispatch)=>{
   dispatch(startRegister());
-    
+    if(token!==null){
      try{
         const res = await axios({
          method:"get",
@@ -42,10 +42,12 @@ import { errorRegister, startRegister, successAfficherCompteInstg, successConfir
        }
        dispatch(errorRegister(err.response.data.errors[0].message))
      }
+    }
  }
 
  //---
  export const afficherCompteInstagram=async (id,data,dispatch)=>{
+ 
   dispatch(startRegister());
    try{
     const res=await axios.put(`${process.env.REACT_APP_URL_SERVER}/api/v1/influenceur/afficherCompte/${id}`,{
@@ -71,33 +73,19 @@ import { errorRegister, startRegister, successAfficherCompteInstg, successConfir
  }
 
  //----
-//compelete profil :
+//compelete profil : 
  export const compeleteProfil=async (id,data,dispatch)=>{
   dispatch(startRegister());
   try{
-    const res=axios({
+
+    await axios({
       method:"put",
       url:`${process.env.REACT_APP_URL_SERVER}/api/v1/influenceur/complete/${id}`,
       data
       });
-      
-      console.log(res);
-
-    window.location.href=`/register/conditionGenrale?id=${id}`;
-
-  }catch(err){
-     dispatch(errorRegister());
-  }
- }
- 
- //condition genrale:
-
- export const conditionGenrale=async (id,dispatch)=>{
-  dispatch(startRegister());
-  try{
-    const res=await axios.put(`${process.env.REACT_APP_URL_SERVER}/api/v1/influenceur/accepterCondition/${id}`);
+    
+    await axios.put(`${process.env.REACT_APP_URL_SERVER}/api/v1/influenceur/accepterCondition/${id}`);
     window.location.href=`/login`;
-
   }catch(err){
      dispatch(errorRegister());
   }

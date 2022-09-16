@@ -3,7 +3,7 @@ import { errorInfluenceur, startInfluenceur, successGetAllInfluenceur, successGe
 
 
 
-//---------
+//--------- 
 export const getAllInfluenceur = async (dispatch)=>{
  dispatch(startInfluenceur());
  try{
@@ -17,6 +17,23 @@ export const getAllInfluenceur = async (dispatch)=>{
    dispatch(errorInfluenceur())
  }
 }
+
+//!--------------------------------------------------
+
+//--------- 
+export const getInfluenceurActiveCompte = async (dispatch)=>{
+  dispatch(startInfluenceur());
+  try{
+     const res = await axios({
+      method:"get",
+      url:`${process.env.REACT_APP_URL_SERVER}/api/v1/influenceur/activeCompte`,
+      withCredentials:true
+    })
+     dispatch(successGetAllInfluenceur(res.data));
+  }catch(err){
+    dispatch(errorInfluenceur())
+  }
+ }
 
 //--------------------------------------------------------
 export const getOneInfluenceur = async (id,dispatch)=>{
@@ -178,7 +195,7 @@ export const deleteLangueInfluenceur=async (id)=>{
 //*------------------
 export const addLangueToInfluenceur=async (langueData,idInfluenceur)=>{
   try{
-    langueData.forEach(async (ele) => {
+    langueData.forEach(async (ele) => { 
      const res= await axios({
       method:"post",
       url:`${process.env.REACT_APP_URL_SERVER}/api/v1/langueInfluenceur/${ele}/${idInfluenceur}`

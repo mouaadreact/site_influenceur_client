@@ -2,7 +2,7 @@ module.exports=(Sequelize,dataType)=>{
 
  //-----create table client 
   return Sequelize.define("Client",{
-      nomSociete:{  
+      raisonSociale:{  
        type:dataType.STRING(100),
        allowNull:false,
        validate:{
@@ -46,8 +46,11 @@ module.exports=(Sequelize,dataType)=>{
        validate:{
         isEmail: true
          }
-      }
-
+      },
+      statusActive:{
+        type:dataType.BOOLEAN,
+        allowNull:false,
+       }
   });
   
 

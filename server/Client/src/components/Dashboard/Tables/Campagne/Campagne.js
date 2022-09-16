@@ -1,26 +1,25 @@
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux';
-import Sidebar from '../../Sidebar/Sidebar';
-import FilterSidebar from './FilterSidebar';
-import Table from './Table';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Sidebar from "../../Sidebar/Sidebar";
+import FilterSidebar from "./FilterSidebar";
+import Table from "./Table";
 
 function Campagne() {
- const fieldsTable=[
+  const fieldsTable = [
     "Titre",
     "Date debut",
     "Date fin",
     "Nombre influenceur",
-    "Status"
- ]
-
+    "Status",
+  ];
 
   return (
-   <div className="d-flex" id="wrapper">
-          <Sidebar/>
-          <Table name="Campagne" fieldsTable={fieldsTable} />
-          <FilterSidebar/>
-   </div>
-  )
+    <div className="d-flex" id="wrapper">
+      <Sidebar />
+      <Table name="Campagne" fieldsTable={fieldsTable} />
+      <FilterSidebar />
+    </div>
+  );
 }
 
-export default Campagne
+export default Campagne;

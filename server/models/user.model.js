@@ -10,12 +10,6 @@ module.exports=(Sequelize,dataType)=>{
         isEmail: true
            }
       }, 
-      username:{
-       type:dataType.STRING(50),
-       allowNull:false,
-       unique:true
-       
-      },
       password:{
        type:dataType.TEXT, 
        allowNull:false

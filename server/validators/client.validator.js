@@ -1,7 +1,7 @@
 const Joi=require("joi"); 
  
 const SchemaValidation=Joi.object({
- nomSociete:Joi.string().alphanum().min(3).required(),
+ raisonSociale:Joi.string().alphanum().min(3).required(),
  pays:Joi.string().min(3).required(),
  ville:Joi.string().min(3).required(),
  quartier:Joi.string().min(3).required(),

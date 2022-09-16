@@ -5,6 +5,7 @@ const offreController=require("../controllers/offre.controller");
 
 router.route('/')
       .get(offreController.getAll)
+      .post(offreController.addOffre)
 
 //*counter of all offre
 router.route('/count')
@@ -30,8 +31,10 @@ router.route('/accepterOffre/:campagneId/:influenceurId')
 router.route('/refuserOffre/:campagneId/:influenceurId')
      .put(offreController.refuserOffre)
 
+router.route('/dontShowOffre/:campagneId/:influenceurId')
+     .put(offreController.changeDontShow)
+
 router.route('/:campagneId/:influenceurId')
-      .post(offreController.addOffre)
       .get(offreController.getId)
       .put(offreController.update)
       .delete(offreController.delete)

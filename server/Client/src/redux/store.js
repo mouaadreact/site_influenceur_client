@@ -9,6 +9,7 @@ import galerieCampagneReducer from './reducers/galerieCampagne.reducer';
 import influenceurReducer from './reducers/influenceur.reducer';
 import interetReducer from './reducers/interet.reducer';
 import langueReducer from './reducers/langue.reducer';
+import niveauEtudeReducer from './reducers/niveauEtude.reducer';
 import offreReducer from './reducers/offre.reducer';
 import registerReducer from './reducers/register.reducer';
 import userReducer from './reducers/user.reducer';
@@ -18,6 +19,7 @@ import userReducer from './reducers/user.reducer';
    user:userReducer,
    auth:authReducer,
    register:registerReducer,
+   niveauEtude:niveauEtudeReducer,
    langue:langueReducer, 
    client:clientReducer,
    campagne:campagneReducer,

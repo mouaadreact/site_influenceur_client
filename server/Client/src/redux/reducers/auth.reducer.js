@@ -5,6 +5,7 @@ export const authReducer=createSlice({
  initialState:{
     userData:{},
     loading:null,
+    id:"",
     error:false,
     userErrorMessagePassword:'',
     userErrorMessageEmail:''
@@ -22,6 +23,10 @@ export const authReducer=createSlice({
    state.userData=action.payload;
    state.loading=false
  },
+ successJwtId:(state,action)=>{
+  state.id=action.payload;
+  state.loading=false
+},
   errorAuth:(state,action)=>{
    state.userErrorMessagePassword=action.payload?.password;
    state.userErrorMessageEmail=action.payload?.email;
@@ -34,5 +39,11 @@ export const authReducer=createSlice({
  }
 });
 
-export const {startAuth,errorAuth,successLogin,successJwt} =authReducer.actions;
+export const {
+  startAuth,
+  errorAuth,
+  successLogin,
+  successJwt,
+  successJwtId
+} =authReducer.actions;
 export default authReducer.reducer;

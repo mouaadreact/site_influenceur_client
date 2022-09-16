@@ -9,15 +9,19 @@ import {
   successGetNewOffre,
   successGetCountOffre} from '../reducers/offre.reducer'
 //!--------------------------------------
-export const addOffre = async (data,dispatch)=>{
+export const addOffre = async (CampagneId,listInfluenceur,dispatch)=>{
   dispatch(startOffre());
   try{ 
      const res = await axios({
       method:"post",
       url:`${process.env.REACT_APP_URL_SERVER}/api/v1/offre`,
-      withCredentials:true,
-      data
-    })
+      withCredentials:true, 
+      data:{
+        CampagneId,
+        listInfluenceur
+      }
+    });
+    
     window.location.href="/dashboard/offre";
      
   }catch(err){
@@ -106,6 +110,22 @@ export const RefuserOffre = async (CampagneId,InfluenceurId,dispatch)=>{
      const res = await axios({
       method:"put",
       url:`${process.env.REACT_APP_URL_SERVER}/api/v1/offre/refuserOffre/${CampagneId}/${InfluenceurId}`,
+      withCredentials:true
+    })
+     getNewOffre(InfluenceurId,dispatch);
+  }catch(err){
+    dispatch(errorOffre())
+  }
+ }
+
+ //!-------------------------------------------------
+  
+export const DontShowOffre = async (CampagneId,InfluenceurId,dispatch)=>{
+  dispatch(startOffre());
+  try{
+     const res = await axios({
+      method:"put",
+      url:`${process.env.REACT_APP_URL_SERVER}/api/v1/offre/dontShowOffre/${CampagneId}/${InfluenceurId}`,
       withCredentials:true
     })
      getNewOffre(InfluenceurId,dispatch);

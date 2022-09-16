@@ -29,7 +29,6 @@ exports.login= async (req,res)=>{
    }else{
       
       let token= await compareCryptPassword.verifier(req.body.password,data.password,data.id,data.email,data.Role.dataValues.roleNom);
-     // console.log(token);
       if(token!=null){
       
        
@@ -49,6 +48,8 @@ exports.login= async (req,res)=>{
                   message:"error tu n'est pas confirmer votre Email ! ",
                   id:data.UserId
                })
+               SendEmail.ContactUs(req.body.email,`comfirmer votre email`,`Click in : http://localhost:3000/register/confirmEmail?token=${token}`);
+                
             }
          }else{
             try{
@@ -138,29 +139,17 @@ exports.logout = (req,res) =>{
 //register un(e) influenceur etape 1:
 exports.registerInfluenceur=async(req,res)=>{
 
- const {email,password,username}=req.body;
+ const {email,password}=req.body;
  let validation=SchemaValidation.validate({email,password})
 
  if(validation.error){
    res.json({validation:validation.error.details[0].message})
   }
   
- /*User.count({
-  where:{
-   email,
-   isInfluenceur:false
-        }
- })
- .then(doc=>{ 
-   //console.log(doc);
-  if(doc!=0){
-   res.status(400).json({error:"Influenceur deja exist ! "});
-  }else{*/
-   // console.log("yes");
+
     bcrypt.hash(password,10).then(passwordCrypt=>{
     User.create({
      email:req.body.email,
-     username:req.body.username,
      password:passwordCrypt,
      isInfluenceur:false,
      RoleId:2 //influenceur
@@ -195,7 +184,7 @@ exports.registerInfluenceur=async(req,res)=>{
 //add admin account
 exports.registerAdmin=async(req,res)=>{
 
-   const {email,password,username}=req.body;
+   const {email,password}=req.body;
    let validation=SchemaValidation.validate({email,password})
   
    if(validation.error){
@@ -214,7 +203,6 @@ exports.registerAdmin=async(req,res)=>{
 
       User.create({
        email:req.body.email,
-       username:username, //isInfluenceur : null
        password:passwordCrypt,
        isInfluenceur:null,
        RoleId:1

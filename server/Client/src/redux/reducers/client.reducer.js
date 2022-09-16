@@ -5,8 +5,9 @@ const clientReducer=createSlice({
  initialState:{ 
    allClientData:[],
    oneClientData:{},
+   nombreCampagneOfClient:[],
    countClient:0,
-   loading:null,
+   loading:null, 
    error:false
  },
  reducers:{
@@ -25,6 +26,10 @@ const clientReducer=createSlice({
     state.countClient=action.payload;
     state.loading=false
    },
+   successGetNombreCampagneOfClient:(state,action)=>{
+   state.nombreCampagneOfClient=action.payload;
+   state.loading=false;
+   },
    successClient:(state)=>{
      state.loading=false
    },
@@ -42,6 +47,7 @@ export const {
   successClient,
   successGetAllClient,
   successGetCountClient,
-  successGetOneClient
+  successGetOneClient,
+  successGetNombreCampagneOfClient
 }=clientReducer.actions;
 export default clientReducer.reducer;

@@ -17,6 +17,7 @@ const CampagneModel=require("./campagne.model");
 const GalerieCampagneModel=require("./galerieCampagne.model");
 const ApiInstagramHistoryModel=require("./apiInstagramHistory");
 const RoleModel=require("./role.model");
+const NiveauEtudeModel=require('./niveauEtude.model');
 
 //----------create Model:
 const Client=ClientModel(db,Sequelize);
@@ -27,7 +28,7 @@ const User=UserModel(db,Sequelize);
 const Campagne=CampagneModel(db,Sequelize);
 const GalerieCampagne=GalerieCampagneModel(db,Sequelize);
 const ApiInstagramHistory=ApiInstagramHistoryModel(db,Sequelize);
-
+const NiveauEtude=NiveauEtudeModel(db,Sequelize);
 const Role=RoleModel(db,Sequelize);
 
 //--models nouveau apres relation many to many entre:
@@ -101,6 +102,17 @@ ApiInstagramHistory.belongsTo(Influenceur,{
   onDelete:"CASCADE",
   onUpdate: "CASCADE",
 })
+//niveau etude influenceur:
+
+NiveauEtude.hasMany(Influenceur,{
+  onDelete:"CASCADE",
+  onUpdate: "CASCADE",
+})
+Influenceur.belongsTo(NiveauEtude,{
+  onDelete:"CASCADE",
+  onUpdate: "CASCADE",
+})
+
 
 //user - role (utilise ca pour eviter d avoir 2 table)
 //temporaire influceur et manager donc on utlise ca avec table de role
@@ -132,6 +144,8 @@ Influenceur.belongsTo(User,{
   }
 })
   
+
+
  
 
 //(Many->Many)::
@@ -164,6 +178,7 @@ module.exports={
     User,
     Campagne,
     GalerieCampagne,
+    NiveauEtude,
     ApiInstagramHistory,
     Role,
     Offre,

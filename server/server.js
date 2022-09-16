@@ -27,6 +27,7 @@ const GalerieCampagneRoute=require("./routers/galerieCampagne.route");
 const UserRoute=require("./routers/user.route");
 const RoleRoute=require("./routers/role.route");
 const AuthRoute=require("./routers/auth.route");
+const NiveauEtudeRoute=require("./routers/niveauEtude.route")
 const ApiInstagramHistoryRoute=require("./routers/apiInstragramHistory.route")
 //utils route:
 const CountriesRoute=require("./utils/addresses");
@@ -69,7 +70,7 @@ app.get("*",checkUser);
 //app.get('*',getAPI); 
 //-----------------
 app.get('/jwtid',requireAuth,(req,res)=>{
-  console.log(res.locals.user.id);
+  //console.log(res.locals.user.id);
   res.status(200).json({id:res.locals.user.id});
 });
 
@@ -77,7 +78,7 @@ app.get('/jwtid',requireAuth,(req,res)=>{
 //-------------------- 
 app.use('/api/v1/galerieCampagne/:CampagneId',express.static('uploads/images/galerieCampagne'));
 app.use('/api/v1/Api/:InfluenceurId',express.static('uploads/Api'));
-
+app.use('/api/v1/conditionGenrale/pdf',express.static('uploads/ConditionGenrale'))
 //routers
 app.use('/api/v1/client',ClientRoute);
 app.use('/api/v1/interet',InteretRoute);
@@ -91,6 +92,7 @@ app.use('/api/v1/langueInfluenceur',LangueInfluenceurRoute);
 app.use('/api/v1/interetCampagne',InteretCampagneRoute);
 app.use('/api/v1/galerieCampagne',GalerieCampagneRoute); 
 app.use("/api/v1/apiInstagramHistory",ApiInstagramHistoryRoute)
+app.use("/api/v1/niveauEtude",NiveauEtudeRoute);
 //-----
 app.use('/api/v1/user',UserRoute);
 app.use('/api/v1/role',RoleRoute);

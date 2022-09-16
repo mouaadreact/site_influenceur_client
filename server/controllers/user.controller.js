@@ -13,7 +13,7 @@ const bcrypt=require("bcrypt");
  //-----------------------------------------
 //afficher tout les users
 
-exports.getAll=async (req,res)=>{
+exports.getAll=async (req,res)=>{ 
   try{
     
    const data=await User.findAll({include:[Role,Influenceur]});

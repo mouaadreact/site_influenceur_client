@@ -1,7 +1,7 @@
 
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { errorAuth, startAuth, successJwt, successLogin } from '../reducers/auth.reducer';
+import { errorAuth, startAuth, successJwt, successJwtId, successLogin } from '../reducers/auth.reducer';
 import cookie from 'js-cookie';
 import {toast } from 'react-toastify'; 
 
@@ -14,10 +14,12 @@ import {toast } from 'react-toastify';
          url:`${process.env.REACT_APP_URL_SERVER}/jwtid`,
          withCredentials:true
        })
-        dispatch(successJwt(res.data));
+       
+        //console.log(res.data)
+        dispatch(successJwtId(res.data.id));
      }catch(err){
        console.log("No token");
-       dispatch(errorAuth())
+       dispatch(errorAuth()) 
      }
  }
 
@@ -55,7 +57,7 @@ import {toast } from 'react-toastify';
       window.location=`/register/completeProfil?id=${res.data.id}`;
      }
       else if(res.data.status==='conditionGenrale'){
-        window.location=`/register/conditionGenrale?id=${res.data.id}`;
+        window.location=`/register/completeProfil?id=${res.data.id}`;
      }else if(res.data.status==="ActiveCompte"){
       toast.error("cette Compte est desactiver");
      }

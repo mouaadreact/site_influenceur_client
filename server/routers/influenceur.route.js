@@ -18,6 +18,10 @@ router.route("/confirmer-email")
 router.route("/filtrage")
       .post(influenceurController.filtrage);
 
+//active compte:
+router.route("/activeCompte")
+      .get(influenceurController.getAllInfluenceurActiveCompte);
+
 router.route("/user/:id")
       .get(influenceurController.getByUserId);
 
