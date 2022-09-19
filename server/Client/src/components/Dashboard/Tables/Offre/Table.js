@@ -4,6 +4,7 @@ import { getAllCampagne } from "../../../../redux/actions/campagne.actions";
 import { getAllOffre } from "../../../../redux/actions/offre.actions";
 import Loading from "../../../Loading/Loading";
 import Pagenation from "../../../Pagination/Pagination";
+import dateformat from "dateformat";
 
 function Table({ name, fieldsTable }) {
   const [CampagneId, setCampagneId] = useState("");
@@ -13,7 +14,7 @@ function Table({ name, fieldsTable }) {
 
   //*pagnitaion elements
   var [currentPage, setCurrentPage] = useState(1);
-  var [postsPerPage, setPostsPerPage] = useState(2);
+  var [postsPerPage, setPostsPerPage] = useState(10);
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentData = allOffreData.slice(indexOfFirstPost, indexOfLastPost);
@@ -91,8 +92,9 @@ function Table({ name, fieldsTable }) {
                     <td key={index + 1} className="text-warning">
                       {index + 1 < 10 ? "0" + (index + 1) : index + 1}
                     </td>
-                    <td>{ele.CampagneId}</td>
-                    <td>{ele.InfluenceurId}</td>
+                    <td>{ele.titre}</td>
+                    <td>{ele.instagramUsernameCompte}</td>
+                    <td>{dateformat(ele.createdAt,"yyyy-mm-dd")}</td>
                     <td>
                       {ele.status === "En cours traitement" && (
                         <div className="btn btn-warning">{ele.status}</div>

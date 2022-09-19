@@ -42,6 +42,13 @@ function EditCampagne() {
 
   useEffect(() => {
     setCampagneInputValue({ ...oneCampagneData });
+    oneCampagneData?.Interets?.forEach((ele) => {
+      const op = {
+        label: ele.interetNom,
+        value: ele.id,
+      };
+      setInteretMult((options) => [...options, op]);
+    });
   }, [oneCampagneData.id]);
 
   const fetchDataInteret = useCallback(() => {
@@ -72,9 +79,10 @@ function EditCampagne() {
   const handleEdit = async (event) => {
     event.preventDefault();
     console.log(interetMult);
-    updateCampagne(params.id, campagneInputValue, interetMult, dispatch);
+    //updateCampagne(params.id, campagneInputValue, interetMult, dispatch);
   };
 
+  console.log(interetMult)
   return (
     <div className="d-flex" id="wrapper">
     <Sidebar />
@@ -261,6 +269,7 @@ function EditCampagne() {
                     <label className="label-required" htmlFor="dateDebut">Centre d'intéret: </label>
                     <Multiselect
                       displayValue="name"
+                      values={interetMult}
                       onSelect={(selectedList, removedItem) => {
                         setInteretMult(selectedList);
                         console.log(selectedList);

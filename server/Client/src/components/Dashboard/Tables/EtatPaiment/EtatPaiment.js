@@ -5,8 +5,8 @@ import Table from "./Table";
 
 function EtatPaiment() {
   const fieldsTable = [
-    "Campagne ID",
-    "Influenceur ID",
+    "Campagne Titre",
+    "Influenceur Username Instagram",
     "Date Reglement",
     "Tarif",
   ];

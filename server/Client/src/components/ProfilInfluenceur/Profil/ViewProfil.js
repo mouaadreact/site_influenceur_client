@@ -8,7 +8,7 @@ function ViewProfil({ id }) {
   const { oneInfluenceurData } = useSelector((state) => state.influenceur);
   const [langue, setLangue] = useState([]);
   const [interet, setInteret] = useState([]);
-
+ 
   useEffect(() => {
     getOneInfluenceurUserId(id, dispatch);
   }, [id]);
@@ -156,7 +156,7 @@ function ViewProfil({ id }) {
               </div>
               <div className="col-sm-9">
                 <p className="text-muted mb-0">
-                  {oneInfluenceurData && oneInfluenceurData.niveauEtude}
+                  {oneInfluenceurData && oneInfluenceurData.NiveauEtude?.niveauEtudeNom}
                 </p>
               </div>
             </div>
@@ -193,7 +193,10 @@ function ViewProfil({ id }) {
               <div className="col-sm-9">
                 <p className="text-muted mb-0">
                   {oneInfluenceurData &&
-                    oneInfluenceurData.facebookUsernameCompte}
+                    oneInfluenceurData.facebookUsernameCompte ===null 
+                    ? "---"
+                    : oneInfluenceurData.facebookUsernameCompte
+                    }
                 </p>
               </div>
             </div>
@@ -206,7 +209,11 @@ function ViewProfil({ id }) {
               <div className="col-sm-9">
                 <p className="text-muted mb-0">
                   {oneInfluenceurData &&
-                    oneInfluenceurData.youtubeUsernameCompte}
+                    oneInfluenceurData.youtubeUsernameCompte ===null 
+                    ? "---"
+                    : oneInfluenceurData.youtubeUsernameCompte
+
+                    }
                 </p>
               </div>
             </div>

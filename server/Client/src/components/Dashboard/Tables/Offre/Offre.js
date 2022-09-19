@@ -4,7 +4,7 @@ import Sidebar from "../../Sidebar/Sidebar";
 import Table from "./Table";
 
 function Offre() {
-  const fieldsTable = ["Campagne ID", "Influenceur ID", "Status"];
+  const fieldsTable = ["Campagne Titre", "Influenceur Username Instagram","Date d'invitation", "Status"];
 
   return (
     <div className="d-flex" id="wrapper">

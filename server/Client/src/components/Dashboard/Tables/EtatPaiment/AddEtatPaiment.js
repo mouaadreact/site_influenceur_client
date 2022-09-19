@@ -55,19 +55,19 @@ function AddEtatPaiment() {
               <div className="card-body">
                 <form onSubmit={(e) => handleAdd(e)}>
                   <div className="mb-3">
-                    <label className="mb-2 label-required">CampagneID: </label>
+                    <label className="mb-2 label-required">Campagne titre: </label>
                     <select
                       name="campagneId"
                       className="form-control"
                       onChange={(e) => handleChange(e)}
                     >
                       <option value="" className="text-muted">
-                        Veuillez CampagneID
+                        Veuillez Campagne
                       </option>
                       {allCampagneData?.map((ele, index) => {
                         return (
                           <option key={index} value={ele.id}>
-                            {ele.id}
+                            {ele.titre}
                           </option>
                         );
                       })}
@@ -75,19 +75,19 @@ function AddEtatPaiment() {
                   </div>
 
                   <div className="mb-3">
-                    <label className="mb-2 label-required">InfluenceurID: </label>
+                    <label className="mb-2 label-required">Influenceur username instagram: </label>
                     <select
                       name="influenceurId"
                       className="form-control"
                       onChange={(e) => handleChange(e)}
                     >
                       <option value="" className="text-muted">
-                        Veuillez InfluenceurID
+                        Veuillez Influenceur
                       </option>
                       {allInfluenceurData?.map((ele, index) => {
                         return (
                           <option key={index} value={ele.id}>
-                            {ele.id}
+                            {ele.instagramUsernameCompte}
                           </option>
                         );
                       })}

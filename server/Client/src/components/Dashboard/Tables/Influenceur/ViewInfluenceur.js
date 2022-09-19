@@ -31,7 +31,7 @@ function ViewInfluenceur() {
 
   useEffect(() => {
     if (instagramFilePath?.path) {
-      console.log(instagramFilePath?.path);
+      
       axios
         .get(instagramFilePath?.path)
         .then((res) => {
@@ -120,8 +120,10 @@ function ViewInfluenceur() {
                   <div className="col-md-3">
                     <div className="p-3 primary-bg shadow-sm d-flex justify-content-around align-items-center rounded">
                       <div>
-                        <h3 className="fs-2">{compteInstagram.nombrepost}</h3>
-                        <p className="fs-5">Nombre Post</p>
+                        <h3 
+                        className="fs-2 white-text"
+                        >{new Intl.NumberFormat("de-DE").format(compteInstagram.nombrepost)}</h3>
+                        <p className="fs-5 white-text">Nombre Post</p>
                       </div>
                     </div>
                   </div>
@@ -129,8 +131,8 @@ function ViewInfluenceur() {
                   <div className="col-md-3">
                     <div className="p-3 primary-bg shadow-sm d-flex justify-content-around align-items-center rounded">
                       <div>
-                        <h3 className="fs-2">{compteInstagram.nombreAbonne}</h3>
-                        <p className="fs-5">Nombre Abonne</p>
+                        <h3 className="fs-2 white-text">{new Intl.NumberFormat("de-DE").format(compteInstagram.nombreAbonne)}</h3>
+                        <p className="fs-5 white-text">Nombre Abonne</p>
                       </div>
                     </div>
                   </div>
@@ -138,10 +140,10 @@ function ViewInfluenceur() {
                   <div className="col-md-3">
                     <div className="p-3 primary-bg shadow-sm d-flex justify-content-around align-items-center rounded">
                       <div>
-                        <h3 className="fs-2">
-                          {compteInstagram.nombreAbonnement}
+                        <h3 className="fs-2 white-text">
+                          {new Intl.NumberFormat("de-DE").format(compteInstagram.nombreAbonnement)}
                         </h3>
-                        <p className="fs-5">NombreAbonnement</p>
+                        <p className="fs-5 white-text">Nombre Abonnement</p>
                       </div>
                     </div>
                   </div>
@@ -149,8 +151,8 @@ function ViewInfluenceur() {
                   <div className="col-md-3">
                     <div className="p-3 primary-bg shadow-sm d-flex justify-content-around align-items-center rounded">
                       <div>
-                        <h3 className="fs-2">{compteInstagram.nombreLike}</h3>
-                        <p className="fs-5">Nombre Like</p>
+                        <h3 className="fs-2 white-text">{new Intl.NumberFormat("de-DE").format(compteInstagram.nombreLike)}</h3>
+                        <p className="fs-5 white-text">Nombre Like of last 12 posts</p>
                       </div>
                     </div>
                   </div>
@@ -158,10 +160,10 @@ function ViewInfluenceur() {
                   <div className="col-md-3">
                     <div className="p-3 primary-bg shadow-sm d-flex justify-content-around align-items-center rounded">
                       <div>
-                        <h3 className="fs-2">
-                          {compteInstagram.nombreCommentaire}
+                        <h3 className="fs-2 white-text">
+                          {new Intl.NumberFormat("de-DE").format(compteInstagram.nombreCommentaire)}
                         </h3>
-                        <p className="fs-5">Nombre Commentaire</p>
+                        <p className="fs-5 white-text">Nombre Commentaire of last 12 posts</p>
                       </div>
                     </div>
                   </div>
@@ -170,8 +172,8 @@ function ViewInfluenceur() {
                 <div className="mb-3">
                   <label>Influenceur full name: </label>
                   <p
-                    className="form-control primary-bg"
-                    style={{ color: "#FFF" }}
+                    className="form-control "
+                    style={{ backgroundColor: "#DDD" }}
                   >
                     {`${oneInfluenceurData.nom} ${oneInfluenceurData.prenom}`}
                   </p>
@@ -180,8 +182,8 @@ function ViewInfluenceur() {
                 <div className="mb-3">
                   <label>Influenceur Email : </label>
                   <p
-                    className="form-control primary-bg"
-                    style={{ color: "#FFF" }}
+                    className="form-control "
+                    style={{ backgroundColor: "#DDD" }}
                   >
                     {oneInfluenceurData.User?.email}
                   </p>
@@ -258,7 +260,7 @@ function ViewInfluenceur() {
                     className="form-control"
                     style={{ backgroundColor: "#DDD" }}
                   >
-                    {oneInfluenceurData.NiveauEtude.niveauEtudeNom}
+                    {oneInfluenceurData?.NiveauEtude?.niveauEtudeNom}
                   </p>
                 </div>
 
@@ -274,8 +276,8 @@ function ViewInfluenceur() {
                 <div className="mb-3">
                   <label>Influenceur commentaire:</label>
                   <p
-                    className="form-control primary-bg"
-                    style={{ color: "#FFF" }}
+                    className="form-control"
+                    style={{ backgroundColor: "#DDD" }}
                   >
                     {oneInfluenceurData.commentaire
                       ? oneInfluenceurData.commentaire
@@ -311,8 +313,8 @@ function ViewInfluenceur() {
                 <div className="mb-3">
                   <label>Influenceur date editer le compte : </label>
                   <p
-                    className="form-control primary-bg"
-                    style={{ color: "#FFF" }}
+                    className="form-control"
+                    style={{ backgroundColor: "#DDD" }}
                   >
                     {dateformat(oneInfluenceurData.updatedAt, "dd/mm/yyyy")}
                   </p>

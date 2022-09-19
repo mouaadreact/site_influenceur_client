@@ -1,5 +1,7 @@
 
     const {EtatPaiment}=require("../models");
+    const {QueryTypes }=require('Sequelize');
+    const sequelize=require("../config/db");
     //-------------------------------------------
     //Remarque: en besoin de utilise IF ELSE apres retourne des données
     //car si n'a fait pas il exits une error d'envoyer deux(2) response --> "si on a une error dans request"
@@ -64,10 +66,15 @@
 
     //*-----------------------------------------------
     //!afficher les EtatPaiments
-    exports.getAll=async (req,res)=>{
+    exports.getAll=async (req,res)=>{ 
      try{
-      const data=await EtatPaiment.findAll();
-          
+     // const data=await EtatPaiment.findAll();
+      const data = await sequelize.query(` 
+      SELECT * FROM etatpaiments e , campagnes c , influenceurs i
+      WHERE  e.CampagneId=c.id 
+      AND i.id=e.InfluenceurId`, 
+      { type: QueryTypes.SELECT }); 
+            
         if(!data){
         res.status(400).json({error:"les etatPaiments sont introuvables!"});
         }else{
@@ -104,11 +111,18 @@
 
     exports.getIdCampagne=async (req,res)=>{
       try{
-       const data=await EtatPaiment.findAll({
+       /*const data=await EtatPaiment.findAll({
         where:{
          CampagneId:req.params.campagneId,
         }
-       });
+       });*/
+
+       const data = await sequelize.query(` 
+        SELECT * FROM etatpaiments e , campagnes c , influenceurs i
+        WHERE  e.CampagneId=c.id 
+        AND i.id=e.InfluenceurId
+        AND e.CampagneId=${req.params.campagneId}`, 
+      { type: QueryTypes.SELECT });
            
          if(!data){
          res.status(400).json({error:"l'etatPaiment est introuvable by id Campagne!"});

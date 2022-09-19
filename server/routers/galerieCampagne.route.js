@@ -20,7 +20,7 @@ const upload=multer({
 }*/
 }) 
 
-router.route("/")
+router.route("/") 
       .post(upload.array('images'),galerieCampagneController.upload)
       .get(galerieCampagneController.getAll);
  

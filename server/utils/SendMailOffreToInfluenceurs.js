@@ -25,7 +25,7 @@ module.exports.SendOffre= async (mails,subject,text)=>{
     Message from email : influenceur.client.mail2022@gmail.com , 
     subject : ${subject}`,
     "text":` 
-       ${text}
+       ${text} check your account in plateforme : http://localhost:3000/profil/newOffre
     `
 }));
    const responses = await Promise.all(mailerPromises);

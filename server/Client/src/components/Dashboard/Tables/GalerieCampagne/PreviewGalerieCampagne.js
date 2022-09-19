@@ -26,7 +26,11 @@ function PreviewGalerieCampagne({ idCampagne }) {
       <div className="row">
         {galerieOneCampagneData?.map((ele, index) => {
           return (
-            <div key={index + 1} className="col-lg-4 col-md-12 mb-4 mb-lg-0">
+            <div 
+            key={index + 1} 
+            className="col-lg-4 col-md-12 mb-4 mb-lg-0"
+         
+            >
               <img
                 key={index + 1}
                 src={ele.image}

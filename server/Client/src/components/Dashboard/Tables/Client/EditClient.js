@@ -17,7 +17,7 @@ function EditClient() {
 
   const [clientInputValue, setClientInputValue] = useState({
     id: "",
-    nomSociete: "",
+    raisonSociale: "",
     pays: "",
     ville: "",
     quartier: "",
@@ -78,13 +78,13 @@ function EditClient() {
                     />
                   </div>
                   <div className="mb-3">
-                    <label htmlFor="nomSociete" className="label-required">nom societe: </label>
+                    <label htmlFor="raisonSociale" className="label-required">raison sociale: </label>
                     <input
-                      name="nomSociete"
-                      id="nomSociete"
+                      name="raisonSociale"
+                      id="raisonSociale"
                       type="text"
                       className="form-control"
-                      defaultValue={oneClientData.nomSociete}
+                      defaultValue={oneClientData.raisonSociale}
                       onChange={(e) => handleChange(e)}
                     />
                   </div>

@@ -106,8 +106,8 @@ function Table({ name, fieldsTable }) {
                           <td key={index + 1} className="text-warning">
                             {index + 1 < 10 ? "0" + (index + 1) : index + 1}
                           </td>
-                          <td>{ele.CampagneId}</td>
-                          <td>{ele.InfluenceurId}</td>
+                          <td>{ele.titre}</td>
+                          <td>{ele.instagramUsernameCompte}</td>
                           <td>{dateformat(ele.dateReglement, "dd/mm/yyyy")}</td>
                           <td>{ele.tarif}</td>
                           <td scope="col" width="150">

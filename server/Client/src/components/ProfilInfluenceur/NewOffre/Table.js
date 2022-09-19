@@ -6,20 +6,36 @@ import {
   DontShowOffre,
   getNewOffre,
   RefuserOffre,
-} from "../../../redux/actions/offre.actions"; 
+} from "../../../redux/actions/offre.actions";
 import dateformat from "dateformat";
+import { getAllCampagne } from "../../../redux/actions/campagne.actions";
+import { getAllGalerieCampagne } from "../../../redux/actions/galerieCampagne.actions";
 
+
+//?-***************************
+ 
 function Table({ name, fieldsTable, id }) {
   const dispatch = useDispatch();
+  
+  //* select state from redux: 
   const { loading, newOffreData } = useSelector((state) => state.offre);
   const { oneInfluenceurData } = useSelector((state) => state.influenceur);
+  const { allCampagneData } = useSelector((state) => state.campagne);
+  const { allGalerieCampagneData } = useSelector(
+    (state) => state.galerieCampagne
+  );
 
+  //*fetch data:
   useEffect(() => {
     getOneInfluenceurUserId(id, dispatch);
+    getAllCampagne(dispatch);
+    getAllGalerieCampagne(dispatch);
   }, [id]);
 
   useEffect(() => {
-    getNewOffre(oneInfluenceurData?.id, dispatch);
+    if (oneInfluenceurData?.id !== undefined) {
+      getNewOffre(oneInfluenceurData?.id, dispatch);
+    }
   }, [oneInfluenceurData?.id]);
 
   //*=======================================
@@ -46,143 +62,158 @@ function Table({ name, fieldsTable, id }) {
 
   return (
     <>
-
       <div className="container-fluid p-3">
-      <div className="container mt-3 w-75 mb-5">
-        <div className="row">
-          <div className="col-md-12">
-           {
-            newOffreData?.map((row,index)=>{
-            return(
-              <div className="card mt-4">
-              <div className="card-body">
-              <div className="mb-3">
-                  <label>Offre </label>
-                  <p className="form-control ">
-                    {index+1}
-                  </p>
-                </div>
-                <div className="mb-3">
-                  <label>Campagne titre </label>
-                  <p className="form-control ">
-                    {row.titre}
-                  </p>
-                </div>
-                <div className="mb-3">
-                  <label>Date de debut </label>
-                  <p className="form-control ">
-                  {dateformat(row.dateDebut, "dd/mm/yyyy")}
-                  </p>
-                </div>
-                <div className="mb-3">
-                  <label>Date de fin </label>
-                  <p className="form-control ">
-                  {dateformat(row.dateFin, "dd/mm/yyyy")}
-                  </p>
-                </div>
-                <div className="mb-3">
-                  <label>Nombre des influenceurs</label>
-                  <p className="form-control ">
-                  {row.nombreInfluenceur}
-                  </p>
-                </div>
-                <div className="mb-3">
-                  <label>Campagne description offre </label>
-                  <p className="form-control ">
-                  {row.descriptionOffre}
-                  </p>
-                </div>
-                <div className="mb-3">
-                  <label>Presence</label>
-                  <p className="form-control ">
-                  {row.presence == true ? "oui" : "non"}
-                  </p>
-                </div>
-                <div className="mb-3">
-                  <label>Hashtage utilisé </label>
-                  <p className="form-control ">
-                  {row.hashtags}
-                  </p>
-                </div>
-                <div className="mb-3">
-                  <label>Compte tagger utilisé </label>
-                  <p className="form-control ">
-                  {row.compteTagger}
-                  </p>
-                </div>
-                
-                <div className="mb-3">
-                  <label>Status</label>
-                  <p 
-                  className={"form-control "+(row.status=="En cours traitement"?"bg-warning":"bg-info")} 
+      <div 
+      className="row" 
+      style={{
+        justifyContent:"center",
+        fontSize:"15px",
+        fontFamily:"'Poppins', sans-serif"
+        }}>
+     
+      <div className="col-lg-8">
+      {newOffreData?.map((row, index) => {
+        return (
+        <div className="card mb-4" key={index}>
+          <div className="card-body">
+
+
+            <div className="row">
+              <div 
+              className="col-sm-3 w-100 mb-2"
+               style={{ 
+                display:"flex",
+                justifyContent:"space-between"
+               }}
+              >
+                <b className="mb-0">{row.titre.toUpperCase()}</b>
+                <p 
+                  className="bg-info p-1 rounded text-center white-text"
                   style={{
-                    color:"#FFF",
-                    fontWeight:"bold"
-                    }}>
-                  {row.status}
-                  </p>
-                </div>
-
-                {
-                  row.status=="En cours traitement"
-                  ?
-                  (
-                    <div className="mb-3">
-                  <label style={{marginRight:"10px"}}>Actions : </label>
-                  
-                  <a
-                          onClick={(e) =>
-                            handleChangeAccepter(e, row.CampagneId)
-                          }
-                          className="btn btn-success"
-                          style={{ marginRight: "10px" }}
-                        >
-                          Accepter
-                        </a>
-
-                        <a
-                          onClick={(e) =>
-                            handleChangeRefuser(e, row.CampagneId)
-                          }
-                          className="btn btn-danger"
-                        >
-                          Refuser
-                        </a>
-
-                </div>
-
-                  )
-                  :
-                  (
-                    <div className="mb-3">
-                  <label style={{marginRight:"10px"}}>Actions : </label>
-                  
-                  <a
-                          onClick={(e) =>
-                            handleChangeDontShow(e,row.CampagneId)
-                          }
-                          className="btn btn-primary"
-                          style={{ marginRight: "10px" }}
-                        >
-                          Dont show
-                        </a>  
-
-                </div>
-
-                  )
-                }
-
+                    fontWeight: "bold",  
+                    width:"100px",
+                    margin: "0"
+                    }}
+                >
+             {row.status}
+             </p>
               </div>
             </div>
-            )
+           
 
-            })
-           }
- 
+            <div className="row">
+              <div className="col-sm-3 w-100 mb-1">
+                <p className="text-muted mb-0">{dateformat(row.dateDebut,"yyyy/mm/dd") + " - " +dateformat(row.dateFin,"yyyy/mm/dd")} </p>
+              </div>
+            </div>
+
+            
+            <div className="row">
+              <div className="col-sm-3 mb-1">
+                <p className="mb-0">Offre: </p>
+              </div>
+              <div className="col-sm-9">
+                <p className="text-muted mb-0">
+                {row.descriptionOffre}
+                </p>
+              </div>
+            </div>
+
+         
+            <div className="row">
+              <div className="col-sm-3 mb-2">
+                <p className="mb-0">Presence:</p>
+              </div>
+              <div className="col-sm-9">
+                <p className="text-muted mb-0">
+                {row.presence == true 
+                ? 
+                <p
+                    className="px-1 rounded white-text green-btn"
+                    style={{                     
+                      width:"40px",
+                      margin: "0", 
+                    }}
+                 >oui</p>
+                 : <p
+                    className="px-1 rounded white-text red-btn"
+                    style={{                       
+                      width:"40px",
+                      margin: "0",        
+                    }}
+                 >non</p>
+                 }
+                </p>
+              </div>
+            </div>
+
+
+            {row.status == "En cours traitement" ? (
+                        <div className="mb-3">
+                          <label style={{ marginRight: "10px" }}>
+                            Actions :{" "}
+                          </label>
+
+                          <a
+                            onClick={(e) =>
+                              handleChangeAccepter(e, row.CampagneId)
+                            }
+                            className="green-btn  p-1 rounded"
+                            style={{ marginRight: "10px" }}
+                          >
+                            Accepter
+                          </a>
+
+                          <a
+                            onClick={(e) =>
+                              handleChangeRefuser(e, row.CampagneId)
+                            }
+                            className="red-btn p-1 rounded"
+                          >
+                            Refuser
+                          </a>
+                        </div>
+                      ) : (
+                        <div className="mb-3">
+                          <label style={{ marginRight: "10px" }}>
+                            Actions :{" "}
+                          </label>
+
+                          <a
+                            onClick={(e) =>
+                              handleChangeDontShow(e, row.CampagneId)
+                            }
+                            className="bleu-btn p-1 rounded"
+                            style={{ marginRight: "10px" }}
+                          >
+                            Dont show
+                          </a>
+                        </div>
+                      )}
+
+
+
+            <div className="mb-3">         
+              <a 
+              className="white-text p-1 rounded"
+              style={{
+                float:"right",
+                backgroundColor:"#44e4a0",
+                fontWeight:"bold",
+                }} 
+              href={`/profil/newOffre/details/${id}/${row.id}`}>details</a>
+            </div>
+           
           </div>
         </div>
+        )
+      })
+        }
+        <div className="row"></div>
       </div>
     </div>
+    </div>
+
     </>
   );
 }

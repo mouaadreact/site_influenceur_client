@@ -18,7 +18,10 @@ router.route('/newOffre/:influenceurId')
 
 router.route('/campagne')
       .get(offreController.getAll)  
-       
+
+router.route('/data')
+      .get(offreController.getData) 
+
 router.route('/campagne/:campagneId')
      .get(offreController.getCampagneId)     
 

@@ -1,4 +1,4 @@
-const {Offre, Influenceur, Campagne, Client}=require("../models");
+const {Offre, Influenceur, Campagne, Client, NiveauEtude}=require("../models");
 const Op = require('Sequelize').Op
 const {QueryTypes }=require('Sequelize');
 const sequelize=require("../config/db");
@@ -62,7 +62,13 @@ exports.addOffre=async (req,res)=>{
 exports.getAll=async (req,res)=>{
  try{
 
-  const data=await Offre.findAll();
+  //const data=await Offre.findAll();
+  const data = await sequelize.query(` 
+  SELECT * FROM offres o , campagnes c , influenceurs i
+  WHERE  o.CampagneId=c.id 
+  AND i.id=o.InfluenceurId`, 
+ { type: QueryTypes.SELECT }); 
+
       
     if(!data){
     res.status(400).json({error:"les Offres sont introuvables!"});
@@ -102,11 +108,19 @@ exports.getId=async (req,res)=>{
 //afficher l'offre by id
 exports.getCampagneId=async (req,res)=>{
   try{
-   const data=await Offre.findAll({
+  /* const data=await Offre.findAll({
     where:{
       CampagneId:req.params.campagneId
      }
-   });
+   });*/
+
+      const data = await sequelize.query(` 
+      SELECT * FROM offres o , campagnes c , influenceurs i
+      WHERE  o.CampagneId=c.id 
+      AND i.id=o.InfluenceurId
+      AND o.CampagneId=${req.params.campagneId}`, 
+    { type: QueryTypes.SELECT });
+      
        
      if(!data){
      res.status(400).json({error:"trouve l'Offre using campagne Id!"});
@@ -123,15 +137,7 @@ exports.getCampagneId=async (req,res)=>{
 //afficher l'offre by id
 exports.getOffreAccepterByInfluenceurId=async (req,res)=>{
   try{
-   /*const data=await Offre.findAll({
-    where:{
-      [Op.and]:[
-       {InfluenceurId:req.params.influenceurId},
-       { status:"Accepter"},       
-      ]
-
-      }
-   });*/
+   
 
      const data = await sequelize.query(`SELECT * FROM offres o , campagnes c WHERE o.status='Accepter' AND  o.InfluenceurId=${req.params.influenceurId} AND o.CampagneId=c.id`, { type: QueryTypes.SELECT });
        
@@ -181,8 +187,8 @@ exports.newOffre=async (req,res)=>{
    const data = await sequelize.query(`
    
     SELECT * FROM offres o , campagnes c 
-    WHERE o.status="En cours Traitement" 
-    OR o.status="Late"
+    WHERE (o.status="En cours Traitement" 
+    OR o.status="Late")
     AND o.InfluenceurId=${req.params.influenceurId} 
     AND o.CampagneId=c.id `, 
    { type: QueryTypes.SELECT });
@@ -201,38 +207,6 @@ exports.newOffre=async (req,res)=>{
  }
 
  
-/*exports.newOffre=async (req,res)=>{
- try{
-  const data=await Offre.findAll({
-    where:{
-     [Op.and]:[
-      {InfluenceurId:req.params.influenceurId},
-      {
-        [Op.and]:[
-         
-           { status:{ [Op.ne]:"Accepter"}},
-           { status:{ [Op.ne]:"Refuser"}}
-          
-        ]
-      }
-      
-    ]
-     }
-    }
-  )
-
-      
-    if(!data){ 
-    res.status(400).json({error:"Not found new Offre!"});
-    }else{
-    res.status(200).json(data);
-    }
-
- }catch(err){
-  res.status(400).json(err);
- }
-}*/
-
 //-----------------------------------------------
 //accepter offre:
 exports.accepterOffre=async (req,res)=>{
@@ -435,6 +409,34 @@ exports.getCountAllOffre=async (req,res)=>{
  
   try{
    const data=await Offre.count();
+   res.status(200).json(data);
+  }catch(err){
+   res.status(400).json(err);
+  } 
+}
+
+
+//!--------------------------------------------------------
+
+exports.getData=async (req,res)=>{
+ 
+  try{
+  //data etat paiment
+ /*  const data=await Campagne.findAll({
+    include:[
+      {
+      model:Influenceur,
+      required:false,
+      include:[NiveauEtude]
+    }]
+   });*/
+
+   const data = await sequelize.query(` 
+   SELECT * FROM offres o , campagnes c , influenceurs i
+   WHERE  o.CampagneId=c.id 
+   AND i.id=o.InfluenceurId`, 
+  { type: QueryTypes.SELECT });
+
    res.status(200).json(data);
   }catch(err){
    res.status(400).json(err);

@@ -135,7 +135,7 @@ export const updateCampagne = async (id,data,interetData,dispatch)=>{
     await addInteretToCampagne(interetData,id);
 
     dispatch(successCampagne());
-    //window.location.href="/dashboard/campagne";
+    window.location.href="/dashboard/campagne";
      
   }catch(err){
     dispatch(errorCampagne())

@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800&display=swap');
 body{
  /*background-color: #172b4d !important;*/
 }
@@ -8,5 +9,19 @@ button:disabled{
 
 .label-required::after{
  content: "*";
- color:red
+ color:red;
+}
+
+.green-btn,.red-btn,.bleu-btn{
+ font-weight:bold;
+ color:#FFF
+}
+.green-btn{
+  background-color:#44e4a0;
+}
+.red-btn{
+ background-color:#d9374e;
+}
+.bleu-btn{
+  background-color: #029bff;
 }

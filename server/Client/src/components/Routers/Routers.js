@@ -67,6 +67,8 @@ import HistoryOffre from "../ProfilInfluenceur/HistoryOffre/HistoryOffre";
 import ProfilInfluenceur from "../ProfilInfluenceur/ProfilInfluenceur";
 import AddOffre from "../Dashboard/Tables/Offre/AddOffre";
 import EditClient from "../Dashboard/Tables/Client/EditClient";
+import DetailsHistoryOffre from "../ProfilInfluenceur/HistoryOffre/DetailsHistoryOffre";
+import DetailsNewOffre from "../ProfilInfluenceur/NewOffre/DetailsNewOffre";
 
 //!--------------------------------------------------------------------
 function Routers() {
@@ -160,6 +162,9 @@ function Routers() {
           path="/profil/historyOffre"
           element={<HistoryOffre/>}
         />
+ 
+ <Route path="/profil/historyOffre/details/:idUser/:idOffre" element={<DetailsHistoryOffre/>} />
+        <Route path="/profil/newOffre/details/:idUser/:idOffre" element={<DetailsNewOffre/>} />
 
         {/*indefined page */}
         <Route path="*" element={<PageNotFound />} />
