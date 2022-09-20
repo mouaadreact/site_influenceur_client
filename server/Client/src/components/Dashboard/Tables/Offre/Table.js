@@ -32,7 +32,9 @@ function Table({ name, fieldsTable }) {
 
   //?---------------------------------------
   return (
-    <div className="container-fluid px-4">
+    <div 
+    className="container-fluid px-4"
+    style={{backgroundColor:"#EB6E35"}} >
       <div className="row my-5" 
       style={{
         backgroundColor:"#DDD",
@@ -43,7 +45,7 @@ function Table({ name, fieldsTable }) {
           <h4>{name} Table</h4>
           <a
               href={`/dashboard/offre/add`}
-              className="btn btn-primary float-end"
+              className="btn bleu-btn float-end"
             >
               + add Offre
             </a>
@@ -92,24 +94,24 @@ function Table({ name, fieldsTable }) {
                     <td key={index + 1} className="text-warning">
                       {index + 1 < 10 ? "0" + (index + 1) : index + 1}
                     </td>
-                    <td>{ele.titre}</td>
+                    <td>{ele.titre}</td> 
                     <td>{ele.instagramUsernameCompte}</td>
                     <td>{dateformat(ele.createdAt,"yyyy-mm-dd")}</td>
                     <td>
                       {ele.status === "En cours traitement" && (
-                        <div className="btn btn-warning">{ele.status}</div>
+                        <div className="yellow-status">{ele.status}</div>
                       )}
                       {ele.status === "Accepter" && (
-                        <div className="btn btn-success">{ele.status}</div>
+                        <div className="green-status">{ele.status}</div>
                       )}
                       {ele.status === "Refuser" && (
-                        <div className="btn btn-danger">{ele.status}</div>
+                        <div className="red-status">{ele.status}</div>
                       )}
                       {ele.status === "Late" && (
-                        <div className="btn btn-info">{ele.status}</div>
+                        <div className="bleu-status">{ele.status}</div>
                       )}
                       {ele.status === "DontShow" && (
-                        <div className="btn btn-primary">{ele.status}</div>
+                        <div className="other-status">{ele.status}</div>
                       )}
                     </td>
                   </tr>

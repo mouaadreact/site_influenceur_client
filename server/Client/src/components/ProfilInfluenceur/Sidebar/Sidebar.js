@@ -15,39 +15,48 @@ function Sidebar() {
   };
 
   return (
-    <div className="bg-white" id="sidebar-wrapper">
-      <div className="sidebar-heading text-center py-4 primary-text fs-4 fw-bold text-uppercase border-bottom">
-        <i className="fas fa-user-secret me-2"></i>3WDEV
+    <div 
+    className="bg-white" 
+    style={{ boxShadow:"rgb(0, 0, 0) 1px 0px 15px",zIndex:"1"}}
+    id="sidebar-wrapper">
+      <div
+      style={{
+        color:"rgb(127, 123, 123)"
+        }}
+      className="sidebar-heading text-center py-4  fs-4 fw-bold text-uppercase border-bottom">
+        <i 
+        className="fas fa-user-secret me-2"
+        ></i>3<span style={{color:"#EB6E35"}}>WDEV</span>
       </div>
       <div className="list-group list-group-flush my-3">
         <NavLink
           to="/profil/home"
-          className="list-group-item list-group-item-action bg-transparent second-text"
+          className="list-group-item list-group-item-action  second-text"
         >
           Profil
         </NavLink>
         <NavLink
           to={`/profil/edit/${id}`}
-          className="list-group-item list-group-item-action bg-transparent second-text"
+          className="list-group-item list-group-item-action  second-text"
         >
           Edit Profil
         </NavLink>
         <NavLink
           to="/profil/newOffre"
-          className="list-group-item list-group-item-action bg-transparent second-text"
+          className="list-group-item list-group-item-action  second-text"
         >
           New Offre
         </NavLink>
         <NavLink
           to="/profil/historyOffre"
-          className="list-group-item list-group-item-action bg-transparent second-text"
+          className="list-group-item list-group-item-action second-text"
         >
           History Offre
         </NavLink>
         <NavLink
-          to=""
+          to="/login"
           onClick={(e) => handleLogout(e)}
-          className="list-group-item list-group-item-action bg-transparent text-danger fw-bold"
+          className="list-group-item list-group-item-action  primary-text"
         >
           Logout
         </NavLink>

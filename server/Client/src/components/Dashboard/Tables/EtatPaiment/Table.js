@@ -48,14 +48,24 @@ function Table({ name, fieldsTable }) {
         </>
       ) : (
         <>
-          <div className="container-fluid px-4">
-            <div className="row my-5">
+          <div 
+          className="container-fluid px-4"
+          style={{backgroundColor:"#EB6E35"}} >
+            <div
+              className="row my-5"
+              style={{
+                background: "#DDD",
+                padding: "13px",
+                borderRadius: "10px",
+              }}
+            >
               <div className="card-hearder mb-3">
                 <h4>
                   {name} Table
                   <a
                     href={`/dashboard/etatPaiment/add`}
-                    className="btn btn-primary float-end"
+                    className="btn bleu-btn"
+                    style={{float:"right"}}
                   >
                     + add EtatPaiment
                   </a>
@@ -110,16 +120,17 @@ function Table({ name, fieldsTable }) {
                           <td>{ele.instagramUsernameCompte}</td>
                           <td>{dateformat(ele.dateReglement, "dd/mm/yyyy")}</td>
                           <td>{ele.tarif}</td>
+                          <td>{ele.currency}</td>
                           <td scope="col" width="150">
                             <a
                               href={`/dashboard/etatPaiment/edit/${ele.CampagneId}/${ele.InfluenceurId}`}
-                              className="text-warning"
+                              className="warning-text"
                               style={{ fontSize: "18px", marginRight: "10px" }}
                             >
                               <AiFillEdit />
                             </a>
                             <a
-                              className="text-danger"
+                              className="danger-text"
                               style={{ fontSize: "18px" }}
                               onClick={() =>
                                 handleDelete(ele.CampagneId, ele.InfluenceurId)

@@ -16,7 +16,14 @@ function ProfilInfluenceur() {
   };
 
   return (
-    <div className="d-flex" id="wrapper">
+    <div className="d-flex" 
+    id="wrapper" 
+    style={{
+      background:"#EB6E35",
+      fontFamily:"poppins",
+      fontSize:"15px"
+      }}
+    >
       <Sidebar />
       <Profil />
     </div>

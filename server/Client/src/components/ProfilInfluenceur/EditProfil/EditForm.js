@@ -51,7 +51,7 @@ function EditForm({ id }) {
     quartier: "",
     situationFamiliale: "",
     nombreEnfant: "",
-    niveauEtude: "",
+    NiveauEtudeId: "",
     profession: "",
   });
 
@@ -66,25 +66,11 @@ function EditForm({ id }) {
   useEffect(()=>{
     getAllNiveauEtude(dispatch);
    },[])
-
-  const fetchDataLangue = useCallback(() => {
-    getAllLangue(dispatch);
-    langueData.forEach((ele) => {
-      const op = {
-        label: ele.langueNom,
-        value: ele.id,
-      };
-      setOptionsLangue((options) => [...options, op]);
-    });
-  }, [langueData[0]?.id]);
-
-  useEffect(() => {
-    fetchDataLangue();
-  }, [fetchDataLangue]);
   //!----------------------------------
 
-  //!------------------------------------------
   useEffect(() => {
+    //*default value of input
+
     setInputValue({
       id: oneInfluenceurData?.id,
       nom: oneInfluenceurData?.nom,
@@ -98,11 +84,50 @@ function EditForm({ id }) {
       quartier: oneInfluenceurData?.quartier,
       situationFamiliale: oneInfluenceurData?.situationFamiliale,
       nombreEnfant: oneInfluenceurData?.nombreEnfant,
-      niveauEtude: oneInfluenceurData?.niveauEtude,
+      NiveauEtudeId: oneInfluenceurData?.NiveauEtudeId,
       profession: oneInfluenceurData?.profession,
     });
-  }, [oneInfluenceurData?.id]);
 
+    //* default value of langues:
+    oneInfluenceurData?.Langues?.forEach((ele) => {
+      const op = {
+        label: ele.langueNom,
+        value: ele.id,
+      };
+      setLangueMulti((options) => [...options, op]);
+    });
+
+
+
+    //*default value of interets:
+
+    oneInfluenceurData?.Interets?.forEach((ele) => {
+      const op = {
+        label: ele.interetNom,
+        value: ele.id,
+      };
+      setInteretMulti((options) => [...options, op]);
+    });
+
+
+  }, [oneInfluenceurData?.id]);
+//!----------------------------------------------------------
+
+const fetchDataLangue = useCallback(() => {
+  getAllLangue(dispatch); 
+  langueData.forEach((ele) => {
+    const op = {
+      label: ele.langueNom,
+      value: ele.id,
+    };
+    setOptionsLangue((options) => [...options, op]);
+  });
+}, [langueData[0]?.id]);
+
+useEffect(() => {
+  fetchDataLangue();
+}, [fetchDataLangue]);
+//!---------------------------------------------------------
   const fetchDataInteret = useCallback(() => {
     getAllInteret(dispatch);
     allInteretData.forEach((ele) => {
@@ -125,16 +150,27 @@ function EditForm({ id }) {
   };
 
   const handleChangeLangue = (e) => {
-    setLangueMulti(Array.isArray(e) ? e.map((x) => x.value) : []);
+    setLangueMulti(Array.isArray(e) ? e.map((x) => (
+      {
+      value:x.value,
+      label:x.label
+      }
+      )) : []);
   };
 
   const handleChangeInteret = (e) => {
-    setInteretMulti(Array.isArray(e) ? e.map((x) => x.value) : []);
+    setInteretMulti(Array.isArray(e) ? e.map((x) => (
+      {
+      value:x.value,
+      label:x.label
+      }
+      )) : []);
   };
 
   //!-----------------------------------------
   const handleEdit = (event) => {
     event.preventDefault();
+   // console.log(langueMulti)
     updateInfluenceur(
       oneInfluenceurData?.id,
       inputValue,
@@ -143,6 +179,8 @@ function EditForm({ id }) {
       dispatch
     );
   };
+
+
 
   return (
     <div className="row">
@@ -378,7 +416,7 @@ function EditForm({ id }) {
                     key={ele.id} 
                     value={ele.id}
                     selected={
-                      ele.niveauEtudeNom=== oneInfluenceurData?.NiveauEtude.niveauEtudeNom
+                      ele.niveauEtudeNom=== oneInfluenceurData?.NiveauEtude?.niveauEtudeNom
                         ? true
                         : false
                     }
@@ -399,6 +437,7 @@ function EditForm({ id }) {
                   required={true}
                   isMulti
                   options={optionsLangue}
+                  value={langueMulti}
                   id="langue"
                   name="langue"
                   onChange={handleChangeLangue}
@@ -412,6 +451,7 @@ function EditForm({ id }) {
                 <Select
                   required={true}
                   isMulti
+                  value={interetMulti}
                   options={optionsInteret}
                   id="interet"
                   name="interet"
@@ -444,7 +484,7 @@ function EditForm({ id }) {
               </div>
 
               <div className="mb-3">
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="btn bleu-btn">
                   Update Client
                 </button>
               </div>

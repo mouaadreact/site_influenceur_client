@@ -148,7 +148,7 @@ function CompeleteProfil() {
       ) : (
         <>
           <div
-            className="container w-50 shadow-lg p-3 mb-5 bg-white roundedd "
+            className="container w-50 shadow-lg p-3 mb-5 bg-white rounded "
             style={{ marginTop: "30px" }}
           >
             <div className="text-center p-3">Complete Profil</div>
@@ -334,13 +334,13 @@ function CompeleteProfil() {
              {
               checkedCondition ?
               <>
-              <button  type="submit" className="btn btn-primary w-100">
+              <button  type="submit" className="btn bleu-btn w-100">
                 Submit
               </button>
               </>
               :
               <>
-                <a className="btn btn-primary w-100" style={{opacity:"0.5"}}>Submit</a>
+                <a className="btn bleu-btn w-100" style={{opacity:"0.5"}}>Submit</a>
               </>
              }
             </form>

@@ -9,6 +9,7 @@ function EtatPaiment() {
     "Influenceur Username Instagram",
     "Date Reglement",
     "Tarif",
+    "Currency"
   ];
 
   return (

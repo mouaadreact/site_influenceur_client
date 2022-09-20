@@ -128,3 +128,23 @@
       res.status(400).json(err);
      }
     }
+
+//**************************************************************** 
+//? delete interet of influenceur:
+exports.deleteInteretInfluenceur=async (req,res)=>{
+  try{
+   const data=await InteretInfluenceur.destroy({
+      where:{
+        InfluenceurId:req.params.influenceurId
+      }
+   });
+       
+       if(data==0){
+       res.status(200).json({error:"On peut pas supprimer All Interets of Influenceur!"});
+       }else{
+       res.status(200).json(data);
+       }
+  }catch(err){
+   res.status(400).json(err);
+  }
+ }

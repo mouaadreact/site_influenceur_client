@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { AiFillEdit, AiFillDelete } from "react-icons/ai";
+import { AiFillEdit, AiFillDelete, AiFillEye } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import {
   changeEtatCompteClient,
@@ -8,14 +8,14 @@ import {
 } from "../../../../redux/actions/client.actions";
 import Pagenation from "../../../Pagination/Pagination";
 
-function Table({ name, fieldsTable }) {
+function  Table({ name, fieldsTable }) {
   const [q, setQ] = useState("");
   const dispatch = useDispatch();
   const { allClientData, loading } = useSelector((state) => state.client);
 
   //*pagnitaion elements
   var [currentPage, setCurrentPage] = useState(1);
-  var [postsPerPage, setPostsPerPage] = useState(2);
+  var [postsPerPage, setPostsPerPage] = useState(4);
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentData = allClientData.slice(indexOfFirstPost, indexOfLastPost);
@@ -37,7 +37,7 @@ const handleChangeStatusActive = (e, id, status) => {
 //*search:
   const search = (rows) => {
     return rows.filter(
-      (row) =>
+      (row) => 
         row.id == parseInt(q) ||
         row.raisonSociale.toLowerCase().indexOf(q.toLowerCase()) > -1 ||
         row.nomDirecteur.toLowerCase().indexOf(q.toLowerCase()) > -1 ||
@@ -47,14 +47,24 @@ const handleChangeStatusActive = (e, id, status) => {
   };
 
   return (
-    <div className="container-fluid px-4">
-      <div className="row my-5">
+    <div 
+    className="container-fluid px-4" 
+    style={{backgroundColor:"#EB6E35"}}>
+      <div 
+      className="row my-5"
+      style={{
+        background: "#DDD",
+        padding: "13px",
+        borderRadius: "10px"
+      }}
+      >
         <div className="card-hearder mb-3">
           <h4>
             {name} Table
             <a
               href={`/dashboard/client/add`}
-              className="btn btn-primary float-end"
+              className="float-end bleu-btn"
+              style={{fontSize:"15px",padding:"8px"}}
             >
               + add Client
             </a>
@@ -107,25 +117,25 @@ const handleChangeStatusActive = (e, id, status) => {
                             ele.statusActive
                           )
                         }
+                        style={{cursor:"pointer"}}
                         className={
-                          "btn btn-" +
-                          (ele.statusActive == true ? "success" : "danger")
+                          (ele.statusActive == true ? "green" : "red")+"-status"
                         }
                       >
                         {ele.statusActive == true ? "Active" : "Desactive"}
                       </div>
                     </td>
                     <td scope="col" width="150">
-                      <a
-                        href={`/dashboard/client/view/${ele.id}`}
-                        className="text-success"
+                    <a
+                        href={`/dashboard/campagne/view/${ele.id}`}
+                        className="success-text"
                         style={{ fontSize: "16px", marginRight: "10px" }}
                       >
-                        view
+                        <AiFillEye/>
                       </a>
                       <a
                         href={`/dashboard/client/edit/${ele.id}`}
-                        className="text-warning"
+                        className="warning-text"
                         style={{ fontSize: "18px", marginRight: "10px" }}
                       >
                         <AiFillEdit />

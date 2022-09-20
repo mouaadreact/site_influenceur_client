@@ -9,7 +9,7 @@ import Select from "react-select";
 import { getAllInfluenceur } from "../../../../redux/actions/influenceur.actions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
- 
+
 function AddCampagneForm() {
   const dispatch = useDispatch();
   const { allInfluenceurData } = useSelector((state) => state.influenceur);
@@ -98,7 +98,10 @@ function AddCampagneForm() {
   return (
     <>
       <ToastContainer autoClose={3000} />
-      <div className="container-fluid px-4 w-75">
+      <div
+        className="container-fluid px-4 w-100"
+        style={{ backgroundColor: "#EB6E35" }}
+      >
         <div className="row">
           <div className="col-md-12">
             <div className="card mb-5 mt-5">
@@ -107,7 +110,7 @@ function AddCampagneForm() {
                   Add New Campagne
                   <a
                     href="/dashboard/campagne"
-                    className="btn btn-danger float-end"
+                    className="btn red-btn float-end"
                   >
                     BACK
                   </a>
@@ -122,7 +125,10 @@ function AddCampagneForm() {
                   {(formik) => (
                     <Form>
                       <div className="mb-3">
-                        <label className="form-label label-required" htmlFor="titre">
+                        <label
+                          className="form-label label-required"
+                          htmlFor="titre"
+                        >
                           Titre
                         </label>
 
@@ -138,7 +144,10 @@ function AddCampagneForm() {
                       </div>
 
                       <div className="mb-3">
-                        <label className="form-label label-required" htmlFor="dateDebut">
+                        <label
+                          className="form-label label-required"
+                          htmlFor="dateDebut"
+                        >
                           Date Debut
                         </label>
 
@@ -154,7 +163,10 @@ function AddCampagneForm() {
                       </div>
 
                       <div className="mb-3">
-                        <label className="form-label label-required" htmlFor="dateFin">
+                        <label
+                          className="form-label label-required"
+                          htmlFor="dateFin"
+                        >
                           Date Fin
                         </label>
 
@@ -170,7 +182,10 @@ function AddCampagneForm() {
                       </div>
 
                       <div className="mb-3">
-                        <label className="form-label label-required" htmlFor="presence">
+                        <label
+                          className="form-label label-required"
+                          htmlFor="presence"
+                        >
                           Presence :
                         </label>
                         <div className="form-check form-check-inline">
@@ -251,7 +266,10 @@ function AddCampagneForm() {
                       </div>
 
                       <div className="mb-3">
-                        <label className="form-label label-required" htmlFor="hashtags">
+                        <label
+                          className="form-label label-required"
+                          htmlFor="hashtags"
+                        >
                           Hashtages
                         </label>
 
@@ -268,7 +286,10 @@ function AddCampagneForm() {
                       </div>
 
                       <div className="mb-3">
-                        <label className="form-label label-required" htmlFor="compteTagger">
+                        <label
+                          className="form-label label-required"
+                          htmlFor="compteTagger"
+                        >
                           Compte tagger
                         </label>
 
@@ -285,7 +306,10 @@ function AddCampagneForm() {
                       </div>
 
                       <div className="mb-3">
-                        <label className="form-label label-required" htmlFor="ClientId">
+                        <label
+                          className="form-label label-required"
+                          htmlFor="ClientId"
+                        >
                           Client
                         </label>
 
@@ -310,7 +334,10 @@ function AddCampagneForm() {
                       </div>
 
                       <div className="form-outline mb-4">
-                        <label className="form-label label-required" htmlFor="InteretId">
+                        <label
+                          className="form-label label-required"
+                          htmlFor="InteretId"
+                        >
                           Centre Interet
                         </label>
 
@@ -329,8 +356,12 @@ function AddCampagneForm() {
                       </div>
 
                       <div className="mb-3">
-                        <button type="submit" className="btn btn-primary">
-                          Add Campagne
+                        <button
+                          type="submit"
+                          className="bleu-btn"
+                          style={{ fontSize: "14px", padding: "8px" }}
+                        >
+                          + Add Campagne
                         </button>
                       </div>
                     </Form>

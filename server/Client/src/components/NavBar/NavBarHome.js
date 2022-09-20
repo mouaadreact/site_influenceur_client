@@ -6,7 +6,7 @@ function NavBarHome() {
   return (
     <>
       <nav
-        className=" bg-dark navbar navbar-light navbar-expand-md py-3"
+        className="primary-bg navbar navbar-light navbar-expand-md py-3"
         style={{
           position: "sticky",
           top: "0",
@@ -35,11 +35,11 @@ function NavBarHome() {
                 marginLeft: "14px",
                 fontWeight: "bold",
                 fontFamily: "Ubuntu",
-                fontSize: "18px",
+                fontSize: "22px",
                 color: "white",
               }}
             >
-              <span className="logo"></span>Influenceur
+              <span className="logo" style={{fontSize: "22px"}}>3</span>wdev
             </span>
             <ul className="navbar-nav mx-auto">
               <li className="nav-item">

@@ -7,12 +7,13 @@ const langueInfluenceurController=require("../controllers/langueInfluenceur.cont
 router.route('/')
       .get(langueInfluenceurController.getAll)
 
-      
+       
 router.route('/langue/:langueId')
       .get(langueInfluenceurController.getIdLangue)
-
+ 
 router.route('/influenceur/:influenceurId')
       .get(langueInfluenceurController.getIdInfluenceur)
+      .delete(langueInfluenceurController.deleteLangueInfluenceur)
 
 router.route('/:langueId/:influenceurId')
       .post(langueInfluenceurController.addLangueInfluenceur)

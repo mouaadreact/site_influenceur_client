@@ -65,7 +65,11 @@ function FilterSidebar() {
 
   //!-----------------------------------------------------------
   return (
-    <div className="bg-white" id="sidebar-wrapper">
+    <div
+      style={{ boxShadow: "rgb(0, 0, 0) 0.3px 0px 10px", zIndex: "1" }}
+      className="bg-white"
+      id="sidebar-wrapper"
+    >
       <div className="sidebar-heading primary-bg text-center py-3 text-white fs-4 fw-bold text-uppercase border-bottom">
         <i className="fas fa-user-secret me-2"></i>Filter
       </div>
@@ -290,7 +294,11 @@ function FilterSidebar() {
               <thead>
                 <tr>
                   <td>
-                    <button type="submit" className="btn btn-primary mt-3">
+                    <button
+                      type="submit"
+                      className="bleu-btn mt-2"
+                      style={{ fontSize: "14px", padding: "8px" }}
+                    >
                       Filter Campagne
                     </button>
                   </td>

@@ -46,7 +46,7 @@
  
 .Buttons{
     text-decoration: none;
-    color: #FFF;
+    color:#EB6E35;
     padding: 8px 12px;
     border-radius:8px;
     margin-right:18px;
@@ -55,11 +55,9 @@
     font-size: 12px;
    transition: all 0.3s ease-in-out;
 }
-.log{
-background-color:#e83e8c ;
-}
-.reg{
-    background-color: #e040fb;
+
+.log,.reg{
+background-color: #FFF ;
 }
 .Buttons:hover{
 background-color: #42a5f5 !important;
@@ -67,7 +65,7 @@ color: #FFF;
 font-size: 12px;
 }
 .logo{
-    color: #000;
+    color:rgb(79, 79, 79);
 }
 .nav-link{
     transition: all 0.1s linear;

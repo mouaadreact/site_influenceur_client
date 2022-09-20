@@ -13,6 +13,10 @@ function Pagenation({ postsPerPage, totalPosts, paginate }) {
           <li key={ele} className="page-item">
             <a
               className="page-link"
+              style={{
+                color: "#000",
+                padding: "0px 10px",
+              }}
               onClick={(e) => {
                 e.preventDefault();
                 paginate(ele);

@@ -54,7 +54,7 @@ function EditEtatPaiment() {
   return (
     <div className="d-flex" id="wrapper">
     <Sidebar />
-    <div className="container-fluid px-4">
+    <div className="container-fluid px-4"  style={{backgroundColor:"#EB6E35"}} >
       <div className="container mt-5 w-100 mb-5">
         <div className="row">
           <div className="col-md-12">
@@ -64,7 +64,7 @@ function EditEtatPaiment() {
                   Etat Paiment Update
                   <a
                     href="/dashboard/etatPaiment"
-                    className="btn btn-danger float-end"
+                    className="btn red-btn float-end"
                   >
                     BACK
                   </a>
@@ -126,7 +126,7 @@ function EditEtatPaiment() {
                   </div>
 
                   <div className="mb-3">
-                    <button type="submit" className="btn btn-primary">
+                    <button type="submit" className="btn bleu-btn">
                       Update EtatPaiment
                     </button>
                   </div>

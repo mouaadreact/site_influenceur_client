@@ -12,6 +12,7 @@ function AddEtatPaiment() {
     campagneId: "",
     influenceurId: "",
     tarif: "",
+    currency:"",
     dateReglement: "",
   });
 
@@ -29,14 +30,14 @@ function AddEtatPaiment() {
 
   const handleAdd = (event) => {
     event.preventDefault();
-    console.log(inputValue);
+    console.log(inputValue)
     addEtatPaiment(inputValue, dispatch);
   };
 
   return (
     <div className="d-flex" id="wrapper">
     <Sidebar />
-    <div className="container-fluid px-4">
+    <div className="container-fluid px-4"  style={{backgroundColor:"#EB6E35"}} >
       <div className="container mt-5 w-100 mb-5">
         <div className="row">
           <div className="col-md-12">
@@ -46,7 +47,7 @@ function AddEtatPaiment() {
                   Etat Paiment Add
                   <a
                     href="/dashboard/etatPaiment"
-                    className="btn btn-danger float-end"
+                    className="btn red-btn float-end"
                   >
                     BACK
                   </a>
@@ -57,6 +58,7 @@ function AddEtatPaiment() {
                   <div className="mb-3">
                     <label className="mb-2 label-required">Campagne titre: </label>
                     <select
+                      required
                       name="campagneId"
                       className="form-control"
                       onChange={(e) => handleChange(e)}
@@ -77,6 +79,7 @@ function AddEtatPaiment() {
                   <div className="mb-3">
                     <label className="mb-2 label-required">Influenceur username instagram: </label>
                     <select
+                      required
                       name="influenceurId"
                       className="form-control"
                       onChange={(e) => handleChange(e)}
@@ -97,6 +100,7 @@ function AddEtatPaiment() {
                   <div className="mb-3">
                     <label className="label-required" htmlFor="dateReglement">Date Reglement: </label>
                     <input
+                      required
                       name="dateReglement"
                       id="dateReglement"
                       type="date"
@@ -108,6 +112,7 @@ function AddEtatPaiment() {
                   <div className="mb-3">
                     <label className="label-required" htmlFor="tarif">Tarif: </label>
                     <input
+                      required
                       name="tarif"
                       id="tarif"
                       type="tarif"
@@ -117,7 +122,19 @@ function AddEtatPaiment() {
                   </div>
 
                   <div className="mb-3">
-                    <button type="submit" className="btn btn-primary">
+                    <label className="label-required" htmlFor="currency">Currency :</label>
+                    <select 
+                    className="form-control" 
+                    required
+                    onChange={(e) => handleChange(e)}
+                    name="currency">
+                      <option value="">Veuillez select currency</option>
+                      <option  value="DH">DH</option>
+                    </select>
+                  </div>
+
+                  <div className="mb-3">
+                    <button type="submit" className="btn bleu-btn">
                       Add EtatPaiment
                     </button>
                   </div>

@@ -1,13 +1,32 @@
 :root {
- --main-bg-color: #7380ec;
- --main-text-color: #7380ec;
+ --main-bg-color: #EB6E35;
+ --main-text-color: #EB6E35;
  --second-text-color: #343a40;
  --second-bg-color: #7380ec;
+} 
+/********/
+.card-blue,.card-green,.card-other,.card-red{
+    box-shadow: 1px 1px 8px #000 !important;
+}
+.card-blue{
+  background-color:#01579b !important;
+}
+.card-red{
+  background-color: #dd2c00 !important;
+}
+.card-green{
+  background-color: #4db6ac !important;
+}
+.card-other{
+  background-color: #d81b60 !important;
+}
+/********/
+
+.white-text:hover{
+  color:#FFF;
+  opacity: 0.4;
 }
 
-a{
-  cursor: pointer;
-}
 .primary-text {
  color: var(--main-text-color);
 }
@@ -18,6 +37,15 @@ color:#FFF
  color: var(--second-text-color);
 }
 
+.success-text{
+  color:#4db6ac
+}
+.danger-text{
+  color:#dd2c00;
+}
+.warning-text{
+  color:#fdd835
+}
 .primary-bg {
  background-color: var(--main-bg-color);
 }
@@ -78,8 +106,8 @@ color:#FFF
 }
 
 .list-group-item.active {
- background-color: transparent;
- color: var(--main-text-color);
+ background-color: #e06a3c !important;
+ color: #FFF;
  font-weight: bold;
  border: none;
 }

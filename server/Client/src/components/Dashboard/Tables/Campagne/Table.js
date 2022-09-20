@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { AiFillEdit, AiFillDelete, AiFillDingtalkSquare } from "react-icons/ai";
+import { AiFillEdit, AiFillDelete,AiFillEye} from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import {
   deleteCampagne,
@@ -57,14 +57,14 @@ function Table({ name, fieldsTable }) {
   useEffect(() => {
     search(data);
   }, [centreInteret]);
-
+ 
   return (
-    <div className="container-fluid px-4">
+    <div className="container-fluid px-4" style={{backgroundColor:"#EB6E35"}}>
       <div
         className="row my-5  p-4"
         style={{
-          width: "750px",
-          backgroundColor: "#DDD",
+          width:"750px",
+          backgroundColor:"#DDD",
           borderRadius: "10px",
         }}
       >
@@ -73,7 +73,8 @@ function Table({ name, fieldsTable }) {
             {name} Table
             <a
               href={`/dashboard/campagne/add`}
-              className="btn primary-bg white-text float-end"
+              className="bleu-btn white-text float-end"
+              style={{fontSize:"15px",padding:"8px"}}
             >
               + add Campagne
             </a>
@@ -147,30 +148,30 @@ function Table({ name, fieldsTable }) {
                     <td>
                       <div
                         className={
-                          "btn btn-" +
-                          (ele.presence == true ? "success" : "danger")
+                          (ele.presence == true ? "green" : "red")+"-status" 
                         }
+                        style={{padding:"2px"}}
                       >
-                        {ele.presence == true ? "presence" : "Online"}
+                        {ele.presence == true ? "presence" : "online"}
                       </div>
                     </td>
                     <td scope="col" width="150">
                       <a
                         href={`/dashboard/campagne/view/${ele.id}`}
-                        className="text-success"
+                        className="success-text"
                         style={{ fontSize: "16px", marginRight: "10px" }}
                       >
-                        view
+                        <AiFillEye/>
                       </a>
                       <a
                         href={`/dashboard/campagne/edit/${ele.id}`}
-                        className="text-warning"
+                        className="warning-text"
                         style={{ fontSize: "18px", marginRight: "10px" }}
                       >
                         <AiFillEdit />
                       </a>
                       <a
-                        className="text-danger"
+                        className="danger-text"
                         style={{ fontSize: "18px" }}
                         onClick={(event) => handleDelete(event, ele.id)}
                       >

@@ -117,7 +117,7 @@ function Register() {
                 <button
                   disabled={isSubmitting}
                   type="submit"
-                  className="btn btn-primary w-100"
+                  className="btn bleu-btn w-100"
                 >
                   Register
                 </button>

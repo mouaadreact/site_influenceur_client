@@ -10,7 +10,7 @@ function Influenceur() {
     "Prenom",
     "Username Instagram",
     "Commentaire",
-    "StatusActiverCompte",
+    "Etat Compte",
   ];
 
   return (

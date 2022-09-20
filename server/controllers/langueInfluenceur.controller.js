@@ -105,3 +105,24 @@
       res.status(400).json(err);
      }
     }
+
+//* *************************************************************
+//? delete langue of influenceur:
+ //supprimer les languesInfluenceurs
+ exports.deleteLangueInfluenceur=async (req,res)=>{
+  try{
+   const data=await LangueInfluenceur.destroy({
+    where:{
+     InfluenceurId:req.params.influenceurId
+    }
+   });
+       
+     if(data==0){
+     res.status(200).json({error:"On peut pas Supprimer All Langues of  Influenceur"});
+     }else{
+     res.status(200).json(data);
+     }
+  }catch(err){
+   res.status(400).json(err);
+  }
+ }

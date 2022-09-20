@@ -113,7 +113,8 @@ function ChangePassword({ id }) {
                   <button
                     disabled={isSubmitting}
                     type="submit"
-                    className="btn btn-primary"
+                    className="bleu-btn"
+                    style={{padding:"8px"}}
                   >
                     Change Password
                   </button>

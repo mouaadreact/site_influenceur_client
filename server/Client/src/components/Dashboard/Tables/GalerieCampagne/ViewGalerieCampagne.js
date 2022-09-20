@@ -34,7 +34,7 @@ function ViewGalerieCampagne() {
   };
 
   return (
-    <div className="container-fluid px-4">
+    <div className="container-fluid px-4" style={{backgroundColor:"#EB6E35"}}>
       <div className="container mt-5 w-100 mb-5">
         <div className="row">
           <div className="col-md-12">
@@ -44,7 +44,8 @@ function ViewGalerieCampagne() {
                   <div className="card-header">
                     <a
                       onClick={(e) => handleChangeButton(e)}
-                      className="btn btn-primary float-end"
+                      className="btn  bleu-btn"
+                      style={{float:"right"}}
                     >
                       + add Galerie
                     </a>

@@ -12,9 +12,18 @@ function Sidebar() {
   };
 
   return (
-    <div className="bg-white" id="sidebar-wrapper">
-      <div className="sidebar-heading text-center py-4 primary-text fs-4 fw-bold text-uppercase border-bottom">
-        <i className="fas fa-user-secret me-2"></i>3WDEV
+    <div 
+    style={{boxShadow:"rgb(0, 0, 0) 0.3px 0px 10px",zIndex:"1"}}
+    className="bg-white" 
+    id="sidebar-wrapper">
+       <div
+      style={{
+        color:"rgb(127, 123, 123)"
+        }}
+      className="sidebar-heading text-center py-4  fs-4 fw-bold text-uppercase border-bottom">
+        <i 
+        className="fas fa-user-secret me-2"
+        ></i>3<span style={{color:"#EB6E35"}}>WDEV</span>
       </div>
       <div className="list-group list-group-flush my-3">
         <NavLink
@@ -61,9 +70,9 @@ function Sidebar() {
         </NavLink>
 
         <NavLink
-          to=""
+          to="/login"
           onClick={(e) => handleLogout(e)}
-          className="list-group-item list-group-item-action bg-transparent text-danger fw-bold"
+          className="list-group-item list-group-item-action primary-text"
         >
           Logout
         </NavLink>

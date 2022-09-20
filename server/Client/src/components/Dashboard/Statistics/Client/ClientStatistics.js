@@ -13,9 +13,9 @@ useEffect(() => {
 
 
 const userData={
-  labels:nombreCampagneOfClient.map((data)=>data.nomSociete),
+  labels:nombreCampagneOfClient.map((data)=>data.raisonSociale),
   datasets:[{
-   label:"users diagramme",
+   label:"nombre campagne of client",
    data:nombreCampagneOfClient.map((data)=>data.nombreCampagne),
    backgroundColor:['#16213E','#D800A6']
 }]
@@ -23,7 +23,6 @@ const userData={
 
   return (
     <div style={{width:"700px"}}>
-      <h5 className='btn btn-primary'>Client</h5>
       <Chart chartData={userData}/>
     </div>
   )

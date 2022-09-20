@@ -38,7 +38,13 @@ function DetailsNewOffre() {
     <>
       <div className="d-flex" id="wrapper">
       <Sidebar />
-      <div className="container-fluid p-3">
+      <div 
+      className="container-fluid p-3"
+      style={{
+      background:"#EB6E35",
+      fontSize:"15px"
+      }}
+      >
       <div 
       className="row" 
       style={{

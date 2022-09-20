@@ -34,7 +34,8 @@ const {SendOffre}=require("../utils/SendMailOffreToInfluenceurs")
 exports.addOffre=async (req,res)=>{
    
   const {listInfluenceur,CampagneId}=req.body;
-   try{ 
+
+  /* try{ 
     listInfluenceur.forEach(async (ele)=>{
       const resultatOffre=await Offre.create({
         CampagneId:parseInt(CampagneId),
@@ -53,6 +54,30 @@ exports.addOffre=async (req,res)=>{
     res.status(200).json({message:"add offresuccess"})
    }catch(err){
     res.status(400).json(err);
+   }*/
+
+   try{
+    const oldOffre = await sequelize.query(` 
+    SELECT * FROM offres o , campagnes c , influenceurs i,users u
+    WHERE  
+    o.CampagneId=${parseInt(CampagneId)}
+    AND o.CampagneId=c.id 
+    AND i.id=o.InfluenceurId
+    AND i.UserId=u.id`, 
+   { type: QueryTypes.SELECT }); 
+
+   if(!oldOffre){
+       console.log("new offres")
+   }else{
+    oldOffre.forEach((ele,index)=>{
+      console.log(ele.email)
+      //console.log("send mail"+(index+1))
+    })
+    console.log("send rappel email of ancienne influenceur")
+   }
+
+   }catch(err){
+
    }
  }
  
@@ -64,9 +89,11 @@ exports.getAll=async (req,res)=>{
 
   //const data=await Offre.findAll();
   const data = await sequelize.query(` 
-  SELECT * FROM offres o , campagnes c , influenceurs i
-  WHERE  o.CampagneId=c.id 
-  AND i.id=o.InfluenceurId`, 
+  SELECT * FROM offres o , campagnes c , influenceurs i 
+  WHERE 
+  o.CampagneId=c.id 
+  AND 
+  i.id=o.InfluenceurId`, 
  { type: QueryTypes.SELECT }); 
 
       

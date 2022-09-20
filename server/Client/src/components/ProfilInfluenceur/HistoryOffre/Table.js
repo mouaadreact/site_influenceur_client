@@ -34,7 +34,13 @@ function Table({ id ,name }) {
   return (
     <>
 
-      <div className="container-fluid p-3">
+      <div 
+      className="container-fluid p-3"
+      style={{
+      background:"#EB6E35",
+      fontSize:"15px"
+      }}
+      >
       <div 
       className="row" 
       style={{

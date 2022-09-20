@@ -40,7 +40,7 @@ function AddOffreForm() {
 
   //*---------------------------------------------
   return (
-    <div className="container-fluid px-4">
+    <div className="container-fluid px-4"  style={{backgroundColor:"#EB6E35"}} >
     <ToastContainer autoClose={2000}/>
       <div className="container mt-5 w-100 mb-5">
         <div className="row">
@@ -51,7 +51,7 @@ function AddOffreForm() {
                   Add Offre
                   <a
                     href="/dashboard/offre"
-                    className="btn btn-danger float-end"
+                    className="btn red-btn float-end"
                   >
                     BACK
                   </a>
@@ -78,7 +78,7 @@ function AddOffreForm() {
                   </div>
 
                   <div className="mb-3">
-                    <button type="submit" className="btn btn-primary">
+                    <button type="submit" className="btn bleu-btn">
                       Add Offre
                     </button>
                   </div>

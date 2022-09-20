@@ -47,6 +47,10 @@ const Role=RoleModel(db,Sequelize);
      type:Sequelize.DOUBLE,
      allowNull:false
     },
+    currency:{
+      type:Sequelize.STRING(50),
+      allowNull:false
+    },
     dateReglement:{ 
      type:Sequelize.DATE,
      allowNull:false,

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { AiFillEdit, AiFillDelete, AiFillDingtalkSquare } from "react-icons/ai";
+import { AiFillEdit, AiFillDelete, AiFillDingtalkSquare, AiFillEye } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import {
   changeEtatCompteInfluenceur,
@@ -59,7 +59,10 @@ function Table({ name, fieldsTable }) {
   };
 
   return (
-    <div className="container-fluid px-4">
+    <div 
+    className="container-fluid px-4"
+    style={{backgroundColor:"#EB6E35"}}
+    >
       <div
         className="row my-5  p-4"
         style={{ backgroundColor: "#DDD", borderRadius: "10px" }}
@@ -159,10 +162,10 @@ function Table({ name, fieldsTable }) {
                             ele.statusEtatActiver
                           )
                         }
-                        className={
-                          "btn btn-" +
-                          (ele.statusEtatActiver == true ? "success" : "danger")
+                        className={   
+                          (ele.statusEtatActiver == true ? "green" : "red")+"-status"
                         }
+                        style={{cursor:"pointer"}}
                       >
                         {ele.statusEtatActiver == true ? "Active" : "Desactive"}
                       </div>
@@ -170,14 +173,14 @@ function Table({ name, fieldsTable }) {
                     <td scope="col" width="150">
                       <a
                         href={`/dashboard/influenceur/view/${ele.id}`}
-                        className="text-success"
+                        className="success-text"
                         style={{ fontSize: "16px", marginRight: "10px" }}
                       >
-                        view
+                        <AiFillEye/>
                       </a>
                       <a
                         href={`/dashboard/influenceur/edit/${ele.id}`}
-                        className="text-warning"
+                        className="warning-text"
                         style={{ fontSize: "18px", marginRight: "10px" }}
                       >
                         <AiFillEdit />

@@ -130,12 +130,14 @@ export const updateCampagne = async (id,data,interetData,dispatch)=>{
       withCredentials:true,
       data
     })
-    
     await deleteInteretCampagne(id);
+    if(interetData.length==0){
+      window.location.href="/dashboard/campagne"
+    }
     await addInteretToCampagne(interetData,id);
 
-    dispatch(successCampagne());
-    window.location.href="/dashboard/campagne";
+   
+   
      
   }catch(err){
     dispatch(errorCampagne())

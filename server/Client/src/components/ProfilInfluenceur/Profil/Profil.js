@@ -30,21 +30,31 @@ function Profil() {
   };
 
   return (
-    <div className="container-fluid px-4 mt-4 mb-4">
-      <section style={{ backgroundColor: "#eee" }}>
-        <div className="container py-5">
+    <div 
+    className="container-fluid px-4 mt-4 mb-4"
+    
+    >
+      <section
+      className="rounded" 
+      style={{ backgroundColor: "#eee" }}>
+        <div className="container py-5 rounded" >
           <div style={{ float: "right" }}>
-            <a className="mb-3 btn btn-primary" onClick={handleChangeButton}>
+            <a 
+            className="mb-2 bleu-btn rounded" 
+            style={{padding:"8px",}}
+            onClick={handleChangeButton}>
               {changeButtonEdit.text}
             </a>
           </div>
           <div style={{ clear: "both" }}></div>
 
+          <div className="mt-3">
           {changeButtonEdit.state == true ? (
             <ViewProfil id={id} />
           ) : (
             <ChangePassword id={id} />
           )}
+          </div>
         </div>
       </section>
     </div>

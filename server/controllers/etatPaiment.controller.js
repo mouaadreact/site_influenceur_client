@@ -18,6 +18,7 @@
                               CampagneId:req.params.campagneId,
                               InfluenceurId:req.params.influenceurId,
                               tarif:req.body.tarif, //double
+                              currency:req.body.currency,
                               dateReglement:req.body.dateReglement,//date
                                     })
 
@@ -43,14 +44,19 @@
           campagneId,
           influenceurId,
           tarif,
+          currency,
           dateReglement
         } =req.body;
+
+       // console.log(currency)
        const data=await EtatPaiment.create({
                               CampagneId:campagneId,
                               InfluenceurId:influenceurId,
                               tarif:tarif, //double
+                              currency:currency,
                               dateReglement:dateReglement,//date
                                     })
+          
 
 
            

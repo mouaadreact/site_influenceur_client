@@ -80,7 +80,10 @@ function FilterSidebar() {
   };
 
   return (
-    <div className="bg-white" id="sidebar-wrapper">
+    <div 
+    className="bg-white" 
+    id="sidebar-wrapper"
+    style={{boxShadow:"rgb(0, 0, 0) 0.3px 0px 10px",zIndex:"1"}}>
       <div className="sidebar-heading primary-bg text-center py-3 text-white fs-4 fw-bold text-uppercase border-bottom">
         <i className="fas fa-user-secret me-2"></i>Filter
       </div>
@@ -382,7 +385,7 @@ function FilterSidebar() {
               <thead>
                 <tr>
                   <td>
-                    <button type="submit" className="btn btn-primary mt-3">
+                    <button type="submit" className="btn bleu-btn mt-3">
                       Filter Influenceur
                     </button>
                   </td>

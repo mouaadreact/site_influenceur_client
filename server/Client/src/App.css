@@ -2,6 +2,13 @@
 body{
  /*background-color: #172b4d !important;*/
 }
+body{
+  font-family: "poppins";
+  font-size: 14px;
+}
+a{
+  cursor: pointer;
+}
 
 button:disabled{
  opacity: 0.35;
@@ -12,10 +19,39 @@ button:disabled{
  color:red;
 }
 
-.green-btn,.red-btn,.bleu-btn{
- font-weight:bold;
- color:#FFF
+/**********************/
+.green-status,.bleu-status,.yellow-status,.red-status,.other-status{
+font-weight:bold;
+ color:#FFF;
+ outline: none;
+ border: 0;
+ border-radius: 6px;
 }
+.green-status{
+  background-color:#44e4a0;
+}
+.red-status{
+ background-color:#d9374e;
+}
+.bleu-status{
+  background-color: #029bff;
+}
+.yellow-status{
+  background-color:#fe8300;
+}
+.other-status{
+  background-color: #d81b60;
+}
+/**********************/
+
+.green-btn,.red-btn,.bleu-btn{
+  font-weight:bold;
+  color:#FFF;
+  outline: none;
+  border: 0;
+  border-radius: 6px;
+ }
+
 .green-btn{
   background-color:#44e4a0;
 }
@@ -24,4 +60,27 @@ button:disabled{
 }
 .bleu-btn{
   background-color: #029bff;
+}
+
+.bleu-btn:hover{
+  color:#000;
+  background-color: #FFF;
+  border: 1px solid #000;
+  text-decoration: none;
+  list-style: none;
+}
+
+.red-btn:hover{
+  color:#000;
+  background-color: #FFF;
+  border: 1px solid #000;
+  text-decoration: none;
+  list-style: none;
+}
+.green-btn:hover{
+  color:#000;
+  background-color: #FFF;
+  border: 1px solid #000;
+  text-decoration: none;
+  list-style: none;
 }

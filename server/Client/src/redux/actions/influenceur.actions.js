@@ -165,7 +165,7 @@ export const addInteretToInfluenceur=async (interetData,idInfluenceur)=>{
     interetData.forEach(async (ele) => {
      const res= await axios({
       method:"post",
-      url:`${process.env.REACT_APP_URL_SERVER}/api/v1/interetInfluenceur/${ele}/${idInfluenceur}`
+      url:`${process.env.REACT_APP_URL_SERVER}/api/v1/interetInfluenceur/${ele.value}/${idInfluenceur}`
        });
    
 
@@ -186,7 +186,7 @@ export const deleteLangueInfluenceur=async (id)=>{
       method:"delete",
       url:`${process.env.REACT_APP_URL_SERVER}/api/v1/langueInfluenceur/influenceur/${id}`
     })
-  
+   
   }catch(err){
     console.log(err);
   }
@@ -198,7 +198,7 @@ export const addLangueToInfluenceur=async (langueData,idInfluenceur)=>{
     langueData.forEach(async (ele) => { 
      const res= await axios({
       method:"post",
-      url:`${process.env.REACT_APP_URL_SERVER}/api/v1/langueInfluenceur/${ele}/${idInfluenceur}`
+      url:`${process.env.REACT_APP_URL_SERVER}/api/v1/langueInfluenceur/${ele.value}/${idInfluenceur}`
        });
    
 
@@ -218,20 +218,19 @@ export const updateInfluenceur = async (id,data,langueData,interetData,dispatch)
       withCredentials:true,
       data
     })
-    
-    console.log(interetData)
+
+    await deleteInteretInfluenceur(id); 
+    await deleteLangueInfluenceur(id);
+
     if(interetData.length>0){
-       await deleteInteretInfluenceur(id);
        await addInteretToInfluenceur(interetData,id);
     }
-   
-    console.log(langueData)
-    if(langueData.length>0){
-      await deleteLangueInfluenceur(id);
+    if(langueData.length>0){  
       await addLangueToInfluenceur(langueData,id);
     }
 
     window.location.href="/profil/home"
+
   }catch(err){
     dispatch(errorInfluenceur())
   }

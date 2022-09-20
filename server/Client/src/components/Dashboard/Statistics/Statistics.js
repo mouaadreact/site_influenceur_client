@@ -31,7 +31,7 @@ function Statistics() {
   }, [id]);
 
   return (
-    <div id="page-content-wrapper">
+    <div id="page-content-wrapper" style={{backgroundColor:"#EB6E35"}} >
       <nav className="navbar navbar-expand-lg navbar-light bg-transparent py-4 px-4">
         <div className="d-flex align-items-center">
           <AiOutlineMenu
@@ -55,48 +55,50 @@ function Statistics() {
 
       <div className="container-fluid px-4">
         <div className="row g-3 my-2">
-          <div className="col-md-3">
-            <div className="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+          <div 
+          className="col-md-3">
+            <div 
+            className="card-blue p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
               <div>
-                <h3 className="fs-2">
+                <h3 className="fs-2 white-text">
                   {countClient < 10 ? "0" + countClient : countClient}
                 </h3>
-                <p className="fs-5">Client</p>
+                <p className="fs-5 white-text">Client</p>
               </div>
             </div>
           </div>
 
           <div className="col-md-3">
-            <div className="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+            <div className="card-green p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
               <div>
-                <h3 className="fs-2">
+                <h3 className="fs-2 white-text">
                   {countCampagne < 10 ? "0" + countCampagne : countCampagne}
                 </h3>
-                <p className="fs-5">Campagne</p>
+                <p className="fs-5 white-text">Campagne</p>
               </div>
             </div>
           </div>
 
           <div className="col-md-3">
-            <div className="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+            <div className="card-red p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
               <div>
-                <h3 className="fs-2">
+                <h3 className="fs-2 white-text">
                   {countInfluenceur < 10
                     ? "0" + countInfluenceur
                     : countInfluenceur}
                 </h3>
-                <p className="fs-5">Influenceur</p>
+                <p className="fs-5 white-text">Influenceur</p>
               </div>
             </div>
           </div>
 
           <div className="col-md-3">
-            <div className="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+            <div className="card-other p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
               <div>
-                <h3 className="fs-2">
+                <h3 className="fs-2 white-text">
                   {countOffre < 10 ? "0" + countOffre : countOffre}
                 </h3>
-                <p className="fs-5">Offre</p>
+                <p className="fs-5 white-text">Offre</p>
               </div>
             </div>
           </div>

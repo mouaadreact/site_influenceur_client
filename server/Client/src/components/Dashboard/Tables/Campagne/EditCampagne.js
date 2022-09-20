@@ -42,10 +42,11 @@ function EditCampagne() {
 
   useEffect(() => {
     setCampagneInputValue({ ...oneCampagneData });
+    //*fetch interet data
     oneCampagneData?.Interets?.forEach((ele) => {
       const op = {
-        label: ele.interetNom,
-        value: ele.id,
+        name: ele.interetNom,
+        id: ele.id,
       };
       setInteretMult((options) => [...options, op]);
     });
@@ -78,15 +79,15 @@ function EditCampagne() {
 
   const handleEdit = async (event) => {
     event.preventDefault();
-    console.log(interetMult);
-    //updateCampagne(params.id, campagneInputValue, interetMult, dispatch);
+    console.log(interetMult) 
+   updateCampagne(params.id, campagneInputValue, interetMult, dispatch);
   };
 
-  console.log(interetMult)
+ 
   return (
     <div className="d-flex" id="wrapper">
     <Sidebar />
-    <div className="container-fluid px-4">
+    <div className="container-fluid px-4" style={{backgroundColor:"#EB6E35"}}>
       <div className="container mt-5 w-100 mb-5">
         <div className="row">
           <div className="col-md-12">
@@ -96,7 +97,7 @@ function EditCampagne() {
                   Campagne Update
                   <a
                     href="/dashboard/campagne"
-                    className="btn btn-danger float-end"
+                    className="btn red-btn float-end"
                   >
                     BACK
                   </a>
@@ -269,21 +270,25 @@ function EditCampagne() {
                     <label className="label-required" htmlFor="dateDebut">Centre d'intéret: </label>
                     <Multiselect
                       displayValue="name"
-                      values={interetMult}
+                      //values={interetMult}
                       onSelect={(selectedList, removedItem) => {
-                        setInteretMult(selectedList);
-                        console.log(selectedList);
+                        setInteretMult(selectedList);  
                       }}
                       onRemove={(selectedList, removedItem) => {
                         setInteretMult(selectedList);
                       }}
+                      selectedValues={interetMult}
                       options={optionsInteret}
                     />
                   </div>
 
                   <div className="mb-3">
-                    <button type="submit" className="btn btn-primary">
-                      Update Client
+                    <button 
+                    type="submit" 
+                    className="bleu-btn"
+                    style={{fontSize:"14px",padding:"8px"}}
+                    >
+                      Update Campagne
                     </button>
                   </div>
                 </form>

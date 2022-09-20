@@ -5,6 +5,7 @@ module.exports=(Sequelize,dataType)=>{
       raisonSociale:{  
        type:dataType.STRING(100),
        allowNull:false,
+       unique:true,
        validate:{
         min:{
             args:[3],

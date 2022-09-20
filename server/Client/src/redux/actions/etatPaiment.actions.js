@@ -5,7 +5,7 @@ import {startEtatPaiment,errorEtatPaiment,successEtatPaiment,successGetAllEtatPa
 export const addEtatPaiment = async (data,dispatch)=>{
   dispatch(startEtatPaiment());
   try{ 
-     const res = await axios({
+     const res = await axios({ 
       method:"post",
       url:`${process.env.REACT_APP_URL_SERVER}/api/v1/etatPaiment`,
       withCredentials:true,

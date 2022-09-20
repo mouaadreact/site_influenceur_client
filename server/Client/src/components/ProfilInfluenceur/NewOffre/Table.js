@@ -62,7 +62,12 @@ function Table({ name, fieldsTable, id }) {
 
   return (
     <>
-      <div className="container-fluid p-3">
+      <div 
+      className="container-fluid p-3" 
+      style={{
+      background:"#EB6E35",
+      fontSize:"15px"
+      }}>
       <div 
       className="row" 
       style={{
@@ -88,7 +93,10 @@ function Table({ name, fieldsTable, id }) {
               >
                 <b className="mb-0">{row.titre.toUpperCase()}</b>
                 <p 
-                  className="bg-info p-1 rounded text-center white-text"
+                  className={
+                    "p-1 rounded text-center white-text " + 
+                    (row.status==="En cours traitement" ? "yellow-status" : "bleu-status")
+                    }
                   style={{
                     fontWeight: "bold",  
                     width:"100px",
