@@ -47,6 +47,7 @@ const handleChangeStatusActive = (e, id, status) => {
   };
 
   return (
+    <>
     <div 
     className="container-fluid px-4" 
     style={{backgroundColor:"#EB6E35"}}>
@@ -157,6 +158,7 @@ const handleChangeStatusActive = (e, id, status) => {
         </div>
       </div>
     </div>
+    </>
   );
 }
 

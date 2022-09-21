@@ -7,6 +7,7 @@ const offreReducer=createSlice({
    newOffreData:[],
    historyOffreData:[], 
    countOffre:0,
+   nombreOffreChaqueMonthYear:[],
    loading:null, 
    error:false
  },
@@ -30,6 +31,10 @@ const offreReducer=createSlice({
     state.countOffre=action.payload;
     state.loading=false
    },
+   successGetOffreNombreEachMonth:(state,action)=>{
+    state.nombreOffreChaqueMonthYear=action.payload;
+    state.loading=false
+   },
    successOffre:(state)=>{
      state.loading=false
    },
@@ -48,5 +53,6 @@ successOffre,
 successGetAllOffre,
 successGetHistoryOffre,
 successGetCountOffre,
+successGetOffreNombreEachMonth,
 successGetNewOffre}=offreReducer.actions;
 export default offreReducer.reducer;

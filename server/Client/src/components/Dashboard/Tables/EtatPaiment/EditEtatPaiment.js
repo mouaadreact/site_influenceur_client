@@ -62,12 +62,7 @@ function EditEtatPaiment() {
               <div className="card-header">
                 <h4>
                   Etat Paiment Update
-                  <a
-                    href="/dashboard/etatPaiment"
-                    className="btn red-btn float-end"
-                  >
-                    BACK
-                  </a>
+                  
                 </h4>
               </div>
               <div className="card-body">
@@ -126,7 +121,7 @@ function EditEtatPaiment() {
                   </div>
 
                   <div className="mb-3">
-                    <button type="submit" className="btn bleu-btn">
+                    <button type="submit" className="bleu-btn">
                       Update EtatPaiment
                     </button>
                   </div>

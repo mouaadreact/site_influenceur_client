@@ -58,12 +58,7 @@ function EditClient() {
               <div className="card-header">
                 <h4>
                   Client Update
-                  <a
-                    href="/dashboard/client"
-                    className="btn red-btn float-end"
-                  >
-                    BACK
-                  </a>
+                 
                 </h4>
               </div>
               <div className="card-body">

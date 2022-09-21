@@ -23,7 +23,7 @@ module.exports.SendOffre= async (mails,subject,text)=>{
     to:mail.email,
     subject:`
     Message from email : influenceur.client.mail2022@gmail.com , 
-    subject : ${subject}`,
+    subject : New Offre  ${subject}`,
     "text":` 
        ${text} check your account in plateforme : http://localhost:3000/profil/newOffre
     `

@@ -10,6 +10,9 @@ router.route('/')
 router.route('/campagne')
       .get(etatPaimentController.getAll)      
 
+router.route('/tarifOfInfluenceur')
+      .get(etatPaimentController.getTarifOfInfluenceur) 
+
 router.route('/campagne/:campagneId')
       .get(etatPaimentController.getIdCampagne)
 

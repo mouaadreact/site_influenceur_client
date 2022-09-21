@@ -44,12 +44,7 @@ function AddClient() {
               <div className="card-header">
                 <h4>
                   Client Add
-                  <a
-                    href="/dashboard/client"
-                    className="btn red-btn float-end"
-                  >
-                    BACK
-                  </a>
+                 
                 </h4>
               </div>
               <div className="card-body">

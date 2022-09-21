@@ -8,6 +8,8 @@ import { getCountClient } from "../../../redux/actions/client.actions";
 import { UidContext } from "../../../contexts/AppContext";
 import { getOneUser } from "../../../redux/actions/user.actions";
 import ClientStatistics from "./Client/ClientStatistics";
+import EtatPaimentStatistics from "./EtatPaiment/EtatPaimentStatistics";
+import OffreStatistics from "./Offre/OffreStatistics";
 
 function Statistics() {
   const id = useContext(UidContext);
@@ -108,6 +110,12 @@ function Statistics() {
           <h3 className="fs-4 mb-3">Statistics</h3>
           <div className="col">
              <ClientStatistics/>
+          </div>
+          <div className="col mt-4">
+             <EtatPaimentStatistics />
+          </div>
+          <div className="col mt-4">
+             <OffreStatistics/>
           </div>
         </div>
       </div>

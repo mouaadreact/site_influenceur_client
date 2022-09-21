@@ -71,9 +71,11 @@ function DetailsNewOffre() {
               >
                 <b className="mb-0">{row.titre.toUpperCase()}</b>
                 <p 
-                  className="bg-info p-1 rounded text-center"
+                  className={
+                    "p-1 rounded text-center white-text " + 
+                    (row.status==="En cours traitement" ? "yellow-status" : "bleu-status")
+                    }
                   style={{
-                    color: "#FFF",
                     fontWeight: "bold",  
                     width:"100px",
                     margin: "0"
@@ -113,14 +115,14 @@ function DetailsNewOffre() {
                 {row.presence == true 
                 ? 
                 <p
-                    className="px-1 rounded white-text green-btn"
+                    className="px-1 rounded white-text green-status"
                     style={{                     
                       width:"40px",
                       margin: "0", 
                     }}
                  >oui</p>
                  : <p
-                    className="px-1 rounded white-text red-btn"
+                    className="px-1 rounded white-text red-status"
                     style={{                       
                       width:"40px",
                       margin: "0",        

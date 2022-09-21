@@ -90,7 +90,6 @@ function AddCampagneForm() {
         "nombre influenceur most be last or egal nombre of influenceur list filtering "
       );
     } else {
-      //console.log(interetMult);
       addCampagne(values, interetMult, dispatch);
     }
   };
@@ -108,12 +107,7 @@ function AddCampagneForm() {
               <div className="card-header">
                 <h4>
                   Add New Campagne
-                  <a
-                    href="/dashboard/campagne"
-                    className="btn red-btn float-end"
-                  >
-                    BACK
-                  </a>
+                 
                 </h4>
               </div>
               <div className="card-body">

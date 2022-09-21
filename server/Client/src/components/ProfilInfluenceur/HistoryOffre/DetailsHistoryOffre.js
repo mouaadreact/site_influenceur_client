@@ -113,14 +113,14 @@ function DetailsHistoryOffre() {
                 {row.presence == true 
                 ? 
                 <p
-                    className="px-1 rounded white-text green-btn"
+                    className="px-1 rounded white-text green-status"
                     style={{                     
                       width:"40px",
                       margin: "0", 
                     }}
                  >oui</p>
                  : <p
-                    className="px-1 rounded white-text red-btn"
+                    className="px-1 rounded white-text red-status"
                     style={{                       
                       width:"40px",
                       margin: "0",        

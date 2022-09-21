@@ -1,7 +1,7 @@
 const nodemailer=require("nodemailer") 
  
 //send verifier email
-module.exports.SendOffre= async (mails,subject,text)=>{
+module.exports.SendRappel= async (mails,subject,text)=>{
  //code verification iujypqrgtevjdltp
 
  let transporter=nodemailer.createTransport({
@@ -19,7 +19,7 @@ module.exports.SendOffre= async (mails,subject,text)=>{
   try {
    const mailerPromises = mails.map((mail) => transporter.sendMail({
     form:"influenceur.client.mail2022@gmail.com",
-    to:mail.email,
+    to:mail,
     subject:`
     Message from email : influenceur.client.mail2022@gmail.com , 
     subject :Rappel Offre ${subject}`,

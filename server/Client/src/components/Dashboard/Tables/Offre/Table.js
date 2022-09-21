@@ -45,7 +45,7 @@ function Table({ name, fieldsTable }) {
           <h4>{name} Table</h4>
           <a
               href={`/dashboard/offre/add`}
-              className="btn bleu-btn float-end"
+              className="bleu-btn float-end"
             >
               + add Offre
             </a>

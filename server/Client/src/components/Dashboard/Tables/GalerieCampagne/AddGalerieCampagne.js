@@ -34,7 +34,7 @@ function AddGalerieCampagne({ handleChangeButton, CampagneData }) {
       <div className="card-header">
         <a
           onClick={(e) => handleChangeButton(e)}
-          className="btn green-btn"
+          className="green-btn"
                       style={{float:"right"}}
         >
           view Galerie
@@ -80,7 +80,7 @@ function AddGalerieCampagne({ handleChangeButton, CampagneData }) {
             />
           </div>
           <div className="mb-3">
-            <button type="submit" className="btn bleu-btn">
+            <button type="submit" className="bleu-btn">
               upload Galerie
             </button>
           </div>

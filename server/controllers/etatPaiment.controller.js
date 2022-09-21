@@ -1,5 +1,5 @@
 
-    const {EtatPaiment}=require("../models");
+    const {EtatPaiment, Influenceur}=require("../models");
     const {QueryTypes }=require('Sequelize');
     const sequelize=require("../config/db");
     //-------------------------------------------
@@ -90,7 +90,38 @@
       res.status(400).json(err);
      }
     }
-    
+   //!----------------------------------------------------------
+    //*-----------------------------------------------
+    //!afficher les EtatPaiments
+    exports.getTarifOfInfluenceur=async (req,res)=>{ 
+      try{
+     /* const data=await EtatPaiment.findAll(
+       {
+        attributes: [
+          'InfluenceurId',
+          [sequelize.fn('sum', sequelize.col('tarif')), 'total_tarif'],
+        ],
+        group: ['InfluenceurId']
+       }
+      )*/
+
+      const data=await sequelize.query(` 
+      SELECT i.instagramUsernameCompte,sum(e.tarif) as somme FROM etatpaiments e  , influenceurs i
+      WHERE i.id=e.InfluenceurId
+      Group by i.nom`, 
+      { type: QueryTypes.SELECT }); 
+             
+         if(!data){
+         res.status(400).json({error:"les etatPaiments sont introuvables!"});
+         }else{
+         res.status(200).json(data);
+         }
+      }catch(err){
+       res.status(400).json(err);
+      }
+     } 
+
+
     //*------------------------------------------------------
     //!afficher une seul EtatPaiment
     exports.getId=async (req,res)=>{

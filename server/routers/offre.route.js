@@ -11,6 +11,9 @@ router.route('/')
 router.route('/count')
       .get(offreController.getCountAllOffre)
 
+router.route('/nombreOffreEachMonth')
+      .get(offreController.getNombreOffrePourChaqueMonthYear)
+
 // I will delete this route after execute front end
 router.route('/newOffre/:influenceurId')
       .get(offreController.newOffre)

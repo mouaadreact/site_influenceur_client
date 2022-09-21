@@ -191,7 +191,7 @@ exports.valideCompteInstagram = async (req, res) => {
         });
 
         data = data.dataValues;
-        console.log(data);
+     
         const options = {
           method: "GET",
           url: `${process.env.INSTAGRAM_API_URL}`,
@@ -201,7 +201,7 @@ exports.valideCompteInstagram = async (req, res) => {
             "X-RapidAPI-Host": `${process.env.INSTAGRAM_API_HEADER_HOST}`,
           },
         };
-        console.log(options);
+        
         var UserApiInfo = await axios.request(options);
         var UserAPI = UserApiInfo.data;
         if (!UserAPI) {
@@ -480,7 +480,7 @@ exports.filtrage = async (req, res) => {
       interet,
     } = req.body;
 
-    console.log(req.body);
+  
     var obj = {};
     if (ville) {
       obj.ville = ville.toUpperCase();
@@ -519,7 +519,7 @@ exports.filtrage = async (req, res) => {
       //*---------------------------------------
       //*interet:
       if (interet?.length > 0) {
-        console.log("interet");
+       
         data = data.filter((ele) => {
           let ok = false;
 
@@ -540,7 +540,7 @@ exports.filtrage = async (req, res) => {
       //*--------------------------------------
       //*langues:
       if (langue?.length > 0) {
-        console.log("langue");
+        
         data = data.filter((ele) => {
           let ok = false;
 
@@ -677,12 +677,12 @@ exports.getAllInfluenceurActiveCompte=async (req,res)=>{
       include: [User, Interet, Langue, NiveauEtude]
    });
 
-   console.log(data)
+  
 
    if (!data) {
     res.status(400).json({ error: "On peut pas trouver les comptes active des'influenceurs!" });
   } else {
-    res.status(200).json(data);
+    res.status(200).json(data); 
   }
 
   }catch(err){
@@ -690,3 +690,74 @@ exports.getAllInfluenceurActiveCompte=async (req,res)=>{
   }
 }
 
+//!-----------------------------------------------------
+//*mis a jour:
+
+exports.misAJour = async (req, res) => {
+  try {
+    const data = await Influenceur.findAll();
+    if (!data) {
+      res.status(400).json({ err: "on peut pas trouver influenceur data " });
+    } else {
+      res.status(200).json(data);
+
+      //!loop ======
+
+  data?.forEach(async (ele)=>{
+        const item=item.dataValues;
+
+        const options = {
+          method: "GET",
+          url: `${process.env.INSTAGRAM_API_URL}`,
+          params: { username: `${item.instagramUsernameCompte}` },
+          headers: {
+            "X-RapidAPI-Key": `${process.env.INSTAGRAM_API_HEADER_KEY}`,
+            "X-RapidAPI-Host": `${process.env.INSTAGRAM_API_HEADER_HOST}`,
+          },
+        };
+        
+        var UserApiInfo = await axios.request(options);
+        var UserAPI = UserApiInfo.data;
+        if (!UserAPI) {
+          res
+            .status(400)
+            .json({ err: "on peut pas envoyer Instagram Info ! " });
+        } else {
+          
+          fs.writeFile(
+            `uploads/Api/${item.instagramUsernameCompte}_${
+              item.id
+            }_${FormatDate(new Date())}.json`,
+            JSON.stringify(UserAPI, null, 2),
+            async (err) => {
+              if (err) {
+                console.log(err);
+              } else {
+                console.log("file write successful !! ");
+
+                const result = await ApiInstagramHistory.create({
+                  InfluenceurId: item.id,
+                  path: `${process.env.URL_SERVER}:${
+                    process.env.PORT
+                  }/api/v1/Api/${item.id}/${
+                    item.instagramUsernameCompte
+                  }_${item.id}_${FormatDate(new Date())}.json`,
+                });
+
+                if (result) {
+                  console.log("resultat enregsitrer");
+                }
+              }
+            }
+          );
+        }
+
+        //*fin
+  });
+    
+     
+    }
+  } catch (err) {
+    res.status(400).json(err);
+  }
+};

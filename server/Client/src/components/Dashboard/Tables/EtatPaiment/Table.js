@@ -9,7 +9,10 @@ import {
 } from "../../../../redux/actions/etatPaiment.actions";
 import Loading from "../../../Loading/Loading";
 import Pagenation from "../../../Pagination/Pagination";
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 
+//*first compenent
 function Table({ name, fieldsTable }) {
   const [CampagneId, setCampagneId] = useState("");
   const dispatch = useDispatch();
@@ -23,6 +26,11 @@ function Table({ name, fieldsTable }) {
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentData = allEtatPaiment.slice(indexOfFirstPost, indexOfLastPost);
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
+  const [idCampagneDelete,setIdCampagneDelete]=useState("");
+  const [idInfluenceurDelete,setIdInfluenceurDelete]=useState("");
+  const [show, setShow] = useState(false);
+
   //!----------------------------------
   //*fetch data
   useEffect(() => {
@@ -30,14 +38,31 @@ function Table({ name, fieldsTable }) {
     getAllCampagne(dispatch);
   }, [CampagneId]);
 
-  const handleDelete = (idCampagne, idInfluencuer) => {
+  //*handle function
+  /*const handleDelete = (idCampagne, idInfluencuer) => {
     deleteEtatPaiment(idCampagne, idInfluencuer, dispatch);
-  };
+  };*/
 
   const handleChangeCampagneId = (e) => {
     setCampagneId(e.target.value);
   };
 
+  
+  const handleClose = () => setShow(false);
+
+  const handleDelete = (e) => {
+    e.preventDefault();
+    deleteEtatPaiment(idCampagneDelete,idInfluenceurDelete,dispatch);
+    setShow(false);
+  };
+
+  const handleShow = (idCampagne,idInfluenceur) =>{
+   setShow(true);
+   setIdCampagneDelete(idCampagne);
+   setIdInfluenceurDelete(idInfluenceur);
+  }
+
+  console.log(idInfluenceurDelete)
   // console.log()
   //?---------------------------------------
   return (
@@ -48,9 +73,25 @@ function Table({ name, fieldsTable }) {
         </>
       ) : (
         <>
-          <div 
-          className="container-fluid px-4"
-          style={{backgroundColor:"#EB6E35"}} >
+          <Modal show={show} onHide={handleClose}>
+            <Modal.Header closeButton>
+              <Modal.Title>Delete Etat Paiment</Modal.Title>
+            </Modal.Header>
+            <Modal.Body>Want you delete this etat paiment ?</Modal.Body>
+            <Modal.Footer>
+              <Button variant="danger" onClick={handleClose}>
+                Close
+              </Button>
+              <Button variant="primary" onClick={(e) => handleDelete(e)}>
+                Confirm
+              </Button>
+            </Modal.Footer>
+          </Modal>
+
+          <div
+            className="container-fluid px-4"
+            style={{ backgroundColor: "#EB6E35" }}
+          >
             <div
               className="row my-5"
               style={{
@@ -64,8 +105,8 @@ function Table({ name, fieldsTable }) {
                   {name} Table
                   <a
                     href={`/dashboard/etatPaiment/add`}
-                    className="btn bleu-btn"
-                    style={{float:"right"}}
+                    className="bleu-btn"
+                    style={{ float: "right" }}
                   >
                     + add EtatPaiment
                   </a>
@@ -133,7 +174,7 @@ function Table({ name, fieldsTable }) {
                               className="danger-text"
                               style={{ fontSize: "18px" }}
                               onClick={() =>
-                                handleDelete(ele.CampagneId, ele.InfluenceurId)
+                                handleShow(ele.CampagneId, ele.InfluenceurId)
                               }
                             >
                               <AiFillDelete />

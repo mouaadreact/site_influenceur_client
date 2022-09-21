@@ -7,7 +7,8 @@ import {
   successGetAllOffre,
   successGetHistoryOffre, 
   successGetNewOffre,
-  successGetCountOffre} from '../reducers/offre.reducer'
+  successGetCountOffre,
+  successGetOffreNombreEachMonth} from '../reducers/offre.reducer'
 //!--------------------------------------
 export const addOffre = async (CampagneId,listInfluenceur,dispatch)=>{
   dispatch(startOffre());
@@ -152,4 +153,22 @@ export const DontShowOffre = async (CampagneId,InfluenceurId,dispatch)=>{
     dispatch(errorOffre())
 
   }
+ }
+
+ //!----------------------------------------------------------
+ //*statistics:  NOMBRE OFFRE CHAQUE MONTH 
+
+ export const getOffreNombreEachMonth = async (dispatch)=>{
+  dispatch(startOffre());
+    try{
+     const res = await axios({
+      method:"get",
+      url:`${process.env.REACT_APP_URL_SERVER}/api/v1/offre/nombreOffreEachMonth`,
+      withCredentials:true
+    })
+     dispatch(successGetOffreNombreEachMonth(res.data));
+  }catch(err){
+    dispatch(errorOffre())
+  }
+ 
  }

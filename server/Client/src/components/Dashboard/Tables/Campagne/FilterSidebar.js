@@ -54,8 +54,7 @@ function FilterSidebar() {
     setFilterData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  console.log(allClientData);
-
+  
   //*filterCampagne
 
   const handleSubmitFilter = (e) => {

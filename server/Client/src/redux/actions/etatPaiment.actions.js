@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import {startEtatPaiment,errorEtatPaiment,successEtatPaiment,successGetAllEtatPaiment,successGetOneEtatPaiment} from '../reducers/etatPaiment.reducer'
+import {startEtatPaiment,errorEtatPaiment,successEtatPaiment,successGetAllEtatPaiment,successGetOneEtatPaiment, successGetTarifOfInfluenceur} from '../reducers/etatPaiment.reducer'
 //!--------------------------------------
 export const addEtatPaiment = async (data,dispatch)=>{
   dispatch(startEtatPaiment());
@@ -81,6 +81,27 @@ export const updateEtatPaiment = async (CampagneId,InfluenceurId,data,dispatch)=
     })
     dispatch(successEtatPaiment());
     window.location.href="/dashboard/etatPaiment";
+     
+  }catch(err){
+    dispatch(errorEtatPaiment())
+  }
+ }
+
+
+ //!----------------------------------------------------
+
+
+export const getTarifOfInfluenceur = async (dispatch)=>{
+  dispatch(startEtatPaiment());
+  try{
+    
+     const res = await axios({
+      method:"get",
+      url:`${process.env.REACT_APP_URL_SERVER}/api/v1/etatPaiment/tarifOfInfluenceur`,
+      withCredentials:true
+    });
+
+    dispatch(successGetTarifOfInfluenceur(res.data));
      
   }catch(err){
     dispatch(errorEtatPaiment())

@@ -385,7 +385,7 @@ function FilterSidebar() {
               <thead>
                 <tr>
                   <td>
-                    <button type="submit" className="btn bleu-btn mt-3">
+                    <button type="submit" className="bleu-btn mt-3">
                       Filter Influenceur
                     </button>
                   </td>

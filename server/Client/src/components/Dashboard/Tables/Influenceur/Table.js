@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
-import { AiFillEdit, AiFillDelete, AiFillDingtalkSquare, AiFillEye } from "react-icons/ai";
+import { AiFillEdit,AiFillEye } from "react-icons/ai";
+import {BiCommentDetail} from 'react-icons/bi'
+
 import { useDispatch, useSelector } from "react-redux";
 import {
   changeEtatCompteInfluenceur,
@@ -183,7 +185,7 @@ function Table({ name, fieldsTable }) {
                         className="warning-text"
                         style={{ fontSize: "18px", marginRight: "10px" }}
                       >
-                        <AiFillEdit />
+                        <BiCommentDetail />
                       </a>
                     </td>
                   </tr>

@@ -129,25 +129,29 @@ function Table({ name, fieldsTable, id }) {
 
          
             <div className="row">
-              <div className="col-sm-3 mb-2">
+              <div className="col-sm-3 mb-3">
                 <p className="mb-0">Presence:</p>
               </div>
-              <div className="col-sm-9">
+              <div className="col-sm-9 mb-3">
                 <p className="text-muted mb-0">
                 {row.presence == true 
                 ? 
                 <p
-                    className="px-1 rounded white-text green-btn"
+                    className="rounded white-text green-btn"
                     style={{                     
-                      width:"40px",
+                      width:"45px",
                       margin: "0", 
+                      padding:"0",
+                      textAlign:"center"
                     }}
                  >oui</p>
                  : <p
-                    className="px-1 rounded white-text red-btn"
+                    className="rounded white-text red-status"
                     style={{                       
-                      width:"40px",
-                      margin: "0",        
+                      width:"45px",
+                      margin: "0",  
+                      padding:"0",
+                      textAlign:"center"      
                     }}
                  >non</p>
                  }

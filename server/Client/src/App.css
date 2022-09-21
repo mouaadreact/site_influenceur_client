@@ -21,7 +21,7 @@ button:disabled{
 
 /**********************/
 .green-status,.bleu-status,.yellow-status,.red-status,.other-status{
-font-weight:bold;
+ font-weight:bold;
  color:#FFF;
  outline: none;
  border: 0;
@@ -50,6 +50,8 @@ font-weight:bold;
   outline: none;
   border: 0;
   border-radius: 6px;
+  padding: 8px;
+  font-size: 15px;
  }
 
 .green-btn{
@@ -63,24 +65,18 @@ font-weight:bold;
 }
 
 .bleu-btn:hover{
-  color:#000;
-  background-color: #FFF;
-  border: 1px solid #000;
   text-decoration: none;
-  list-style: none;
+  list-style: none; 
+  color:#FFF
 }
 
 .red-btn:hover{
-  color:#000;
-  background-color: #FFF;
-  border: 1px solid #000;
   text-decoration: none;
   list-style: none;
+  color:#FFF
 }
 .green-btn:hover{
-  color:#000;
-  background-color: #FFF;
-  border: 1px solid #000;
   text-decoration: none;
   list-style: none;
+  color:#FFF
 }

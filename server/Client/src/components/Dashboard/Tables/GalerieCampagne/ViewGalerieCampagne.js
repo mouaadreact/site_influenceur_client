@@ -44,7 +44,7 @@ function ViewGalerieCampagne() {
                   <div className="card-header">
                     <a
                       onClick={(e) => handleChangeButton(e)}
-                      className="btn  bleu-btn"
+                      className="bleu-btn"
                       style={{float:"right"}}
                     >
                       + add Galerie

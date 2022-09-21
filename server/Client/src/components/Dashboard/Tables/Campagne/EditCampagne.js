@@ -79,7 +79,6 @@ function EditCampagne() {
 
   const handleEdit = async (event) => {
     event.preventDefault();
-    console.log(interetMult) 
    updateCampagne(params.id, campagneInputValue, interetMult, dispatch);
   };
 
@@ -95,12 +94,7 @@ function EditCampagne() {
               <div className="card-header">
                 <h4>
                   Campagne Update
-                  <a
-                    href="/dashboard/campagne"
-                    className="btn red-btn float-end"
-                  >
-                    BACK
-                  </a>
+                 
                 </h4>
               </div>
               <div className="card-body">
