@@ -1,13 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { AiFillEdit,AiFillEye } from "react-icons/ai";
-import {BiCommentDetail} from 'react-icons/bi'
+import {AiFillEye } from "react-icons/ai";
+import { BiCommentDetail } from "react-icons/bi";
 
 import { useDispatch, useSelector } from "react-redux";
 import {
   changeEtatCompteInfluenceur,
   deleteInfluenceur,
   getAllInfluenceur,
+  misAjourData,
 } from "../../../../redux/actions/influenceur.actions";
+import Loading from "../../../Loading/Loading";
 import Pagenation from "../../../Pagination/Pagination";
 
 function Table({ name, fieldsTable }) {
@@ -21,7 +23,7 @@ function Table({ name, fieldsTable }) {
 
   //*pagination elements
   var [currentPage, setCurrentPage] = useState(1);
-  var [postsPerPage, setPostsPerPage] = useState(2);
+  var [postsPerPage, setPostsPerPage] = useState(10);
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentData = allInfluenceurData.slice(
@@ -43,6 +45,11 @@ function Table({ name, fieldsTable }) {
     changeEtatCompteInfluenceur(id, status, dispatch);
   };
 
+  const handleMisAJour=(e)=>{
+    e.preventDefault();
+    misAjourData(dispatch)
+  }
+
   //******************************************
 
   const search = (rows) => {
@@ -60,17 +67,32 @@ function Table({ name, fieldsTable }) {
     });
   };
 
+
   return (
-    <div 
-    className="container-fluid px-4"
-    style={{backgroundColor:"#EB6E35"}}
+     <div
+      className="container-fluid px-4"
+      style={{ backgroundColor: "#EB6E35" }}
     >
+      {
+        loading 
+        ?
+        <>
+          <Loading />
+        </>
+        :
+        <>
       <div
         className="row my-5  p-4"
         style={{ backgroundColor: "#DDD", borderRadius: "10px" }}
       >
         <div className="card-hearder mb-3">
-          <h4>{name} Table</h4>
+          <h4>
+            {name} Table
+            <a 
+            onClick={(e)=>handleMisAJour(e)}
+            className="bleu-btn float-end"
+            >Mis à jour</a>
+          </h4>
         </div>
 
         <div className="card-hearder mb-3">
@@ -157,17 +179,18 @@ function Table({ name, fieldsTable }) {
                     <td>{ele.commentaire ? ele.commentaire : "-"}</td>
                     <td>
                       <div
-                        onClick={(e) => 
+                        onClick={(e) =>
                           handleChangeStatusActive(
                             e,
                             ele.id,
                             ele.statusEtatActiver
                           )
                         }
-                        className={   
-                          (ele.statusEtatActiver == true ? "green" : "red")+"-status"
+                        className={
+                          (ele.statusEtatActiver == true ? "green" : "red") +
+                          "-status"
                         }
-                        style={{cursor:"pointer"}}
+                        style={{ cursor: "pointer" }}
                       >
                         {ele.statusEtatActiver == true ? "Active" : "Desactive"}
                       </div>
@@ -178,7 +201,7 @@ function Table({ name, fieldsTable }) {
                         className="success-text"
                         style={{ fontSize: "16px", marginRight: "10px" }}
                       >
-                        <AiFillEye/>
+                        <AiFillEye />
                       </a>
                       <a
                         href={`/dashboard/influenceur/edit/${ele.id}`}
@@ -202,6 +225,9 @@ function Table({ name, fieldsTable }) {
           </div>
         </div>
       </div>
+    
+        </>
+      }
     </div>
   );
 }

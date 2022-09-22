@@ -1,10 +1,8 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   BrowserRouter,
   Route,
-  Routes,
-  useHistory,
-  useNavigate,
+  Routes
 } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Home from "../Home/Home";
@@ -14,6 +12,7 @@ import VerifierEmail from "../VerifierEmail/VerifierEmail";
 import ConfimerEmail from "../ConfimerEmail/ConfimerEmail";
 import ConfirmInstagram from "../ConfimerInstagram/ConfirmInstagram";
 import PageNotFound from "../PageNotFound/PageNotFound";
+
 import AdminRoute from "./ProtectedRouter/AdminRoute";
 import ClientRoute from "./ProtectedRouter/Client/ClientRoute";
 import ViewClientRoute from "./ProtectedRouter/Client/ViewClientRoute";
@@ -41,34 +40,10 @@ import ProfilNewOffreRoute from "./ProtectedRouter/Profil/ProfilNewOffreRoute";
 import ProfilHistoryOffreRoute from "./ProtectedRouter/Profil/ProfilHisrotyOffreRoute";
 //!------------------------------------------------------------------
 import CompeleteProfil from "../CompeleteProfil/CompeleteProfil";
-import Admin from "../Dashboard/Admin";
-import Client from "../Dashboard/Tables/Client/Client";
-import ViewClient from "../Dashboard/Tables/Client/ViewClient";
-import AddClient from "../Dashboard/Tables/Client/AddClient";
-import Campagne from "../Dashboard/Tables/Campagne/Campagne";
-import ViewCampagne from "../Dashboard/Tables/Campagne/ViewCampagne";
-import EditCampagne from "../Dashboard/Tables/Campagne/EditCampagne";
-import AddCampagne from "../Dashboard/Tables/Campagne/AddCampagne";
-import GalerieCampagne from "../Dashboard/Tables/GalerieCampagne/GalerieCampagne";
 import Influenceur from "../Dashboard/Tables/Influenceur/Influenceur";
-import ViewInfluenceur from "../Dashboard/Tables/Influenceur/ViewInfluenceur";
-import EditInfluenceur from "../Dashboard/Tables/Influenceur/EditInfluenceur";
-import Langue from "../Dashboard/Tables/Langue/Langue";
-import AddLangue from "../Dashboard/Tables/Langue/AddLangue";
-import Interet from "../Dashboard/Tables/Interet/Interet";
-import AddInteret from "../Dashboard/Tables/Interet/AddInteret";
-import EtatPaiment from "../Dashboard/Tables/EtatPaiment/EtatPaiment";
-import EditEtatPaiment from "../Dashboard/Tables/EtatPaiment/EditEtatPaiment";
-import AddEtatPaiment from "../Dashboard/Tables/EtatPaiment/AddEtatPaiment";
-import Offre from "../Dashboard/Tables/Offre/Offre";
-import EditProfil from "../ProfilInfluenceur/EditProfil/EditProfil";
-import NewOffre from "../ProfilInfluenceur/NewOffre/NewOffre";
-import HistoryOffre from "../ProfilInfluenceur/HistoryOffre/HistoryOffre";
-import ProfilInfluenceur from "../ProfilInfluenceur/ProfilInfluenceur";
-import AddOffre from "../Dashboard/Tables/Offre/AddOffre";
-import EditClient from "../Dashboard/Tables/Client/EditClient";
-import DetailsHistoryOffre from "../ProfilInfluenceur/HistoryOffre/DetailsHistoryOffre";
-import DetailsNewOffre from "../ProfilInfluenceur/NewOffre/DetailsNewOffre";
+import DetailsHistoryOffreRoute from "./ProtectedRouter/Profil/DetailsHistoryOffreRoute";
+import DetailsNewOffreRoute from "./ProtectedRouter/Profil/DetailsNewOffreRoute";
+import AddOffreRoute from "./ProtectedRouter/Offre/AddOffreRoute";
 
 //!--------------------------------------------------------------------
 function Routers() {
@@ -92,79 +67,83 @@ function Routers() {
        
 
         {/************************************************************ */}
-        <Route path="/dashboard/home" element={<Admin />} />
+        <Route path="/dashboard/home" element={<AdminRoute />} />
         {/*Client table */}
-        <Route path="/dashboard/client" element={<Client />} />
+        <Route path="/dashboard/client" element={<ClientRoute />} />
         <Route
           path="/dashboard/client/view/:id"
-          element={<ViewClient />}
+          element={<ViewClientRoute />}
         />
         <Route
           path="/dashboard/client/edit/:id"
-          element={<EditClient />}
+          element={<EditClientRoute />}
         />
-        <Route path="/dashboard/client/add" element={<AddClient />} />
+        <Route path="/dashboard/client/add" element={<AddClientRoute />} />
 
         {/*Campagne table */}
-        <Route path="/dashboard/campagne" element={<Campagne/>} />
+        <Route path="/dashboard/campagne" element={<CampagneRoute/>} />
         <Route
           path="/dashboard/campagne/view/:id"
-          element={<ViewCampagne />}
+          element={<ViewCampagneRoute />}
         />
         <Route
           path="/dashboard/campagne/edit/:id"
-          element={<EditCampagne />}
+          element={<EditCampagneRoute />}
         />
-        <Route path="/dashboard/campagne/add" element={<AddCampagne />} />
+        <Route path="/dashboard/campagne/add" element={<AddCampagneRoute />} />
         {/*Galerie Campage */}
         <Route
           path="/dashboard/galerieCampagne"
-          element={<GalerieCampagne />}
+          element={<GalerieCampagneRoute />}
         />
 
         {/*table influenceur */}
         <Route path="/dashboard/influenceur" element={<Influenceur/>} />
         <Route
           path="/dashboard/influenceur/view/:id"
-          element={<ViewInfluenceur/>}
+          element={<ViewInfluenceurRoute />}
         />
         <Route
           path="/dashboard/influenceur/edit/:id"
-          element={<EditInfluenceur/>}
+          element={<EditInfluenceurRoute />}
         />
         {/* table langue */}
-        <Route path="/dashboard/langue" element={<Langue/>} />
-        <Route path="/dashboard/langue/add" element={<AddLangue/>} />
+        <Route path="/dashboard/langue" element={<LangueRoute />} />
+        <Route path="/dashboard/langue/add" element={<AddLangueRoute />} />
         {/* table Interet */}
-        <Route path="/dashboard/interet" element={<Interet/>} />
-        <Route path="/dashboard/interet/add" element={<AddInteret/>} />
+        <Route path="/dashboard/interet" element={<InteretRoute />} />
+        <Route path="/dashboard/interet/add" element={<AddInteretRoute />} />
         {/*add Etat Paiment*/}
-        <Route path="/dashboard/etatPaiment" element={<EtatPaiment />} />
+        <Route path="/dashboard/etatPaiment" element={<EtatPaimentRoute />} />
         <Route
           path="/dashboard/etatPaiment/edit/:campagneId/:influenceurId"
-          element={<EditEtatPaiment/>}
+          element={<EditEtatPaimentRoute />}
         />
         <Route
           path="/dashboard/etatPaiment/add"
-          element={<AddEtatPaiment />}
+          element={<AddEtatPaimentRoute />}
         />
 
         {/*Offre */}
-        <Route path="/dashboard/offre" element={<Offre/>} />
-        <Route path="/dashboard/offre/add" element={<AddOffre/>} />
+        <Route path="/dashboard/offre" element={<OffreRoute />} />
+        <Route path="/dashboard/offre/add" element={<AddOffreRoute />} />
 
         {/**************************************** */}
         {/*profil */}
-        <Route path="/profil/home" element={<ProfilInfluenceur/>} />
-        <Route path="/profil/edit/:id" element={<EditProfil/>} />
-        <Route path="/profil/newOffre" element={<NewOffre />} />
+        <Route path="/profil/home" element={<ProfilHomeRoute/>} />
+        <Route path="/profil/edit/:id" element={<EditProfilRoute/>} />
+        <Route path="/profil/newOffre" element={<ProfilNewOffreRoute />} />
         <Route
           path="/profil/historyOffre"
-          element={<HistoryOffre/>}
+          element={<ProfilHistoryOffreRoute/>}
         />
  
- <Route path="/profil/historyOffre/details/:idUser/:idOffre" element={<DetailsHistoryOffre/>} />
-        <Route path="/profil/newOffre/details/:idUser/:idOffre" element={<DetailsNewOffre/>} />
+        <Route 
+        path="/profil/historyOffre/details/:idUser/:idOffre" 
+        element={<DetailsHistoryOffreRoute/>} />
+        <Route 
+        path="/profil/newOffre/details/:idUser/:idOffre" 
+        element={<DetailsNewOffreRoute/>} />
 
         {/*indefined page */}
         <Route path="*" element={<PageNotFound />} />

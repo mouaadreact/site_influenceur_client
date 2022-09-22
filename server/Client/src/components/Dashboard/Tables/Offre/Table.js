@@ -2,14 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCampagne } from "../../../../redux/actions/campagne.actions";
 import { getAllOffre } from "../../../../redux/actions/offre.actions";
-import Loading from "../../../Loading/Loading";
 import Pagenation from "../../../Pagination/Pagination";
 import dateformat from "dateformat";
 
 function Table({ name, fieldsTable }) {
   const [CampagneId, setCampagneId] = useState("");
   const dispatch = useDispatch();
-  const { loading, allOffreData } = useSelector((state) => state.offre);
+  const { allOffreData } = useSelector((state) => state.offre);
   const { allCampagneData } = useSelector((state) => state.campagne);
 
   //*pagnitaion elements

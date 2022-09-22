@@ -24,6 +24,7 @@ function EditProfil() {
             <EditForm id={params.id} />
           </div>
         </section>
+       
       </div>
     </div>
   );

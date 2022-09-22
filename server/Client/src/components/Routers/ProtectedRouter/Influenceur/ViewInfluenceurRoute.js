@@ -1,27 +1,22 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { UidContext } from "../../../../contexts/AppContext";
-import { getOneUser } from "../../../../redux/actions/user.actions";
+import React from "react";
+
+import isAuth from "../../../../utils/Auth";
 import ViewInfluenceur from "../../../Dashboard/Tables/Influenceur/ViewInfluenceur";
 import PageForbidden from "../../../PageNotFound/PageForbidden";
+import PageRole from "../../../PageNotFound/PageRole";
 
 function ViewInfluenceurRoute() {
-  const id = useContext(UidContext);
-  const dispatch = useDispatch();
-  const { oneUserData } = useSelector((state) => state.user);
-  const [uid, setUid] = useState(0);
-
-  useEffect(() => {
-    getOneUser(id, dispatch);
-    setUid(id);
-  }, [id]);
 
   const Authorization = () => {
-    return uid && oneUserData?.Role?.roleNom === "admin" ? (
-      <ViewInfluenceur />
-    ) : (
-      <PageForbidden />
-    );
+    if(isAuth().status){
+       if(isAuth().role==="admin"){
+         return <ViewInfluenceur/>
+       }else{
+         return <PageRole/>
+       }
+    }else{
+      return <PageForbidden/>
+    }
   };
 
   return <>{Authorization()}</>;

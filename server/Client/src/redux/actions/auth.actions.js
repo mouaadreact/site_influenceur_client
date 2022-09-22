@@ -14,9 +14,9 @@ import {toast } from 'react-toastify';
          url:`${process.env.REACT_APP_URL_SERVER}/jwtid`,
          withCredentials:true
        })
-       
-        //console.log(res.data)
+        
         dispatch(successJwtId(res.data.id));
+        //console.log(res.data.id)
      }catch(err){
        console.log("No token");
        dispatch(errorAuth()) 
@@ -36,9 +36,13 @@ import {toast } from 'react-toastify';
     });
 
    
-
+     console.log(res.data)
+     
      if(res.data.status==='login'){
       dispatch(successLogin(res.data));
+      localStorage.setItem('jwt',res.data.token);
+      localStorage.setItem('role',res.data.role);
+
       switch(res.data.role){
        case "admin":
         window.location='/dashboard/home'
@@ -79,6 +83,8 @@ import {toast } from 'react-toastify';
      withCredentials:true
     });
       cookie.remove("jwt",{expires:1});
+      localStorage.removeItem("jwt");
+      localStorage.removeItem("role");
       window.location.href='/login';  
     
 

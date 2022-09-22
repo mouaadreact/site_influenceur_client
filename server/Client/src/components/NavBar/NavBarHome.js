@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import "./NavBar.css";
 import { NavLink } from "react-router-dom";
-import { UidContext } from "../../contexts/AppContext";
 function NavBarHome() {
   return (
     <>
@@ -43,7 +42,9 @@ function NavBarHome() {
             </span>
             <ul className="navbar-nav mx-auto">
               <li className="nav-item">
-                <NavLink
+                {
+                  /*
+                  <NavLink
                   to="/"
                   className="nav-NavLink"
                   style={{
@@ -54,6 +55,8 @@ function NavBarHome() {
                 >
                   Acceuil
                 </NavLink>
+                 */
+                }
               </li>
             </ul>
             <NavLink to="/login" className="Buttons log">

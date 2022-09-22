@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllCampagne } from "../../../redux/actions/campagne.actions";
 import { getAllGalerieCampagne } from "../../../redux/actions/galerieCampagne.actions";

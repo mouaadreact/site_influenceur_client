@@ -253,3 +253,21 @@ export const updateInfluenceur = async (id,data,langueData,interetData,dispatch)
   dispatch(errorInfluenceur())
   }
  }
+
+
+//!-----------------------------------------------------
+
+
+export const misAjourData=async (dispatch)=>{
+  dispatch(startInfluenceur())
+  try{
+    const res = await axios({
+      method:"get",
+      url:`${process.env.REACT_APP_URL_SERVER}/api/v1/influenceur/misAjour`,
+      withCredentials:true
+    }) 
+  }catch(err)
+  {
+  dispatch(errorInfluenceur())
+  }
+ }

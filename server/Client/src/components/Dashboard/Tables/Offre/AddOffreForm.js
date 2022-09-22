@@ -57,6 +57,7 @@ function AddOffreForm() {
                   <div className="mb-3">
                   <label className="label-required mb-2">Campagne:</label>
                     <select
+                      required
                       onChange={(e) => handleChange(e)}
                       className="form-control w-50"
                       name="CampagneId"

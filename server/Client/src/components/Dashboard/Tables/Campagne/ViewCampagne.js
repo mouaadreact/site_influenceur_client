@@ -7,8 +7,7 @@ import Sidebar from "../../Sidebar/Sidebar";
 
 function ViewCampagne() {
   const dispatch = useDispatch();
-  const { loading, oneCampagneData } = useSelector((state) => state.campagne);
-  const { interetCampagneData } = useSelector((state) => state.interet);
+  const {oneCampagneData } = useSelector((state) => state.campagne);
   const params = useParams();
 
   useEffect(() => {

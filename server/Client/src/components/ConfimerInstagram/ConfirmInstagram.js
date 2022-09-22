@@ -1,9 +1,8 @@
-import React, { useContext, useState } from "react";
+import React, { useContext} from "react";
 import { Formik, Form, Field, ErrorMessage, prepareDataForValidation } from "formik";
 import { basicSchemaConfirmInstagram } from "../../schemas";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./ConfimInstagram.css";
 import {
@@ -14,6 +13,7 @@ import Loading from "../Loading/Loading";
 import { UidContext } from "../../contexts/AppContext";
 import NavbarRegister from "../NavBar/NavbarRegister";
 import PageDejaConnect from "../PageNotFound/PageDejaConnect";
+import isAuth from "../../utils/Auth";
 
 function ConfirmInstagram() {
   const id = useContext(UidContext);
@@ -55,7 +55,16 @@ function ConfirmInstagram() {
   console.log(instagramData);
   return (
     <>
-      {loading ? (
+    {
+      isAuth().status 
+      ? 
+      (
+        <PageDejaConnect/>
+      )
+      :
+      (
+        <>
+        {loading ? (
         <>
           <Loading />
         </>
@@ -196,7 +205,9 @@ function ConfirmInstagram() {
                 onSubmit={onSubmit}
               >
                 <div className="container w-50 shadow-lg p-3 mb-5 bg-white roundedd mt-5">
-                  <div className="text-center p-3">Confirm Instagram</div>
+                <div
+                  style={{fontSize:"20px",fontWeight:"bold",color:"rgb(118, 118, 118)"}}
+                  className="text-center p-3">Comfimer votre compte instagram</div>
 
                   <Form>
                     <div className="form-outline mb-4">
@@ -345,7 +356,7 @@ function ConfirmInstagram() {
                       </div>
                     </div>
 
-                    <button type="submit" className="btn bleu-btn w-100">
+                    <button type="submit" className="bleu-btn w-100">
                       Submit
                     </button>
                   </Form>
@@ -354,7 +365,11 @@ function ConfirmInstagram() {
             </>
           )}
         </>
-      )}
+      )
+    }
+        </>
+      )
+    }
     </>
   );
 }

@@ -12,6 +12,7 @@ import "react-toastify/dist/ReactToastify.css";
 
 function AddCampagneForm() {
   const dispatch = useDispatch();
+  const {error}=useSelector((state)=>state.campagne)
   const { allInfluenceurData } = useSelector((state) => state.influenceur);
   const { allClientData } = useSelector((state) => state.client);
   const { allInteretData } = useSelector((state) => state.interet);
@@ -357,6 +358,10 @@ function AddCampagneForm() {
                         >
                           + Add Campagne
                         </button>
+                      </div>
+
+                      <div className="mb-3">
+                        <p className="text-danger">{error}</p>
                       </div>
                     </Form>
                   )}

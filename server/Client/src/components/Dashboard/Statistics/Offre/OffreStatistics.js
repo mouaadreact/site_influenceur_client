@@ -21,7 +21,7 @@ function OffreStatistics() {
      {
        label: "nombre of offre each month",
        data:  nombreOffreChaqueMonthYear.map((data) => data.nombre),
-       backgroundColor: ["#16213E", "#D800A6"],
+       backgroundColor: ["#01579b", "#D800A6"]
      },
    ],
  };

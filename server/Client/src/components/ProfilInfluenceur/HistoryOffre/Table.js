@@ -11,7 +11,7 @@ import dateformat from "dateformat";
 function Table({ id ,name }) {
   const dispatch = useDispatch();
   const { oneInfluenceurData } = useSelector((state) => state.influenceur);
-  const { loading, historyOffreData } = useSelector((state) => state.offre);
+  const { historyOffreData } = useSelector((state) => state.offre);
   const { allCampagneData } = useSelector((state) => state.campagne);
   const { allGalerieCampagneData } = useSelector(
     (state) => state.galerieCampagne
@@ -145,6 +145,7 @@ function Table({ id ,name }) {
         <div className="row"></div>
       </div>
     </div>
+    
     </div>
     </>
   );

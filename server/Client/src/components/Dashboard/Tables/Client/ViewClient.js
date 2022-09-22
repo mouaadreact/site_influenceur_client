@@ -6,7 +6,7 @@ import Sidebar from "../../Sidebar/Sidebar";
 
 function ViewClient() {
   const dispatch = useDispatch();
-  const { loading, oneClientData } = useSelector((state) => state.client);
+  const {oneClientData } = useSelector((state) => state.client);
   const params = useParams();
 
   useEffect(() => {

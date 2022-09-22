@@ -13,6 +13,7 @@ import { UidContext } from "../../contexts/AppContext";
 import NavbarRegister from "../NavBar/NavbarRegister";
 import PageDejaConnect from "../PageNotFound/PageDejaConnect";
 import { getAllNiveauEtude } from "../../redux/actions/niveauEtude.actions";
+import isAuth from "../../utils/Auth";
 
 function CompeleteProfil() {
   const id = useContext(UidContext);
@@ -141,7 +142,7 @@ function CompeleteProfil() {
     <>
       <ToastContainer autoClose={3000} />
       <NavbarRegister />
-      {id ? (
+      {isAuth().status ? (
         <>
           <PageDejaConnect />
         </>
@@ -151,7 +152,9 @@ function CompeleteProfil() {
             className="container w-50 shadow-lg p-3 mb-5 bg-white rounded "
             style={{ marginTop: "30px" }}
           >
-            <div className="text-center p-3">Complete Profil</div>
+            <div
+            style={{fontSize:"20px",fontWeight:"bold",color:"rgb(118, 118, 118)"}}
+             className="text-center p-3">Complete Profil</div>
 
             <form onSubmit={(e) => handleSubmit(e)}>
               <div className="form-outline mb-4">
@@ -323,12 +326,12 @@ function CompeleteProfil() {
                   onClick={(e)=>handleAccepterCondition(e)}
                 />
                 <label className="form-label" htmlFor="interet">
-                  Accepter les  
+                  Accepter   
                 </label>
                 <a 
                 className="label-required" 
                 target="_blank"
-                href={`${process.env.REACT_APP_URL_SERVER}/api/v1/conditionGenrale/pdf/SISSY-PH05222090812040.pdf`}> conditions generale</a>
+                href={`${process.env.REACT_APP_URL_SERVER}/api/v1/conditionGenrale/pdf/SISSY-PH05222090812040.pdf`}> les conditions generale de 3WDEV</a>
               </div>
 
              {
@@ -340,7 +343,7 @@ function CompeleteProfil() {
               </>
               :
               <>
-                <a className="btn bleu-btn w-100" style={{opacity:"0.5"}}>Submit</a>
+                <button className="bleu-btn w-100" style={{opacity:"0.5"}}>Submit</button>
               </>
              }
             </form>

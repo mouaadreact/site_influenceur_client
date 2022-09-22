@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import React, {useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { addClient } from "../../../../redux/actions/client.actions";
 import marocVille from "../../../../assets/data/marocAddress/ville.json";
 import marocQuartier from "../../../../assets/data/marocAddress/quartier.json";
@@ -18,6 +18,9 @@ function AddClient() {
     email: "",
   });
 
+  const {error}=useSelector((state)=>state.client);
+  console.log(error);
+
   const handleChange = (e) => {
     e.preventDefault();
     setClientInputValue({
@@ -28,7 +31,6 @@ function AddClient() {
 
   const handleAdd = (event) => {
     event.preventDefault();
-    console.log(clientInputValue)
     addClient(clientInputValue, dispatch);
   };
 
@@ -52,6 +54,7 @@ function AddClient() {
                   <div className="mb-3">
                     <label className="label-required" htmlFor="raisonSociale"> raison sociale: </label>
                     <input
+                      required
                       name="raisonSociale"
                       id="raisonSociale"
                       type="text"
@@ -63,6 +66,7 @@ function AddClient() {
                   <div className="mb-3">
                     <label className="mb-2 label-required">pays: </label>
                     <select
+                      required
                       name="pays"
                       className="form-control"
                       onChange={(e) => handleChange(e)}
@@ -77,6 +81,7 @@ function AddClient() {
                   <div className="mb-3 ">
                     <label className="mb-2 label-required">ville: </label>
                     <select
+                      required
                       name="ville"
                       className="form-control"
                       onChange={(e) => handleChange(e)}
@@ -97,6 +102,7 @@ function AddClient() {
                   <div className="mb-3">
                     <label className="mb-2 label-required">quartier: </label>
                     <select
+                      required
                       name="quartier"
                       className="form-control"
                       onChange={(e) => handleChange(e)}
@@ -119,6 +125,7 @@ function AddClient() {
                   <div className="mb-3">
                     <label htmlFor="nomDirecteur " className="label-required">nom directeur: </label>
                     <input
+                      required
                       name="nomDirecteur"
                       id="nomDirecteur"
                       type="text"
@@ -130,6 +137,7 @@ function AddClient() {
                   <div className="mb-3">
                     <label htmlFor="telephone " className="label-required">telephone: </label>
                     <input
+                      required
                       name="telephone"
                       id="telephone"
                       type="text"
@@ -141,6 +149,7 @@ function AddClient() {
                   <div className="mb-3">
                     <label htmlFor="email" className="label-required">email: </label>
                     <input
+                      required
                       name="email"
                       id="email"
                       type="text"
@@ -158,6 +167,13 @@ function AddClient() {
                       + Add Client
                     </button>
                   </div>
+
+                  <div className="mb-3">
+                    <p className="text-danger">
+                    {error}
+                    </p>
+                  </div>
+
                 </form>
               </div>
             </div>

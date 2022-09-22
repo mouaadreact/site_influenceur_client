@@ -107,7 +107,7 @@ function ChangePassword({ id }) {
                   {errors.confirmPassword && touched.confirmPassword && (
                     <p className="text-danger">{errors.confirmPassword}</p>
                   )}
-                </div>
+                </div> 
 
                 <div className="mb-3">
                   <button

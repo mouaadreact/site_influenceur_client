@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, NavLink, useLocation } from "react-router-dom";
-import ConfirmInstagram from "../ConfimerInstagram/ConfirmInstagram";
-import { useDispatch, useSelector } from "react-redux";
-import { ToastContainer, toast } from "react-toastify";
+import { useLocation } from "react-router-dom";
+import { useDispatch} from "react-redux";
+import { ToastContainer} from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { confirmEmail } from "../../redux/actions/register.actions";
 import NavbarRegister from "../NavBar/NavbarRegister";
 import PageDejaConnect from "../PageNotFound/PageDejaConnect";
 import { UidContext } from "../../contexts/AppContext";
+import isAuth from "../../utils/Auth";
 
 function ConfimerEmail() {
   const location = useLocation();
@@ -33,7 +33,7 @@ function ConfimerEmail() {
       <ToastContainer autoClose={3000} />
       <NavbarRegister />
 
-      {id ? (
+      {isAuth().status ? (
         <>
           <PageDejaConnect />
         </>

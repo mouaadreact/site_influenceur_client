@@ -7,7 +7,8 @@ const campagneReducer=createSlice({
    oneCampagneData:{},
    countCampagne:0,
    loading:null,
-   error:false
+   error:"",
+   errorStatus:false
  },
  reducers:{
    startCampagne:(state)=>{
@@ -28,9 +29,10 @@ const campagneReducer=createSlice({
    successCampagne:(state)=>{
      state.loading=false
    },
-   errorCampagne:(state)=>{
+   errorCampagne:(state,action)=>{
     state.loading=false;
-    state.error=true;
+    state.error=action.payload;
+    state.errorStatus=true;
    }
  }
 

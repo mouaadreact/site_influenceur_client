@@ -1,9 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getOneClient,
-  updateClient,
-} from "../../../redux/actions/client.actions";
 import marocVille from "../../../assets/data/marocAddress/ville.json";
 import marocQuartier from "../../../assets/data/marocAddress/quartier.json";
 import {
@@ -16,6 +12,7 @@ import { getAllInteret } from "../../../redux/actions/interet.actions";
 import dateformat from "dateformat";
 import Select from "react-select";
 import { getAllNiveauEtude } from "../../../redux/actions/niveauEtude.actions";
+import Footer from "../../Footer/Footer";
 
 //!-----------------------------------------------
 function EditForm({ id }) {
@@ -194,6 +191,7 @@ useEffect(() => {
               <div className="mb-3">
                 <label className="label-required" htmlFor="nom">nom: </label>
                 <input
+                  required
                   name="nom"
                   id="nom"
                   type="text"
@@ -206,6 +204,7 @@ useEffect(() => {
               <div className="mb-3">
                 <label className="label-required" htmlFor="prenom">prenom: </label>
                 <input
+                  required
                   name="prenom"
                   id="prenom"
                   type="text"
@@ -218,6 +217,7 @@ useEffect(() => {
               <div className="mb-3">
                 <label className="label-required" htmlFor="profession">profession: </label>
                 <input
+                  required
                   name="profession"
                   id="profession"
                   type="text"
@@ -229,7 +229,8 @@ useEffect(() => {
 
               <div className="mb-3">
                 <label className="label-required mb-2">pays: </label>
-                <select
+                <select 
+                  required
                   name="pays"
                   className="form-control"
                   onChange={(e) => handleChange(e)}
@@ -246,6 +247,7 @@ useEffect(() => {
               <div className="mb-3">
                 <label className="mb-2 label-required">ville: </label>
                 <select
+                  required
                   name="ville"
                   className="form-control"
                   onChange={(e) => handleChange(e)}
@@ -274,6 +276,7 @@ useEffect(() => {
               <div className="mb-3">
                 <label className="mb-2 label-required" >quartier: </label>
                 <select
+                  required
                   name="quartier"
                   className="form-control"
                   onChange={(e) => handleChange(e)}
@@ -302,6 +305,7 @@ useEffect(() => {
               <div className="mb-3">
                 <label htmlFor="nomDirecteur" className="label-required">genre: </label>
                 <select
+                  required
                   name="quartier"
                   className="form-control"
                   onChange={(e) => handleChange(e)}
@@ -320,6 +324,7 @@ useEffect(() => {
               <div className="mb-3">
                 <label className="label-required" htmlFor="dateNaissance">date naissance: </label>
                 <input
+                  required
                   name="dateNaissance"
                   id="dateNaissance"
                   type="date"
@@ -334,6 +339,7 @@ useEffect(() => {
                   situation familiale:{" "}
                 </label>
                 <select
+                  required
                   name="situationFamiliale"
                   className="form-control"
                   onChange={(e) => handleChange(e)}
@@ -386,6 +392,7 @@ useEffect(() => {
               <div className="mb-3">
                 <label className="label-required" htmlFor="nombreEnfant">nombre enfant: </label>
                 <input
+                  required
                   name="nombreEnfant"
                   id="nombreEnfant"
                   type="number"
@@ -400,6 +407,7 @@ useEffect(() => {
                   Niveau des études
                 </label>
                 <select
+
                  required
                  name="NiveauEtudeId"
                  className="form-control"
@@ -462,6 +470,7 @@ useEffect(() => {
               <div className="mb-3">
                 <label htmlFor="email " className="label-required">youtube username: </label>
                 <input
+                  required
                   name="email"
                   id="email"
                   type="text"
@@ -474,6 +483,7 @@ useEffect(() => {
               <div className="mb-3">
                 <label htmlFor="email" className="label-required">facebook username: </label>
                 <input
+                  required
                   name="email"
                   id="email"
                   type="text"

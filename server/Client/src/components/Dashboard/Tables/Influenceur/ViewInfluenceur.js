@@ -30,42 +30,44 @@ function ViewInfluenceur() {
   }, []);
 
   useEffect(() => {
+    //console.log(instagramFilePath?.path)
     if (instagramFilePath?.path) {
       axios
         .get(instagramFilePath?.path)
         .then((res) => {
+          //console.log(res.data);
           var CommentCount = 0;
           var LikeCount = 0;
-
+          
           for (
             var i = 0;
-            i < res.data.edge_owner_to_timeline_media.edges.length;
+            i < res.data.data.edge_owner_to_timeline_media.edges.length;
             i++
           ) {
             CommentCount +=
-              res.data.edge_owner_to_timeline_media.edges[i].node
+              res.data.data.edge_owner_to_timeline_media.edges[i].node
                 .edge_media_to_comment.count;
             LikeCount +=
-              res.data.edge_owner_to_timeline_media.edges[i].node.edge_liked_by
+              res.data.data.edge_owner_to_timeline_media.edges[i].node.edge_liked_by
                 .count;
           }
 
           for (
             var i = 0;
-            i < res.data.edge_felix_video_timeline.edges.length;
+            i < res.data.data.edge_felix_video_timeline.edges.length;
             i++
           ) {
             CommentCount +=
-              res.data.edge_felix_video_timeline.edges[i].node
+              res.data.data.edge_felix_video_timeline.edges[i].node
                 .edge_media_to_comment.count;
             LikeCount +=
-              res.data.edge_felix_video_timeline.edges[i].node.edge_liked_by
+              res.data.data.edge_felix_video_timeline.edges[i].node.edge_liked_by
                 .count;
           }
           setCompteInstagram({
-            nombrepost: res.data.edge_owner_to_timeline_media.count,
-            nombreAbonne: res.data.edge_followed_by.count,
-            nombreAbonnement: res.data.edge_follow.count,
+            nombrepost: res.data.data.edge_owner_to_timeline_media.count,
+            nombreAbonne: res.data.data.edge_followed_by.count,
+            nombreAbonnement: res.data.data.edge_follow.count,
             nombreCommentaire: CommentCount,
             nombreLike: LikeCount,
           });

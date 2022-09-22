@@ -17,7 +17,9 @@ const userData={
   datasets:[{
    label:"nombre campagne of client",
    data:nombreCampagneOfClient.map((data)=>data.nombreCampagne),
-   backgroundColor:['#16213E','#D800A6']
+   backgroundColor:['#01579b','#D800A6'],
+   borderColor:'#D800A6',
+   tension:0.3
 }]
 }
 

@@ -14,7 +14,7 @@ export const addClient = async (data,dispatch)=>{
     window.location.href="/dashboard/client";
      
   }catch(err){
-    dispatch(errorClient())
+    dispatch(errorClient(err.response.data.errors[0].message))
   }
  }
 
@@ -82,7 +82,7 @@ export const deleteClient = async (id,dispatch)=>{
 //-----------
 
 export const updateClient = async (id,data,dispatch)=>{
-  dispatch(startClient());
+  dispatch(startClient()); 
   try{
      const res = await axios({
       method:"put",
@@ -94,7 +94,7 @@ export const updateClient = async (id,data,dispatch)=>{
     window.location.href="/dashboard/client";
      
   }catch(err){
-    dispatch(errorClient())
+    dispatch(errorClient(err.response.data.errors[0].message))
   }
  }
 

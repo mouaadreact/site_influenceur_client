@@ -42,9 +42,7 @@ exports.addCampagne=async(req,res)=>{
  
       }
    }catch(err){  //testing error validators
-    res.status(400).json({
-      error:err
-    }); //using 
+    res.status(400).json(err); //using 
    }
 }
 
@@ -74,7 +72,7 @@ exports.getAll=async (req,res)=>{
       res.status(200).json(data);
     }
   }catch(err){
-   res.status(400).json({err:err});
+   res.status(400).json(err);
   }
   
 }
@@ -152,7 +150,7 @@ exports.update=async (req,res)=>{
   
     }
  }catch(err){
-  res.status(400).json({err:err});
+  res.status(400).json(err);
  }
 }
 
@@ -171,7 +169,7 @@ exports.delete= async (req,res)=>{
       res.status(200).json(data);
     }
  }catch(err){
-  res.status(400).json({err:err});
+  res.status(400).json(err);
  }
 }
 

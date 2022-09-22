@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { UidContext } from "../../../contexts/AppContext";
 import { getOneUser } from "../../../redux/actions/user.actions";
+import Footer from "../../Footer/Footer";
 import EditProfil from "../EditProfil/EditProfil";
 import ChangePassword from "./ChangePassword";
 import ViewProfil from "./ViewProfil";
@@ -30,9 +31,9 @@ function Profil() {
   };
 
   return (
+    <>
     <div 
-    className="container-fluid px-4 mt-4 mb-4"
-    
+    className="container-fluid px-4 mt-4 mb-4"   
     >
       <section
       className="rounded" 
@@ -57,7 +58,9 @@ function Profil() {
           </div>
         </div>
       </section>
+ 
     </div>
+    </>
   );
 }
 

@@ -126,7 +126,7 @@ exports.afficherCompteInstagram = async (req, res) => {
     } else {
       try {
         //change forma
-        const options = {
+       /* const options = {
           method: "GET",
           url: `${process.env.INSTAGRAM_API_URL}`,
           params: { username: `${instagramUsernameCompte}` },
@@ -134,10 +134,18 @@ exports.afficherCompteInstagram = async (req, res) => {
             "X-RapidAPI-Key": `${process.env.INSTAGRAM_API_HEADER_KEY}`,
             "X-RapidAPI-Host": `${process.env.INSTAGRAM_API_HEADER_HOST}`,
           },
+        };*/
+
+        const options = {
+          method: "GET",
+          url: `${process.env.INSTAGRAM_API_URL}/${item.instagramUsernameCompte}`,
+          headers: {
+            "X-RapidAPI-Key": `${process.env.INSTAGRAM_API_HEADER_KEY}`,
+            "X-RapidAPI-Host": `${process.env.INSTAGRAM_API_HEADER_HOST}`,
+          },
         };
 
         var UserApiInfo = await axios.request(options);
-        //console.log(UserApiInfo.data)
         //change forma:
         var UserAPI = UserApiInfo.data;
 
@@ -191,8 +199,17 @@ exports.valideCompteInstagram = async (req, res) => {
         });
 
         data = data.dataValues;
-     
+
         const options = {
+          method: "GET",
+          url: `${process.env.INSTAGRAM_API_URL}/${item.instagramUsernameCompte}`,
+          headers: {
+            "X-RapidAPI-Key": `${process.env.INSTAGRAM_API_HEADER_KEY}`,
+            "X-RapidAPI-Host": `${process.env.INSTAGRAM_API_HEADER_HOST}`,
+          },
+        };
+     
+       /* const options = {
           method: "GET",
           url: `${process.env.INSTAGRAM_API_URL}`,
           params: { username: `${data.instagramUsernameCompte}` },
@@ -200,7 +217,7 @@ exports.valideCompteInstagram = async (req, res) => {
             "X-RapidAPI-Key": `${process.env.INSTAGRAM_API_HEADER_KEY}`,
             "X-RapidAPI-Host": `${process.env.INSTAGRAM_API_HEADER_HOST}`,
           },
-        };
+        };*/
         
         var UserApiInfo = await axios.request(options);
         var UserAPI = UserApiInfo.data;
@@ -693,31 +710,31 @@ exports.getAllInfluenceurActiveCompte=async (req,res)=>{
 //!-----------------------------------------------------
 //*mis a jour:
 
-exports.misAJour = async (req, res) => {
+exports.misAJour = async (req, res) => { 
   try {
     const data = await Influenceur.findAll();
     if (!data) {
       res.status(400).json({ err: "on peut pas trouver influenceur data " });
     } else {
-      res.status(200).json(data);
-
-      //!loop ======
-
-  data?.forEach(async (ele)=>{
-        const item=item.dataValues;
-
+    //!loop ======
+    data?.forEach(async (ele)=>{ 
+        const item=ele.dataValues;
+        
         const options = {
           method: "GET",
-          url: `${process.env.INSTAGRAM_API_URL}`,
-          params: { username: `${item.instagramUsernameCompte}` },
+          url: `${process.env.INSTAGRAM_API_URL}/${item.instagramUsernameCompte}`,
+         // params: { username: `${item.instagramUsernameCompte}` },
           headers: {
             "X-RapidAPI-Key": `${process.env.INSTAGRAM_API_HEADER_KEY}`,
             "X-RapidAPI-Host": `${process.env.INSTAGRAM_API_HEADER_HOST}`,
           },
         };
         
+        
         var UserApiInfo = await axios.request(options);
         var UserAPI = UserApiInfo.data;
+        
+        
         if (!UserAPI) {
           res
             .status(400)
@@ -730,12 +747,9 @@ exports.misAJour = async (req, res) => {
             }_${FormatDate(new Date())}.json`,
             JSON.stringify(UserAPI, null, 2),
             async (err) => {
-              if (err) {
-                console.log(err);
-              } else {
-                console.log("file write successful !! ");
-
-                const result = await ApiInstagramHistory.create({
+              if (err) {} 
+              else {
+               await ApiInstagramHistory.create({
                   InfluenceurId: item.id,
                   path: `${process.env.URL_SERVER}:${
                     process.env.PORT
@@ -743,10 +757,6 @@ exports.misAJour = async (req, res) => {
                     item.instagramUsernameCompte
                   }_${item.id}_${FormatDate(new Date())}.json`,
                 });
-
-                if (result) {
-                  console.log("resultat enregsitrer");
-                }
               }
             }
           );
@@ -754,9 +764,11 @@ exports.misAJour = async (req, res) => {
 
         //*fin
   });
-    
-     
-    }
+
+  res.status(200).json({message:"mis a jour all data"})
+        
+}
+
   } catch (err) {
     res.status(400).json(err);
   }

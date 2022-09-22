@@ -1,6 +1,6 @@
 const { ApiInstagramHistory } = require("../models");
 
-
+ 
 exports.getAll=async (req,res)=>{
  try{
 

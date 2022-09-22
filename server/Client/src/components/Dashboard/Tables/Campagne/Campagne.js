@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React from "react";
 import Sidebar from "../../Sidebar/Sidebar";
 import FilterSidebar from "./FilterSidebar";
 import Table from "./Table";

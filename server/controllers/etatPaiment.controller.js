@@ -200,6 +200,7 @@
        {
         tarif:req.body.tarif,
         dateReglement:req.body.dateReglement,
+        currency:req.body.currency
        },{
         where:{
          CampagneId:req.params.campagneId,

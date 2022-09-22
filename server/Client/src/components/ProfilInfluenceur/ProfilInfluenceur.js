@@ -6,6 +6,7 @@ import { useDispatch } from "react-redux";
 import { authLogout } from "../../redux/actions/auth.actions";
 import Sidebar from "./Sidebar/Sidebar";
 import Profil from "./Profil/Profil";
+import Footer from "../Footer/Footer";
 
 function ProfilInfluenceur() {
   const dispatch = useDispatch();

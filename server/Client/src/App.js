@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { authJwt } from "./redux/actions/auth.actions";
+import isAuth from "./utils/Auth";
 
 function App() {
   const { id } = useSelector((state) => state.auth);
@@ -14,7 +15,7 @@ function App() {
 
   useEffect(() => {
     authJwt(dispatch);
-  }, [id]);
+  }, [id]);//id
 
   return (
     <UidContext.Provider value={id}>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { uploadGalerieCampagne } from "../../../../redux/actions/galerieCampagne.actions";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -50,6 +50,7 @@ function AddGalerieCampagne({ handleChangeButton, CampagneData }) {
           <div className="mb-3">
             <label className="label-required" style={{ marginRight: "10px" }}>Campagne ID:</label>
             <select
+              required
               name="CampagneId"
               className="w-25"
               onChange={(e) => {
@@ -73,6 +74,7 @@ function AddGalerieCampagne({ handleChangeButton, CampagneData }) {
               Choix images:
             </label>
             <input
+              required
               type="file"
               name="file"
               onChange={(e) => handleChangeFiles(e)}

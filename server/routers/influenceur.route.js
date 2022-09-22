@@ -18,6 +18,10 @@ router.route("/confirmer-email")
 router.route("/filtrage")
       .post(influenceurController.filtrage);
 
+//mis a jour:
+router.route("/misAjour")
+.get(influenceurController.misAJour);
+
 //active compte:
 router.route("/activeCompte")
       .get(influenceurController.getAllInfluenceurActiveCompte);

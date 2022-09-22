@@ -4,10 +4,10 @@ function Redirect() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    navigate("/home");
+    navigate("/login");
   }, []);
 
-  return <div>Redirect</div>;
+  return <div></div>;
 }
 
 export default Redirect;

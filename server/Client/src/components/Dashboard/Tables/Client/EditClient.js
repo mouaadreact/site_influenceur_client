@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Formik, Form, Field, ErrorMessage, formik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getOneClient,
@@ -12,7 +11,8 @@ import Sidebar from "../../Sidebar/Sidebar";
 
 function EditClient() {
   const dispatch = useDispatch();
-  const { loading, oneClientData } = useSelector((state) => state.client);
+  const {error,oneClientData } = useSelector((state) => state.client);
+  
   const params = useParams();
 
   const [clientInputValue, setClientInputValue] = useState({
@@ -47,6 +47,8 @@ function EditClient() {
     updateClient(params.id, clientInputValue, dispatch);
   };
 
+  console.log(error)
+
   return (
     <div className="d-flex" id="wrapper">
       <Sidebar />
@@ -65,6 +67,7 @@ function EditClient() {
                 <form onSubmit={(e) => handleEdit(e)}>
                   <div className="mb-3">
                     <input
+                      required
                       name="id"
                       type="text"
                       disabled={true}
@@ -75,6 +78,7 @@ function EditClient() {
                   <div className="mb-3">
                     <label htmlFor="raisonSociale" className="label-required">raison sociale: </label>
                     <input
+                      required
                       name="raisonSociale"
                       id="raisonSociale"
                       type="text"
@@ -87,6 +91,7 @@ function EditClient() {
                   <div className="mb-3">
                     <label className="mb-2 label-required" >pays: </label>
                     <select
+                      required
                       name="pays"
                       className="form-control"
                       onChange={(e) => handleChange(e)}
@@ -103,6 +108,7 @@ function EditClient() {
                   <div className="mb-3">
                     <label className="mb-2 label-required">ville: </label>
                     <select
+                      required
                       name="ville"
                       className="form-control"
                       onChange={(e) => handleChange(e)}
@@ -131,6 +137,7 @@ function EditClient() {
                   <div className="mb-3">
                     <label className="mb-2 label-required">quartier: </label>
                     <select
+                      required
                       name="quartier"
                       className="form-control"
                       onChange={(e) => handleChange(e)}
@@ -143,7 +150,7 @@ function EditClient() {
                         (ele, index) => {
                           if (ele == oneClientData.quartier) {
                             return (
-                              <option selected={true} key={index} value={ele}>
+                              <option  selected={true} key={index} value={ele}>
                                 {ele}
                               </option>
                             );
@@ -162,6 +169,7 @@ function EditClient() {
                   <div className="mb-3">
                     <label htmlFor="nomDirecteur" className="label-required">nom directeur: </label>
                     <input
+                      required
                       name="nomDirecteur"
                       id="nomDirecteur"
                       type="text"
@@ -174,6 +182,7 @@ function EditClient() {
                   <div className="mb-3">
                     <label htmlFor="telephone" className="label-required">telephone: </label>
                     <input
+                      required
                       name="telephone"
                       id="telephone"
                       type="text"
@@ -186,6 +195,7 @@ function EditClient() {
                   <div className="mb-3">
                     <label htmlFor="email" className="label-required">email: </label>
                     <input
+                      required
                       name="email"
                       id="email"
                       type="text"
@@ -204,6 +214,13 @@ function EditClient() {
                       Update Client
                     </button>
                   </div>
+
+                  <div className="mb-3">
+                    <p className="text-danger">
+                    {error}
+                    </p>
+                  </div>
+
                 </form>
               </div>
             </div>

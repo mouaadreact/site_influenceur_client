@@ -21,7 +21,7 @@ function Table({ name, fieldsTable }) {
 
   //*pagination elements
   var [currentPage, setCurrentPage] = useState(1);
-  var [postsPerPage, setPostsPerPage] = useState(2);
+  var [postsPerPage, setPostsPerPage] = useState(10);
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentData = allEtatPaiment.slice(indexOfFirstPost, indexOfLastPost);
@@ -62,11 +62,12 @@ function Table({ name, fieldsTable }) {
    setIdInfluenceurDelete(idInfluenceur);
   }
 
-  console.log(idInfluenceurDelete)
-  // console.log()
   //?---------------------------------------
   return (
-    <>
+    <div
+            className="container-fluid px-4"
+            style={{ backgroundColor: "#EB6E35" }}
+          >
       {loading ? (
         <>
           <Loading />
@@ -88,10 +89,6 @@ function Table({ name, fieldsTable }) {
             </Modal.Footer>
           </Modal>
 
-          <div
-            className="container-fluid px-4"
-            style={{ backgroundColor: "#EB6E35" }}
-          >
             <div
               className="row my-5"
               style={{
@@ -194,10 +191,9 @@ function Table({ name, fieldsTable }) {
                 </div>
               </div>
             </div>
-          </div>
         </>
       )}
-    </>
+  </div>
   );
 }
 

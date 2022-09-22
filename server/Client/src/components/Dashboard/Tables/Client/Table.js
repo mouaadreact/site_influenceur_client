@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { AiFillEdit, AiFillDelete, AiFillEye } from "react-icons/ai";
+import { AiFillEdit, AiFillEye } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import {
   changeEtatCompteClient,
-  deleteClient,
   getAllClient,
 } from "../../../../redux/actions/client.actions";
 import Pagenation from "../../../Pagination/Pagination";
@@ -15,7 +14,7 @@ function  Table({ name, fieldsTable }) {
 
   //*pagnitaion elements
   var [currentPage, setCurrentPage] = useState(1);
-  var [postsPerPage, setPostsPerPage] = useState(4);
+  var [postsPerPage, setPostsPerPage] = useState(10);
   const indexOfLastPost = currentPage * postsPerPage;
   const indexOfFirstPost = indexOfLastPost - postsPerPage;
   const currentData = allClientData.slice(indexOfFirstPost, indexOfLastPost);
@@ -128,7 +127,7 @@ const handleChangeStatusActive = (e, id, status) => {
                     </td>
                     <td scope="col" width="150">
                     <a
-                        href={`/dashboard/campagne/view/${ele.id}`}
+                        href={`/dashboard/client/view/${ele.id}`}
                         className="success-text"
                         style={{ fontSize: "16px", marginRight: "10px" }}
                       >

@@ -17,7 +17,7 @@ function EtatPaimentStatistics() {
       {
         label: "tarif of influenceur",
         data: tarifOfInfluenceur.map((data) => data.somme),
-        backgroundColor: ["#16213E", "#D800A6"],
+        backgroundColor: ["#01579b", "#D800A6"],
       },
     ],
   };

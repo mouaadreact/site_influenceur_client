@@ -1,29 +1,22 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { UidContext } from "../../../contexts/AppContext";
-import { getOneUser } from "../../../redux/actions/user.actions";
+import React from "react";
+
+import isAuth from "../../../utils/Auth";
 import Admin from "../../Dashboard/Admin";
 import PageForbidden from "../../PageNotFound/PageForbidden";
+import PageRole from "../../PageNotFound/PageRole";
 
 function AdminRoute() {
-  const id = useContext(UidContext);
-  const dispatch = useDispatch();
-  const { oneUserData } = useSelector((state) => state.user);
-  const [uid, setUid] = useState(0);
-
-  useEffect(() => {
-    getOneUser(id, dispatch);
-    setUid(id);
-  }, [id]);
-
-  console.log(id);
-
+ 
   const Authorization = () => {
-    return uid && oneUserData?.Role?.roleNom === "admin" ? (
-      <Admin />
-    ) : (
-      <PageForbidden />
-    );
+    if(isAuth().status){
+       if(isAuth().role==="admin"){
+         return <Admin/>
+       }else{
+         return <PageRole/>
+       }
+    }else{
+      return <PageForbidden/>
+    }
   };
 
   return <>{Authorization()}</>;

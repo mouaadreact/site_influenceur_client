@@ -41,17 +41,21 @@ function NavbarRegister() {
             </span>
           <ul className="navbar-nav mx-auto">
             <li className="nav-item">
-              <NavLink
-                to="/"
-                className="nav-NavLink"
-                style={{
-                  fontFamily: "Ubuntu",
-                  fontWeight: "bold",
-                  color: "white",
-                }}
-              >
-                Acceuil
-              </NavLink>
+            {
+                  /*
+                  <NavLink
+                  to="/"
+                  className="nav-NavLink"
+                  style={{
+                    fontFamily: "Ubuntu",
+                    fontWeight: "bold",
+                    color: "white",
+                  }}
+                >
+                  Acceuil
+                </NavLink>
+                 */
+                }
             </li>
           </ul>
           <NavLink to="/login" className="Buttons log">

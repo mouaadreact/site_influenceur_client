@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import NavbarRegister from "../NavBar/NavbarRegister";
 import { UidContext } from "../../contexts/AppContext";
 import PageDejaConnect from "../PageNotFound/PageDejaConnect";
+import isAuth from "../../utils/Auth";
 
 function Register() {
   const id = useContext(UidContext);
@@ -39,7 +40,7 @@ function Register() {
   return (
     <>
       <NavbarRegister />
-      {id ? (
+      {isAuth().status ? (
         <>
           <PageDejaConnect />
         </>
@@ -117,7 +118,7 @@ function Register() {
                 <button
                   disabled={isSubmitting}
                   type="submit"
-                  className="btn bleu-btn w-100"
+                  className="bleu-btn w-100"
                 >
                   Register
                 </button>

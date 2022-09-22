@@ -54,7 +54,7 @@ export const addCampagne = async (data,interetData,dispatch)=>{
     
      
   }catch(err){
-    dispatch(errorCampagne())
+    dispatch(errorCampagne(err.response.data.errors[0].message))
   }
  }
 
@@ -140,7 +140,8 @@ export const updateCampagne = async (id,data,interetData,dispatch)=>{
    
      
   }catch(err){
-    dispatch(errorCampagne())
+    console.log(err)
+    dispatch(errorCampagne(err.response.data.errors[0].message))
   }
  }
 

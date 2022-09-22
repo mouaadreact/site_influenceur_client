@@ -1,28 +1,24 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { UidContext } from "../../../../contexts/AppContext";
-import { getOneUser } from "../../../../redux/actions/user.actions";
+import React from "react";
+import isAuth from "../../../../utils/Auth";
+
 import PageForbidden from "../../../PageNotFound/PageForbidden";
 import HistoryOffre from "../../../ProfilInfluenceur/HistoryOffre/HistoryOffre";
+import PageRole from "../../../PageNotFound/PageRole";
 
 function ProfilHistoryOffreRoute() {
-  const id = useContext(UidContext);
-  const dispatch = useDispatch();
-  const { oneUserData } = useSelector((state) => state.user);
-  const [uid, setUid] = useState(0);
-
-  useEffect(() => {
-    getOneUser(id, dispatch);
-    setUid(id);
-  }, [id]);
-
+ 
   const Authorization = () => {
-    return uid && oneUserData?.Role?.roleNom === "influenceur" ? (
-      <HistoryOffre />
-    ) : (
-      <PageForbidden />
-    );
+    if(isAuth().status){
+       if(isAuth().role==="influenceur"){
+         return <HistoryOffre/>
+       }else{
+         return <PageRole/>
+       }
+    }else{
+      return <PageForbidden/>
+    }
   };
+
 
   return <>{Authorization()}</>;
 }

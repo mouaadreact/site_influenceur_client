@@ -19,6 +19,7 @@ function EditEtatPaiment() {
     influenceurId: "",
     tarif: "",
     dateReglement: "",
+    currency:""
   });
 
   useEffect(() => {
@@ -31,6 +32,7 @@ function EditEtatPaiment() {
       influenceurId: oneEtatPaiment.InfluenceurId,
       tarif: oneEtatPaiment.tarif,
       dateReglement: oneEtatPaiment.dateReglement,
+      currency:oneEtatPaiment.currency
     });
   }, [oneEtatPaiment.CampagneId]);
 
@@ -61,7 +63,7 @@ function EditEtatPaiment() {
             <div className="card">
               <div className="card-header">
                 <h4>
-                  Etat Paiment Update
+                  Update Etat Paiment 
                   
                 </h4>
               </div>
@@ -99,6 +101,7 @@ function EditEtatPaiment() {
                   <div className="mb-3">
                     <label className="label-required" htmlFor="dateReglement">Date Reglement: </label>
                     <input
+                      required
                       name="dateReglement"
                       id="dateReglement"
                       type="date"
@@ -111,6 +114,7 @@ function EditEtatPaiment() {
                   <div className="mb-3">
                     <label htmlFor="tarif" className="label-required">Tarif: </label>
                     <input
+                      required
                       name="tarif"
                       id="tarif"
                       type="tarif"
@@ -118,6 +122,20 @@ function EditEtatPaiment() {
                       defaultValue={oneEtatPaiment.tarif}
                       onChange={(e) => handleChange(e)}
                     />
+                  </div>
+
+                  <div className="mb-3">
+                    <label className="label-required" htmlFor="currency">Currency :</label>
+                    <select 
+                    className="form-control" 
+                    required
+                    onChange={(e) => handleChange(e)}
+                    name="currency">
+                      <option value="">Veuillez select currency</option>
+                      <option  
+                      selected={oneEtatPaiment.currency=="DH" ? true :false}
+                      value="DH">DH</option>
+                    </select>
                   </div>
 
                   <div className="mb-3">

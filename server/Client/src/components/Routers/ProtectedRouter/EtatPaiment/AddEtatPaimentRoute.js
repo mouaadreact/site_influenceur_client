@@ -1,29 +1,22 @@
-import React, { useContext, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { UidContext } from "../../../../contexts/AppContext";
-import { getOneUser } from "../../../../redux/actions/user.actions";
+import React from "react";
+import isAuth from "../../../../utils/Auth";
 import AddEtatPaiment from "../../../Dashboard/Tables/EtatPaiment/AddEtatPaiment";
 import PageForbidden from "../../../PageNotFound/PageForbidden";
+import PageRole from "../../../PageNotFound/PageRole";
 
-function AddEtatPaimentRoute() {
-  const id = useContext(UidContext);
-  const dispatch = useDispatch();
-  const { oneUserData } = useSelector((state) => state.user);
-  const [uid, setUid] = useState(0);
-
-  useEffect(() => {
-    getOneUser(id, dispatch);
-    setUid(id);
-  }, [id]);
-
+function AddEtatPaimentRoute() { 
+  
   const Authorization = () => {
-    return uid && oneUserData?.Role?.roleNom === "admin" ? (
-      <AddEtatPaiment />
-    ) : (
-      <PageForbidden />
-    );
+    if(isAuth().status){
+       if(isAuth().role==="admin"){
+         return <AddEtatPaiment/>
+       }else{
+         return <PageRole/>
+       }
+    }else{
+      return <PageForbidden/>
+    }
   };
-
   return <>{Authorization()}</>;
 }
 

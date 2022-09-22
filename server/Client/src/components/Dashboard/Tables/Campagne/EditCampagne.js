@@ -1,11 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { Formik, Form, Field, ErrorMessage, formik } from "formik";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import {
-  addInteretToCampagne,
-  deleteCampagne,
-  deleteInteretCampagne,
   getOneCampagne,
   updateCampagne,
 } from "../../../../redux/actions/campagne.actions";
@@ -18,7 +14,7 @@ import Sidebar from "../../Sidebar/Sidebar";
 function EditCampagne() {
   const dispatch = useDispatch();
   const params = useParams();
-  const { loading, oneCampagneData } = useSelector((state) => state.campagne);
+  const { error,oneCampagneData } = useSelector((state) => state.campagne);
   const { allClientData } = useSelector((state) => state.client);
   const { allInteretData } = useSelector((state) => state.interet);
   const [optionsInteret, setOptionsInteret] = useState([]);
@@ -79,6 +75,7 @@ function EditCampagne() {
 
   const handleEdit = async (event) => {
     event.preventDefault();
+   // console.log(campagneInputValue)
    updateCampagne(params.id, campagneInputValue, interetMult, dispatch);
   };
 
@@ -101,6 +98,7 @@ function EditCampagne() {
                 <form onSubmit={(e) => handleEdit(e)}>
                   <div className="mb-3">
                     <input
+                      required
                       name="id"
                       type="text"
                       disabled={true}
@@ -112,6 +110,7 @@ function EditCampagne() {
                   <div className="mb-3">
                     <label className="label-required" htmlFor="titre">Titre: </label>
                     <input
+                      required
                       name="titre"
                       id="titre"
                       type="text"
@@ -137,6 +136,7 @@ function EditCampagne() {
                   <div className="mb-3">
                     <label className="label-required" htmlFor="dateDebut">Date Debut: </label>
                     <input
+                      required
                       name="dateDebut"
                       id="dateDebut"
                       type="date"
@@ -152,6 +152,7 @@ function EditCampagne() {
                   <div className="mb-3">
                     <label className="label-required" htmlFor="dateFin">Date Fin: </label>
                     <input
+                      required
                       name="dateFin"
                       id="dateFin"
                       type="date"
@@ -169,6 +170,7 @@ function EditCampagne() {
                       Nombre Influenceur:{" "}
                     </label>
                     <input
+                      required
                       name="nombreInfluenceur"
                       id="nombreInfluenceur"
                       type="number"
@@ -182,6 +184,7 @@ function EditCampagne() {
                     <label className="label-required" htmlFor="presence">Presence: </label>
                     <div className="form-check form-check-inline">
                       <input
+                        required
                         className="form-check-Field"
                         type="radio"
                         name="presence"
@@ -201,6 +204,7 @@ function EditCampagne() {
 
                     <div className="form-check form-check-inline">
                       <input
+                        required
                         className="form-check-Field"
                         type="radio"
                         name="presence"
@@ -224,19 +228,23 @@ function EditCampagne() {
                     <label className="label-required" htmlFor="descriptionOffre">
                       Description Offre:{" "}
                     </label>
-                    <input
+                    <textarea
+                      required
                       name="descriptionOffre"
                       id="descriptionOffre"
                       type="text"
                       className="form-control"
                       defaultValue={oneCampagneData.descriptionOffre}
                       onChange={(e) => handleChange(e)}
-                    />
+                    >
+                    
+                    </textarea>
                   </div>
 
                   <div className="mb-3">
                     <label className="label-required" htmlFor="hashtags">Hashtages: </label>
                     <input
+                      required
                       name="hashtags"
                       id="hashtags"
                       type="text"
@@ -250,6 +258,7 @@ function EditCampagne() {
                   <div className="mb-3">
                     <label className="label-required" htmlFor="compteTagger">Compte Tagger: </label>
                     <input
+                      required
                       name="compteTagger"
                       id="compteTagger"
                       type="text"
@@ -263,6 +272,7 @@ function EditCampagne() {
                   <div className="mb-3">
                     <label className="label-required" htmlFor="dateDebut">Centre d'intéret: </label>
                     <Multiselect
+                      required
                       displayValue="name"
                       //values={interetMult}
                       onSelect={(selectedList, removedItem) => {
@@ -285,6 +295,11 @@ function EditCampagne() {
                       Update Campagne
                     </button>
                   </div>
+
+                  <div className="mb-3">
+                        <p className="text-danger">{error}</p>
+                  </div>
+
                 </form>
               </div>
             </div>

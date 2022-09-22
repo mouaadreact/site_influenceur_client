@@ -32,6 +32,8 @@ function EditInfluenceur() {
     addCommentaire(params.id, commentaireValue, dispatch);
   };
 
+  console.log(oneInfluenceurData.commentaire)
+
   return (
     <div className="d-flex" id="wrapper" >
     <Sidebar />
@@ -61,14 +63,17 @@ function EditInfluenceur() {
                   </div>
 
                   <div className="mb-3">
-                    <label className="label-required" htmlFor="titre">Commentaire: </label>
+                    <label className="label-required" htmlFor="commentaire">Commentaire: </label>
                     <textarea
-                      name="titre"
-                      id="titre"
+                      required
+                      name="commentaire"
+                      id="commentaire"
                       className="form-control"
-                      defaultValue={oneInfluenceurData.commmentaire}
+                      defaultValue={oneInfluenceurData.commentaire}
                       onChange={(e) => handleChange(e)}
-                    ></textarea>
+                    >
+
+                    </textarea>
                   </div>
 
                   <div className="mb-3">

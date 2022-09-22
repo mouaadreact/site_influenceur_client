@@ -43,15 +43,7 @@ function Statistics() {
           <h2 className="fs-2 m-0">Dashboard</h2>
         </div>
 
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        ></button>
+       
 
       </nav>
 
@@ -117,8 +109,9 @@ function Statistics() {
           <div className="col mt-4">
              <OffreStatistics/>
           </div>
-        </div>
-      </div>
+        </div>        
+      </div>   
+      
     </div>
   );
 }

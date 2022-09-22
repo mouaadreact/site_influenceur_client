@@ -1,9 +1,7 @@
 import React, { useContext, useState } from "react";
-import axios from "axios";
 import { useFormik } from "formik";
 import { basicSchemaLogin } from "../../schemas";
 import { UidContext } from "../../contexts/AppContext";
-import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { authLogin } from "../../redux/actions/auth.actions";
 import { ToastContainer } from "react-toastify";
@@ -11,6 +9,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "./Login.css";
 import NavbarLogin from "../NavBar/NavbarLogin";
 import PageDejaConnect from "../PageNotFound/PageDejaConnect";
+import isAuth from "../../utils/Auth";
 
 function Login() {
   const id = useContext(UidContext);
@@ -39,7 +38,7 @@ function Login() {
   return (
     <>
       <NavbarLogin />
-      {id ? (
+      {isAuth().status ? (
         <>
           <PageDejaConnect />
         </>
@@ -98,7 +97,7 @@ function Login() {
                   )}
                 </div>
 
-                <button type="submit" className="btn bleu-btn w-100">
+                <button type="submit" className="bleu-btn w-100">
                   Login
                 </button>
               </form>

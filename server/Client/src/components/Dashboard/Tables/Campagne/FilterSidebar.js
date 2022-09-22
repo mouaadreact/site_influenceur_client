@@ -1,11 +1,6 @@
-import React, { useCallback, useEffect, useState } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getAllInteret } from "../../../../redux/actions/interet.actions";
-import {
-  filterCentreInteret,
-  filterStatusCampagne,
-} from "../../../../redux/actions/filter.actions";
 import { getAllClient } from "../../../../redux/actions/client.actions";
 import { filterCampagne } from "../../../../redux/actions/campagne.actions";
 
@@ -14,7 +9,6 @@ function FilterSidebar() {
   const { allInteretData } = useSelector((state) => state.interet);
   const { allClientData } = useSelector((state) => state.client);
 
-  const [optionsInteret, setOptionsInteret] = useState([]);
 
   //* useState of data filter
   const [centreInteretFilter, setCentreInteretFilter] = useState([]);
