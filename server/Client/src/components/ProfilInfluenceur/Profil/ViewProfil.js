@@ -24,20 +24,14 @@ function ViewProfil({ id }) {
     });
   }, [oneInfluenceurData?.id]);
 
-  console.log(interet);
 
   return (
     <div className="row">
       <div className="col-lg-4">
         <div className="card mb-4">
           <div className="card-body text-center">
-            <img
-              src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava3.webp"
-              alt="avatar"
-              className="rounded-circle img-fluid"
-              style={{ width: "150px" }}
-            />
-            <h5 className="my-3">
+            
+            <h5 className="my-3 primary-text">
               {oneInfluenceurData?.instagramUsernameCompte}
             </h5>
             <p className="text-muted mb-1">

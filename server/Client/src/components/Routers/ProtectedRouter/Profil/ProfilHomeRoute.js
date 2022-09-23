@@ -6,7 +6,7 @@ import ProfilInfluenceur from "../../../ProfilInfluenceur/ProfilInfluenceur";
 import PageRole from "../../../PageNotFound/PageRole";
 
 function ProfilHomeRoute() {
- 
+  
   const Authorization = () => {
     if(isAuth().status){
        if(isAuth().role==="influenceur"){

@@ -33,6 +33,22 @@ export const getAllClient = async (dispatch)=>{
  }
 }
 
+//!------------------
+
+export const getCampagneUsedStatus = async (statusActive,dispatch)=>{
+  dispatch(startClient());
+  try{
+     const res = await axios({
+      method:"get",
+      url:`${process.env.REACT_APP_URL_SERVER}/api/v1/client/filterEtatActive?statusActive=${statusActive}`,
+      withCredentials:true
+    })
+     dispatch(successGetAllClient(res.data));
+  }catch(err){
+    dispatch(errorClient())
+  }
+ }
+
 //!---------
 export const getAllCompteActiveOfClient = async (dispatch)=>{
   dispatch(startClient());

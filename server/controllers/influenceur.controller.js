@@ -446,7 +446,7 @@ exports.getId = async (req, res) => {
   try {
     const data = await Influenceur.findOne({
       where: { id: req.params.id },
-      include: [User, Interet, Langue,NiveauEtude],
+      include: [User, Interet,Langue,NiveauEtude],
     });
 
     if (!data) {

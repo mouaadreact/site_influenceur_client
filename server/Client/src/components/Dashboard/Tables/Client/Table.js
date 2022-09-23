@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   changeEtatCompteClient,
   getAllClient,
+  getCampagneUsedStatus,
 } from "../../../../redux/actions/client.actions";
 import Pagenation from "../../../Pagination/Pagination";
 
@@ -11,7 +12,7 @@ function  Table({ name, fieldsTable }) {
   const [q, setQ] = useState("");
   const dispatch = useDispatch();
   const { allClientData, loading } = useSelector((state) => state.client);
-
+  const [searchStatus,setSearchStatus]=useState("");
   //*pagnitaion elements
   var [currentPage, setCurrentPage] = useState(1);
   var [postsPerPage, setPostsPerPage] = useState(10);
@@ -33,6 +34,13 @@ const handleChangeStatusActive = (e, id, status) => {
 };
 
 
+const handleSearchEtatActive=(e)=>{
+ console.log(e.target.value)
+ getCampagneUsedStatus(e.target.value,dispatch)
+}
+
+console.log(allClientData)
+
 //*search:
   const search = (rows) => {
     return rows.filter(
@@ -41,7 +49,7 @@ const handleChangeStatusActive = (e, id, status) => {
         row.raisonSociale.toLowerCase().indexOf(q.toLowerCase()) > -1 ||
         row.nomDirecteur.toLowerCase().indexOf(q.toLowerCase()) > -1 ||
         row.telephone.toLowerCase().indexOf(q.toLowerCase()) > -1 ||
-        row.email.toLowerCase().indexOf(q.toLowerCase()) > -1
+        row.email.toLowerCase().indexOf(q.toLowerCase()) > -1 
     );
   };
 
@@ -73,11 +81,43 @@ const handleChangeStatusActive = (e, id, status) => {
 
         <div className="card-hearder mb-3">
           <input
-            className="p-1 form-control w-25"
-            placeholder="search .."
+            className="p-1 form-control w-50"
+            placeholder="search id,raison sociale,nom directeur,telephone,email ..."
             value={q}
             onChange={(e) => setQ(e.target.value)}
           />
+        </div>
+        <div className="card-hearder mb-3 d-flex">
+          <div style={{marginRight:"10px"}} >
+            <input 
+              name="statusActive"  
+              style={{marginRight:"2px"}}
+              type="radio" 
+              onChange={(e)=>handleSearchEtatActive(e)}
+              value="true"/>
+            <label>Active</label>
+          </div>
+          <div style={{marginRight:"10px"}} >
+            <input 
+            value="false" 
+            name="statusActive" 
+            style={{marginRight:"2px"}} 
+            type="radio" 
+            onChange={(e)=>handleSearchEtatActive(e)}
+            />
+            <label>Desactive</label>
+          </div>
+          <div >
+            <input 
+            value=""
+            name="statusActive"
+            style={{marginRight:"2px"}}
+            type="radio" 
+            onChange={(e)=>handleSearchEtatActive(e)}
+                />
+            <label>All</label>
+          </div>
+          
         </div>
 
         <div className="col">

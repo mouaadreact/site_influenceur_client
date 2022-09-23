@@ -20,6 +20,7 @@ function ViewInfluenceur() {
     nombreAbonnement: 0,
     nombreLike: 0,
     nombreCommentaire: 0,
+    urlImage:""
   });
 
   const params = useParams();
@@ -31,11 +32,14 @@ function ViewInfluenceur() {
 
   useEffect(() => {
     //console.log(instagramFilePath?.path)
+    
     if (instagramFilePath?.path) {
       axios
         .get(instagramFilePath?.path)
         .then((res) => {
-          //console.log(res.data);
+         
+          //console.log(atob(btoa("user")))
+          console.log("data:image/jpg;base64,"+btoa(res.data.data.profile_pic_url))
           var CommentCount = 0;
           var LikeCount = 0;
           
@@ -70,11 +74,14 @@ function ViewInfluenceur() {
             nombreAbonnement: res.data.data.edge_follow.count,
             nombreCommentaire: CommentCount,
             nombreLike: LikeCount,
+            urlImage:"data:image/png;base64, "+btoa(res.data.data.profile_pic_url)
           });
         })
         .catch((err) => console.log(err));
     }
   }, [instagramFilePath?.path]);
+
+
 
   return (
     <div className="d-flex" id="wrapper">
@@ -92,6 +99,7 @@ function ViewInfluenceur() {
                     Influenceur View Details
                    
                   </h4>
+                  
                 </div>
                 <div className="card-body">
                   <div className="mb-3">
@@ -134,46 +142,46 @@ function ViewInfluenceur() {
 
                   <div className="row g-3 my-2">
                     <div className="col-md-3">
-                      <div className="p-3 primary-bg shadow-sm d-flex justify-content-around align-items-center rounded">
+                      <div className="p-3 card-blue shadow-sm d-flex justify-content-around align-items-center rounded">
                         <div>
                           <h3 className="fs-2 white-text">
                             {new Intl.NumberFormat("de-DE").format(
                               compteInstagram.nombrepost
                             )}
                           </h3>
-                          <p className="fs-5 white-text">Nombre Post</p>
+                          <p className="fs-5 white-text">Post</p>
                         </div>
                       </div>
                     </div>
 
                     <div className="col-md-3">
-                      <div className="p-3 primary-bg shadow-sm d-flex justify-content-around align-items-center rounded">
+                      <div className="p-3 card-red shadow-sm d-flex justify-content-around align-items-center rounded">
                         <div>
                           <h3 className="fs-2 white-text">
                             {new Intl.NumberFormat("de-DE").format(
                               compteInstagram.nombreAbonne
                             )}
                           </h3>
-                          <p className="fs-5 white-text">Nombre Abonne</p>
+                          <p className="fs-5 white-text">Abonne</p>
                         </div>
                       </div>
                     </div>
 
                     <div className="col-md-3">
-                      <div className="p-3 primary-bg shadow-sm d-flex justify-content-around align-items-center rounded">
+                      <div className="p-3 card-green shadow-sm d-flex justify-content-around align-items-center rounded">
                         <div>
                           <h3 className="fs-2 white-text">
                             {new Intl.NumberFormat("de-DE").format(
                               compteInstagram.nombreAbonnement
                             )}
                           </h3>
-                          <p className="fs-5 white-text">Nombre Abonnement</p>
+                          <p className="fs-5 white-text">Abonnement</p>
                         </div>
                       </div>
                     </div>
 
                     <div className="col-md-3">
-                      <div className="p-3 primary-bg shadow-sm d-flex justify-content-around align-items-center rounded">
+                      <div className="p-3 card-blue shadow-sm d-flex justify-content-around align-items-center rounded">
                         <div>
                           <h3 className="fs-2 white-text">
                             {new Intl.NumberFormat("de-DE").format(
@@ -181,14 +189,14 @@ function ViewInfluenceur() {
                             )}
                           </h3>
                           <p className="fs-5 white-text">
-                            Nombre Like of last 12 posts
+                            Likes of last 12 posts
                           </p>
                         </div>
                       </div>
                     </div>
 
                     <div className="col-md-3">
-                      <div className="p-3 primary-bg shadow-sm d-flex justify-content-around align-items-center rounded">
+                      <div className="p-3 card-other shadow-sm d-flex justify-content-around align-items-center rounded">
                         <div>
                           <h3 className="fs-2 white-text">
                             {new Intl.NumberFormat("de-DE").format(
@@ -196,7 +204,7 @@ function ViewInfluenceur() {
                             )}
                           </h3>
                           <p className="fs-5 white-text">
-                            Nombre Commentaire of last 12 posts
+                            Commentaires of last 12 posts
                           </p>
                         </div>
                       </div>
@@ -352,6 +360,21 @@ function ViewInfluenceur() {
                           style={{ backgroundColor: "#DDD" }}
                         >
                           {ele.langueNom}
+                        </p>
+                      );
+                    })}
+                  </div>
+
+                  <div className="mb-3">
+                    <label>Influenceur interets : </label>
+                    {oneInfluenceurData.Interets?.map((ele, index) => {
+                      return (
+                        <p
+                          key={index + 1}
+                          className="form-control"
+                          style={{ backgroundColor: "#DDD" }}
+                        >
+                          {ele.interetNom}
                         </p>
                       );
                     })}

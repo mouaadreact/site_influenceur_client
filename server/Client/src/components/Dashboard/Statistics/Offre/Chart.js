@@ -5,7 +5,14 @@ import {Chart as ChartJS} from 'chart.js/auto'
 function Chart({chartData}) {
   return (
    <>
-   <Bar style={{backgroundColor:"#FFF",padding:"10px"}} data={chartData} />
+   <Bar 
+  style={{
+      backgroundColor:"#FFF",
+      padding:"10px",
+      boxShadow:"rgb(0 0 0) 3px 4px 18px"
+      }} 
+     className="rounded"  
+   data={chartData} />
    </>
   )
 }

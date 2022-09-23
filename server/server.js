@@ -9,7 +9,6 @@ const cookieParser = require('cookie-parser');
 const helmet = require("helmet");
 const morgan = require('morgan')
 const cors=require("cors");
-
 //route require:
 
 
@@ -101,7 +100,15 @@ app.use('/api/v1/auth',AuthRoute);
 //utils route
 app.get('/api/v1/countries',CountriesRoute.getCountries);
 app.get('/api/v1/cities',CountriesRoute.getCities);
+//!------------------------------------------
 
+app.get('/testApi',async (req,res)=>{
+    try{
+      console.log("hello")
+    }catch(err){
+     console.log(err)
+    }
+})
 //------------------------------------------
 //instagrma api for testing api instagram
 //api

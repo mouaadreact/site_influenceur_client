@@ -98,15 +98,21 @@ function Statistics() {
           </div>
         </div>
 
-        <div className="row my-5">
-          <h3 className="fs-4 mb-3">Statistics</h3>
+        <div className="row my-5 mb-3" >
+          <h3 className="fs-4">Statistiques</h3>
+        </div>
+
+        <div className="row my-5" style={{margin:"auto 100px"}}>
           <div className="col">
+             <p style={{fontSize:"17px"}}>Nombre campagne de chaque client</p>
              <ClientStatistics/>
           </div>
           <div className="col mt-4">
+          <p style={{fontSize:"17px"}}>Somme tarif de chaque influenceur</p>
              <EtatPaimentStatistics />
           </div>
           <div className="col mt-4">
+          <p style={{fontSize:"17px"}}>Nombre des offres moins/annee</p>
              <OffreStatistics/>
           </div>
         </div>        

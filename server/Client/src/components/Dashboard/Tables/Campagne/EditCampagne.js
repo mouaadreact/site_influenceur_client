@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
-import {
+import { 
   getOneCampagne,
   updateCampagne,
 } from "../../../../redux/actions/campagne.actions";
@@ -23,7 +23,7 @@ function EditCampagne() {
     titre: "",
     dateDebut: "",
     dateFin: "",
-    presence: "",
+    presence: null,
     nombreInfluenceur: "",
     descriptionOffre: "",
     hashtags: "",
@@ -75,8 +75,7 @@ function EditCampagne() {
 
   const handleEdit = async (event) => {
     event.preventDefault();
-   // console.log(campagneInputValue)
-   updateCampagne(params.id, campagneInputValue, interetMult, dispatch);
+    updateCampagne(params.id, campagneInputValue, interetMult, dispatch);
   };
 
  
@@ -180,49 +179,39 @@ function EditCampagne() {
                     />
                   </div>
 
-                  <div className="mb-3">
-                    <label className="label-required" htmlFor="presence">Presence: </label>
-                    <div className="form-check form-check-inline">
-                      <input
-                        required
-                        className="form-check-Field"
-                        type="radio"
-                        name="presence"
-                        id="inlineRadio1"
-                        value={true}
-                        checked={
-                          oneCampagneData.presence == true ? "checked" : ""
-                        }
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="inlineRadio1"
-                      >
-                        oui
-                      </label>
-                    </div>
-
-                    <div className="form-check form-check-inline">
-                      <input
-                        required
-                        className="form-check-Field"
-                        type="radio"
-                        name="presence"
-                        id="inlineRadio2"
-                        value={false}
-                        checked={
-                          oneCampagneData.presence == false ? "checked" : ""
-                        }
-                      />
-                      <label
-                        className="form-check-label"
-                        htmlFor="inlineRadio2"
-                      >
-                        non
-                      </label>
-                    </div>
-                    <div className="text-danger"></div>
-                  </div>
+                 
+                <div className="mb-3">
+                <label htmlFor="nomDirecteur" className="label-required">presence: </label>
+                <select
+                  required
+                  name="presence"
+                  className="form-control"
+                  onChange={(e) => handleChange(e)}
+                >
+                  <option className="text-muted">Selection option</option>
+                  {   oneCampagneData.presence == true ? (
+                    <>
+                    <option selected={true} value={true}>
+                      oui
+                    </option>
+                    <option value={false}>non</option>
+                    </>
+                    
+                  ) : (
+                    <>
+                    <>
+                    <option value={true}>
+                      oui
+                    </option>
+                    <option 
+                    selected={true}
+                    value={false}>
+                    non</option>
+                    </>
+                    </>
+                  )}
+                </select>
+              </div>
 
                   <div className="mb-3">
                     <label className="label-required" htmlFor="descriptionOffre">

@@ -10,6 +10,9 @@ router.route("/")
 router.route('/compteActive')
       .get(clientController.getAllActiveCompte)
 
+router.route('/filterEtatActive')
+      .get(clientController.getClientUsingStatusActive)
+
 router.route('/count')
       .get(clientController.getCountAllClient)
 

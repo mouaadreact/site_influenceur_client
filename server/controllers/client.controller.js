@@ -128,6 +128,38 @@ exports.getAllActiveCompte=async (req,res)=>{
   } 
 }
 
+//!--------------------------------------------------------
+//filter using etat active
+
+
+//afficher tout les clients sans condition:
+exports.getClientUsingStatusActive=async (req,res)=>{
+ 
+  const {statusActive}=req.query;
+  console.log(statusActive)
+  let data=[];
+  try{
+
+  if(statusActive===""){
+   data=await Client.findAll();
+  }else{
+    data=await Client.findAll({
+      where:{statusActive:((statusActive=="false")?false:true)}
+  });
+  }
+
+    if(!data){
+      res.status(400).json({error:"les clients sont introuvables!"});
+    }else{
+      res.status(200).json(data);
+    }
+  }catch(err){
+   res.status(400).json(err);
+  } 
+}
+
+
+
 
 
 //!---------------------------------------------------------

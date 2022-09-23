@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import marocVille from "../../../assets/data/marocAddress/ville.json";
 import marocQuartier from "../../../assets/data/marocAddress/quartier.json";
-import {
+import { 
   getOneInfluenceurUserId,
   updateInfluenceur,
 } from "../../../redux/actions/influenceur.actions";
@@ -312,11 +312,23 @@ useEffect(() => {
                 >
                   <option className="text-muted">Selection votre genre</option>
                   {oneInfluenceurData?.genre === "homme" ? (
+                    <>
                     <option selected={true} value="homme">
                       homme
                     </option>
-                  ) : (
                     <option value="femme">femme</option>
+                    </>
+                    
+                  ) : (
+                    <>
+                    <option 
+                    value="homme">
+                      homme
+                    </option>
+                    <option 
+                    selected={true}  
+                    value="femme">femme</option>
+                    </>
                   )}
                 </select>
               </div>

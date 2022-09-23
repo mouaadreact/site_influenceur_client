@@ -128,11 +128,12 @@ exports.update=async (req,res)=>{
    ClientId
   }=req.body; 
 
+   
   const data=await  Campagne.update({
                     titre,
                     dateDebut,
                     dateFin,
-                    presence,
+                    presence:((presence=="false"||presence==false)?false:true),
                     nombreInfluenceur, 
                     descriptionOffre,
                     hashtags,
